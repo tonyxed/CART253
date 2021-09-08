@@ -18,11 +18,23 @@ function setup() {
 
   ellipseMode(CENTER);
   // Head of Alien with Dimensions and Color
-  stroke(255, 10, 20);
-  fill(66, 245, 182, 100);
+  stroke(53, 69, 64);
+  fill(35, 135, 24);
   ellipse(255, 255, 255, 255);
-  
+  // Body of Alien
+  stroke(53, 69, 64);
+  fill(35, 135, 24);
+  ellipse(255, 500, 400, 300);
 
+  // Left Eye of Alien
+  stroke(10, 0, 5);
+  fill(12, 28, 23);
+  ellipse(200, 215, 50, 120);
+  // Right Eye of Alien
+  stroke(10, 0, 5);
+  fill(12, 28, 23);
+  ellipse(300, 215, 50, 120);
+  
 }
 
 // draw()
