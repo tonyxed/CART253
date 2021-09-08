@@ -18,10 +18,12 @@ function setup() {
   background(245, 152, 66);
 
   ellipseMode(CENTER);
+
   // Head of Alien with Dimensions and Color
   noStroke();
   fill(35, 135, 24);
   ellipse(255, 255, 255, 255);
+
   // Body of Alien
   noStroke();
   fill(35, 135, 24);
@@ -31,16 +33,30 @@ function setup() {
   noStroke();
   fill(12, 28, 23);
   ellipse(200, 215, 50, 120);
+
   // Right Eye of Alien
   noStroke();
   fill(12, 28, 23);
   ellipse(300, 215, 50, 120);
+
   // Mouth of Alien
   rectMode(CENTER);
   stroke(255, 0, 0);
   strokeWeight(10);
   fill(255, 0, 0);
-  rect(255, 320, 45, 10);
+  rect(255, 320, 35, 2*2/4);
+  //Nose of ALien
+  ellipseMode(CENTER);
+
+  // Left Nostril
+  noStroke();
+  fill(6, 8, 6);
+  ellipse(230, 290, 10, 10);
+  // Right Nostril
+  noStroke();
+  fill(6, 8 ,6);
+  ellipse(280, 290, 10, 10);
+
 
 }
 
