@@ -13,9 +13,11 @@ function preload() {
 
 //Variables
 let backgroundShade = 0;
-let circleSize = 300;
-let circleX = 250;
+let circleSize = 200;
+let circleX = 0;
 let circleY = 250;
+let circleSpeed = 2;
+let circleAcceleration = .25;
 
 function setup() {
   createCanvas(500, 500);
@@ -24,6 +26,8 @@ function setup() {
 
 function draw() {
   background(backgroundShade);
-    ellipse(circleX, circleY, circleSize);
+  circleX += circleSpeed;
+  circleSpeed += circleAcceleration;
+  ellipse(circleX, circleY, circleSize);
 
 }
