@@ -7,29 +7,23 @@ Variables as a whole!
 
 "use strict";
 
-
-/**
-Description of preload
-*/
 function preload() {
 
 }
 
-/**
-Description of setup
-*/
+//Variables
+let backgroundShade = 0;
+let circleSize = 300;
+let circleX = 250;
+let circleY = 250;
+
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  createCanvas(500, 500);
 
 }
 
-
-/**
-Description of draw()
-*/
 function draw() {
-  background(255, 9 , 0);
-  rectMode(CENTER);
-  rect(width / 2, height / 2, 100 , 100);
+  background(backgroundShade);
+    ellipse(circleX, circleY, circleSize);
 
 }
