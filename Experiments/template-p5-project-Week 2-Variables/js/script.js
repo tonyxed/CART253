@@ -41,6 +41,7 @@ function draw() {
   ellipse(circle.x, circle.y, circle.size);
 
   console.log(`circle.fill: ${circle.fill} circle.speed: ${circle.speed} circle.y: ${circle.y} circle.size: ${circle.size}`);
+  console.log(`circle.speed: ${circle.speed}`);
 
 
 }
