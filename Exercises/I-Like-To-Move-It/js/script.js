@@ -61,6 +61,9 @@ fill(circle1.fill, circle1.alpha);
 ellipse(circle1.x, circle1.y, circle1.size);
 circle1.y -= circle1.speed;
 circle1.y = constrain(circle1.y, 0, 250);
+if (circle1.y > height) {
+  circle1.speed = -circle1.speed;
+}
 circle1.size +=circle1.growth;
 circle1.size = constrain(circle1.size, 0, width / 2);
 circle1.fill = map(circle1.fill, 0, 500, -1.3, width);
