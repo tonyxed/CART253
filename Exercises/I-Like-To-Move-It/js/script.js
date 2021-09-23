@@ -25,7 +25,7 @@ let circle2 = {
   speed: 1,
   growth: 1,
   fill: 1,
-  alpha: 400,
+  alpha: 400
 };
 
 let circle3 = {
