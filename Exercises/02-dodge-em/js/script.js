@@ -1,8 +1,7 @@
 /**
-Dodging Covid 19
+Dodge-em Exercise
 Anthony Calderone
 
-Dodging Covid 19 Activity #4!
 */
 
 //Variable circleCovid
