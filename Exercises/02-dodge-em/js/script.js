@@ -44,7 +44,7 @@ function draw() {
   //Collision between circleCovid + playerCircle
   let d = dist(playerCircle.x, playerCircle.y, circleCovid.x, circleCovid.y);
   if (d < circleCovid.size / 2 + playerCircle.size / 2) {
-    //noLoop();
+    noLoop();
   }
 
   fill(255);
@@ -89,25 +89,25 @@ function draw() {
   circleCovid.vx = constrain(circleCovid.vx, -circleCovid.maxspeed, circleCovid.maxspeed);
   circleCovid.vy = circleCovid.vy + circleCovid.ay;
   circleCovid.vy = constrain(circleCovid.vy, -circleCovid.maxspeed, circleCovid.maxspeed);
-  //if circleCovid leaves right side of screen place on (0,500)
+  //if circleCovid leaves right side of screen place on (0,y)
   if (circleCovid.x > width) {
     circleCovid.x = 0;
     circleCovid.y = y;
   }
-  // if circleCovid leaves left side of screen place on (0,500)
+  // if circleCovid leaves left side of screen place on (0,y)
   if (circleCovid.x < 0) {
     circleCovid.x = width;
-    circleCovid.y = 500;
+    circleCovid.y = y;
   }
-// if circleCovid leaves bottom side of screen place on (0,500)
+// if circleCovid leaves bottom side of screen place on (0,y)
   if (circleCovid.y > 1000) {
     circleCovid.x = 0;
-    circleCovid.y = 500
+    circleCovid.y = y
   }
-  // if circleCovid leaves top side of screen place on (0,500)
+  // if circleCovid leaves top side of screen place on (0,y)
   if (circleCovid.y < 0) {
     circleCovid.x = 0;
-    circleCovid.y = 500;
+    circleCovid.y = y;
   }
   //if playerCircle leaves right side of screen place on (0,500)
   if (playerCircle.x > width) {
