@@ -31,7 +31,7 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(1600, 1000);
+  createCanvas(1400, 900);
 
 }
 
@@ -39,12 +39,14 @@ function draw() {
   background(0);
   imageMode(CENTER);
   image(covidImage, width / 2, height / 2);
+
   //Static
-  for (let i = 0; i < 10; i++) {
-    let numX = random(0, width);
-    let numY = random(0, height);
-    stroke(200),
-      ellipse(numX, numY, 20);
+  for (let i = 0; i < 1000; i++) {
+    let covidX = random(0, width);
+    let covidY = random(0, height);
+    fill(145,0,0);
+    stroke(10),
+      ellipse(covidX, covidY, 8);
   }
   //Collision between circleCovid + playerCircle
   let d = dist(playerCircle.x, playerCircle.y, circleCovid.x, circleCovid.y);
@@ -53,7 +55,7 @@ function draw() {
   }
 
   //playerCircle
-  fill(0, 255, 0);
+  fill(212, 91, 4);
   stroke(0);
   ellipse(playerCircle.x, playerCircle.y, playerCircle.size);
 
@@ -73,8 +75,8 @@ function draw() {
 
   //circleCovid
   let y = random(0, height);
-  noStroke();
-  fill(255, 0, 0);
+  stroke(10);
+  fill(145, 0, 0);
   circleCovid.x = circleCovid.x + circleCovid.vx;
   circleCovid.y = circleCovid.y + circleCovid.vy;
   ellipse(circleCovid.x, circleCovid.y, circleCovid.size);
@@ -114,7 +116,7 @@ function draw() {
   // if circleCovid leaves top side of screen place on (800,1000)
   if (circleCovid.y < 0) {
     circleCovid.x = 800;
-    circleCovid.y = 1000;
+    circleCovid.y = 900;
   }
   //if playerCircle leaves right side of screen place on (0,y)
   if (playerCircle.x > width) {
@@ -134,6 +136,6 @@ function draw() {
   // if playerCircle leaves top side of screen place on (800,1000)
   if (playerCircle.y < 0) {
     playerCircle.x = 800;
-    playerCircle.y = 1000;
+    playerCircle.y = 900;
   }
 }
