@@ -7,27 +7,27 @@ Anthony Calderone
 //Variable circleCovid
 
 let circleCovid = {
-  x: 250,
-  y: 250,
-  size: 100,
+  x: 0,
+  y: 960,
+  size: 50,
   vx: 0,
   vy: 0,
   ax: 0,
   ay: 0,
-  acceleration: .1,
-  maxspeed: 5
+  acceleration: .2,
+  maxspeed: 7
 };
 //Variable playerCircle
 let playerCircle = {
   x: 250,
   y: 250,
-  size: 100,
-  speed: 5
+  size: 50,
+  speed: 7
 };
 "use strict";
 
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  createCanvas(1600, 1000);
 }
 
 function draw() {
@@ -43,15 +43,13 @@ function draw() {
   }
   //Collision between circleCovid + playerCircle
   let d = dist(playerCircle.x, playerCircle.y, circleCovid.x, circleCovid.y);
-  if (d < circleCovid.size / 4 + playerCircle.size / 4) {
+  if (d < circleCovid.size / 2 + playerCircle.size / 2) {
     //noLoop();
   }
-  //playerCircle.x = mouseX;
-  //playerCircle.y = mouseY;
-
 
   fill(255);
   ellipse(playerCircle.x, playerCircle.y, playerCircle.size);
+
   //playerCircle Movement
   if (keyIsDown(LEFT_ARROW)) {
     playerCircle.x -= 5;
@@ -65,6 +63,7 @@ function draw() {
   if (keyIsDown(DOWN_ARROW)) {
     playerCircle.y += 5;
   }
+
   //circleCovid
   let y = random(0, height);
   noStroke();
@@ -85,13 +84,51 @@ function draw() {
     circleCovid.ay = circleCovid.acceleration;
   }
 
-  //Movement constrains
+  //circleCovid Movement constrains
   circleCovid.vx = circleCovid.vx + circleCovid.ax;
   circleCovid.vx = constrain(circleCovid.vx, -circleCovid.maxspeed, circleCovid.maxspeed);
   circleCovid.vy = circleCovid.vy + circleCovid.ay;
   circleCovid.vy = constrain(circleCovid.vy, -circleCovid.maxspeed, circleCovid.maxspeed);
+  //if circleCovid leaves right side of screen place on (0,500)
   if (circleCovid.x > width) {
     circleCovid.x = 0;
     circleCovid.y = y;
   }
+  // if circleCovid leaves left side of screen place on (0,500)
+  if (circleCovid.x < 0) {
+    circleCovid.x = width;
+    circleCovid.y = 500;
+  }
+// if circleCovid leaves bottom side of screen place on (0,500)
+  if (circleCovid.y > 1000) {
+    circleCovid.x = 0;
+    circleCovid.y = 500
+  }
+  // if circleCovid leaves top side of screen place on (0,500)
+  if (circleCovid.y < 0) {
+    circleCovid.x = 0;
+    circleCovid.y = 500;
+  }
+  //if playerCircle leaves right side of screen place on (0,500)
+  if (playerCircle.x > width) {
+    playerCircle.x = 0;
+    playerCircle.y = 500;
+  }
+  // if playerCircle leaves left side of screen place on ()
+  if (playerCircle.x < 0) {
+    playerCircle.x = width;
+    playerCircle.y = 500;
+  }
+  // if playerCircle leaves bottom side of screen place on (0,500)
+  if (playerCircle.y > 1000) {
+    playerCircle.x = 0;
+    playerCircle.y = 500;
+  }
+  // if playerCircle leaves top side of screen place on (0,500)
+  if (playerCircle.y < 0) {
+    playerCircle.x = 0;
+    playerCircle.y = 500;
+  }
+
+
 }
