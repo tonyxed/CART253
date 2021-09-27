@@ -3,11 +3,11 @@ Dodge-em Exercise
 Anthony Calderone
 
 */
+let covidImage;
 
 //Variable circleCovid
-
 let circleCovid = {
-  x: 0,
+  x: 250,
   y: 960,
   size: 50,
   vx: 0,
@@ -15,7 +15,7 @@ let circleCovid = {
   ax: 0,
   ay: 0,
   acceleration: .2,
-  maxspeed: 7
+  maxspeed: 4
 };
 //Variable playerCircle
 let playerCircle = {
@@ -25,29 +25,35 @@ let playerCircle = {
   speed: 7
 };
 "use strict";
+//Image
+function preload() {
+  covidImage = loadImage("assets/images/Covid.png");
+}
 
 function setup() {
   createCanvas(1600, 1000);
+
 }
 
 function draw() {
-  noCursor();
   background(0);
-
+  imageMode(CENTER);
+  image(covidImage, width / 2, height / 2);
   //Static
-  for (let i = 0; i < 100; i++) {
+  for (let i = 0; i < 10; i++) {
     let numX = random(0, width);
     let numY = random(0, height);
     stroke(200),
-      ellipse(numX, numY, 7);
+      ellipse(numX, numY, 20);
   }
   //Collision between circleCovid + playerCircle
   let d = dist(playerCircle.x, playerCircle.y, circleCovid.x, circleCovid.y);
   if (d < circleCovid.size / 2 + playerCircle.size / 2) {
-    //noLoop();
+    noLoop();
   }
 
-  fill(255);
+  //playerCircle
+  fill(0, 255, 0);
   stroke(0);
   ellipse(playerCircle.x, playerCircle.y, playerCircle.size);
 
@@ -110,15 +116,15 @@ function draw() {
     circleCovid.x = 800;
     circleCovid.y = 1000;
   }
-  //if playerCircle leaves right side of screen place on (0,500)
+  //if playerCircle leaves right side of screen place on (0,y)
   if (playerCircle.x > width) {
     playerCircle.x = 0;
-    playerCircle.y = 500;
+    playerCircle.y = y;
   }
-  // if playerCircle leaves left side of screen place on (500,0)
+  // if playerCircle leaves left side of screen place on (width,y)
   if (playerCircle.x < 0) {
     playerCircle.x = width;
-    playerCircle.y = 500;
+    playerCircle.y = y;
   }
   // if playerCircle leaves bottom side of screen place on (800,0)
   if (playerCircle.y > 1000) {
