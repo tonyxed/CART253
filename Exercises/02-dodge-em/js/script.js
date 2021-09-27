@@ -21,7 +21,7 @@ let circleCovid = {
 let playerCircle = {
   x: 250,
   y: 250,
-  size: 50,
+  size: 80,
   speed: 7
 };
 "use strict";
@@ -38,16 +38,17 @@ function draw() {
   for (let i = 0; i < 100; i++) {
     let numX = random(0, width);
     let numY = random(0, height);
-    stroke(255),
-      ellipse(numX, numY, 2);
+    stroke(200),
+      ellipse(numX, numY, 7);
   }
   //Collision between circleCovid + playerCircle
   let d = dist(playerCircle.x, playerCircle.y, circleCovid.x, circleCovid.y);
   if (d < circleCovid.size / 2 + playerCircle.size / 2) {
-    noLoop();
+    //noLoop();
   }
 
   fill(255);
+  stroke(0);
   ellipse(playerCircle.x, playerCircle.y, playerCircle.size);
 
   //playerCircle Movement
@@ -89,7 +90,7 @@ function draw() {
   circleCovid.vx = constrain(circleCovid.vx, -circleCovid.maxspeed, circleCovid.maxspeed);
   circleCovid.vy = circleCovid.vy + circleCovid.ay;
   circleCovid.vy = constrain(circleCovid.vy, -circleCovid.maxspeed, circleCovid.maxspeed);
-  //if circleCovid leaves right side of screen place on (0,y)
+  //if circleCovid leaves right side of screen place on (y,0)
   if (circleCovid.x > width) {
     circleCovid.x = 0;
     circleCovid.y = y;
@@ -99,36 +100,34 @@ function draw() {
     circleCovid.x = width;
     circleCovid.y = y;
   }
-// if circleCovid leaves bottom side of screen place on (0,y)
+  // if circleCovid leaves bottom side of screen place on (800,0)
   if (circleCovid.y > 1000) {
-    circleCovid.x = 0;
-    circleCovid.y = y
+    circleCovid.x = 800;
+    circleCovid.y = 0;
   }
-  // if circleCovid leaves top side of screen place on (0,y)
+  // if circleCovid leaves top side of screen place on (800,1000)
   if (circleCovid.y < 0) {
-    circleCovid.x = 0;
-    circleCovid.y = y;
+    circleCovid.x = 800;
+    circleCovid.y = 1000;
   }
   //if playerCircle leaves right side of screen place on (0,500)
   if (playerCircle.x > width) {
     playerCircle.x = 0;
     playerCircle.y = 500;
   }
-  // if playerCircle leaves left side of screen place on ()
+  // if playerCircle leaves left side of screen place on (500,0)
   if (playerCircle.x < 0) {
     playerCircle.x = width;
     playerCircle.y = 500;
   }
-  // if playerCircle leaves bottom side of screen place on (0,500)
+  // if playerCircle leaves bottom side of screen place on (800,0)
   if (playerCircle.y > 1000) {
-    playerCircle.x = 0;
-    playerCircle.y = 500;
+    playerCircle.x = 800;
+    playerCircle.y = 0;
   }
-  // if playerCircle leaves top side of screen place on (0,500)
+  // if playerCircle leaves top side of screen place on (800,1000)
   if (playerCircle.y < 0) {
-    playerCircle.x = 0;
-    playerCircle.y = 500;
+    playerCircle.x = 800;
+    playerCircle.y = 1000;
   }
-
-
 }
