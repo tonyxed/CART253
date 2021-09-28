@@ -44,7 +44,7 @@ function draw() {
   for (let i = 0; i < 1000; i++) {
     let covidX = random(0, width);
     let covidY = random(0, height);
-    fill(145,0,0);
+    fill(145, 0, 0);
     stroke(10),
       ellipse(covidX, covidY, 8);
   }
@@ -113,7 +113,8 @@ function draw() {
     circleCovid.x = 800;
     circleCovid.y = 0;
   }
-  // if circleCovid leaves top side of screen place on (800,1000)
+
+  // if circleCovid leaves top side of screen place on (800,900)
   if (circleCovid.y < 0) {
     circleCovid.x = 800;
     circleCovid.y = 900;
