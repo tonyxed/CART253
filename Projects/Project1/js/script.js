@@ -41,11 +41,10 @@ function draw() {
   background(shade.r, shade.g, shade.b);
   userBasic();
   userController();
-
+  userConstrain();
 }
-
+//user basic
 function userBasic() {
-  //user basic
   push();
   stroke(1);
   angleMode(DEGREES);
@@ -54,7 +53,7 @@ function userBasic() {
   rect(user.x, user.y, user.w, user.h);
   pop();
 }
-
+//user controller
 function userController() {
   //user movement LEFT_ARROW
   if (keyIsDown(LEFT_ARROW)) {
@@ -72,4 +71,8 @@ function userController() {
   if (keyIsDown(DOWN_ARROW)) {
     user.x += user.boost;
   }
+}
+//constrain user from exiting off screen
+function userConstrain() {
+  user.x = constrain(user.x, -900, 650);
 }
