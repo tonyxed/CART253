@@ -30,6 +30,8 @@ let user = {
   g: 0,
   b: 0,
   speed: 5,
+  boost: 0.12,
+
 };
 let acidity = {
   x: 950,
@@ -150,12 +152,12 @@ function userController() {
 
   //user speed boost
   if (keyIsDown(SHIFT)) {
-    user.speed += .12;
+    user.speed += user.boost;
   } else {
     user.speed = 5;
   }
 
-  //constrain user speed boost
+  //constrain users speed boost
   user.speed = constrain(user.speed, 5, 9);
 }
 //acidityController
