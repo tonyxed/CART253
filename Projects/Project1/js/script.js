@@ -11,12 +11,13 @@ Juggle of War!
 - end screen (when no more balls are being juggled)
 - random movement of ai controlled "balls" when hitting user paddle
 - background // Done
-- sound of some sort
+- sound of some sort // Done
 - images of some sort
 - reset system?
 - time limit?
 */
 "use strict";
+let backgroundSound;
 
 let user = {
   x: -180,
@@ -32,9 +33,17 @@ let shade = {
   g: 135,
   b: 127,
 };
+// sounds
+function preload() {
+  backgroundSound = loadSound('assets/sounds/Juice Wrld Guitar Type Beat Conflict.mp3');
+}
 
 function setup() {
   createCanvas(1800, 1000);
+  //backgroundSound
+  // backgroundSound.setVolume(0.2);
+  // backgroundSound.play();
+  // noLoop();
 }
 
 function draw() {
@@ -42,6 +51,7 @@ function draw() {
   userBasic();
   userController();
   userConstrain();
+
 }
 //user basic
 function userBasic() {
