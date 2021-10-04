@@ -10,7 +10,8 @@ acidity essential for bacterial growth.
 - Bacteria grows over time //DONE
 - user controlled player (white blood cell) (KEYBOARD) //DONE
 - user on top of bacteria === bacteria decrease in size else bacteria keeps growing over time // DONE
-- agent (acidity) chasing player to prevent bacteria growth
+- agent's (acidity1, 2 & 3) coming into screen like a shooting star and user has to dodge them. //DONE
+- when bacterias get too big, flash colors, and reset to original color when back to default size?
 - Time limit?
 - Title
 - Game over
@@ -23,9 +24,9 @@ let shade = {
   b: 160,
 };
 let user = {
-  x: 950,
+  x: 100,
   y: 900,
-  size: 70,
+  size: 60,
   r: 0,
   g: 0,
   b: 0,
@@ -34,19 +35,35 @@ let user = {
   boost: 0.12,
 
 };
-let acidity = {
-  x: 950,
+let acidity1 = {
+  x: 100,
   y: 50,
-  size: 30,
+  size: 80,
+  r: 255,
+  g: 200,
+  b: 0,
+  vx: 15,
+  vy: 15,
+};
+let acidity2 = {
+  x: 500,
+  y: 50,
+  size: 80,
   r: 255,
   g: 0,
-  b: 0,
-  vx: 0,
-  vy: 0,
-  ax: 0,
-  ay: 0,
-  acceleration: 0.2,
-  maxspeed: 1,
+  b: 200,
+  vx: 15,
+  vy: 15,
+};
+let acidity3 = {
+  x: 900,
+  y: 50,
+  size: 80,
+  r: 255,
+  g: 200,
+  b: 200,
+  vx: 15,
+  vy: 15,
 };
 let bacteria1 = {
   x: 300,
@@ -94,7 +111,7 @@ let bacteria4 = {
 };
 
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  createCanvas(1900, 1000);
 }
 
 function draw() {
@@ -104,7 +121,9 @@ function draw() {
   bacteria3Controller();
   bacteria4Controller();
   userController();
-  acidityController();
+  acidity1Controller();
+  acidity2Controller();
+  acidity3Controller();
 }
 
 function bacteria1Controller() {
@@ -204,16 +223,72 @@ function userController() {
 
   //constrain users speed boost
   user.speed = constrain(user.speed, 5, 9);
+
+  //constrain users movement off screen from left to right
+  user.x = constrain(user.x, 0, 1900);
+  //constrain users movement off screen from top to bottom
+  user.y = constrain(user.y, 0, 1000);
 }
-//acidityController
-function acidityController() {
-  //agent is (acidity)
+//acidity1Controller
+function acidity1Controller() {
   push();
-  stroke(1);
-  fill(acidity.r, acidity.g, acidity.b);
-  ellipse(acidity.x, acidity.y, acidity.size);
+  let x = random(-600, 1800);
+  stroke(10);
+  fill(acidity1.r, acidity1.g, acidity1.b);
+  acidity1.x = acidity1.x + acidity1.vx;
+  acidity1.y = acidity1.y + acidity1.vy;
+  ellipse(acidity1.x, acidity1.y, acidity1.size);
   pop();
+  //collision between acidity1 and user
+  let da1 = dist(user.x, user.y, acidity1.x, acidity1.y);
+  if (da1 < acidity1.size / 2 + user.size / 2) {
+    noLoop();
+  }
+  // if acidity1 leaves right or bottom of screen, spawned at random (x,y)
+  if (acidity1.x > width) {
+    acidity1.x = x;
+    acidity1.y = 0;
+  }
+}
 
-  //movement
+function acidity2Controller() {
+  push();
+  let x = random(-600, 1800);
+  stroke(10);
+  fill(acidity2.r, acidity2.g, acidity2.b);
+  acidity2.x = acidity2.x + acidity2.vx;
+  acidity2.y = acidity2.y + acidity2.vy;
+  ellipse(acidity2.x, acidity2.y, acidity2.size);
+  pop();
+  //collision between acidity2 and user
+  let da2 = dist(user.x, user.y, acidity2.x, acidity2.y);
+  if (da2 < acidity2.size / 2 + user.size / 2) {
+    noLoop();
+  }
+  // if acidity2 leaves right or bottom of screen, spawned at random (x,y)
+  if (acidity2.x > width) {
+    acidity2.x = x;
+    acidity2.y = 0;
+  }
+}
 
+function acidity3Controller() {
+  push();
+  let x = random(-600, 1800);
+  stroke(10);
+  fill(acidity3.r, acidity3.g, acidity3.b);
+  acidity3.x = acidity3.x + acidity3.vx;
+  acidity3.y = acidity3.y + acidity3.vy;
+  ellipse(acidity3.x, acidity3.y, acidity3.size);
+  pop();
+  //collision between acidity3 and user
+  let da3 = dist(user.x, user.y, acidity3.x, acidity3.y);
+  if (da3 < acidity3.size / 2 + user.size / 2) {
+    noLoop();
+  }
+  // if acidity3 leaves right or bottom of screen, spawned at random (x,y)
+  if (acidity3.x > width) {
+    acidity3.x = x;
+    acidity3.y = 0;
+  }
 }
