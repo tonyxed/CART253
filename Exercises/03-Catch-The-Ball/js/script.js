@@ -5,10 +5,12 @@ Anthony Calderone
 "use strict";
 
 let user = {
-  x: 500,
-  y: 400,
+  x: 50,
+  y: 50,
   size: 100,
   speed: 5,
+  speeddefault: 5,
+  boost: 0.2,
   vx: 0,
   vy: 0,
 };
@@ -49,6 +51,7 @@ function circle2move() {
 }
 //displays circle2
 function displaycircle2() {
+  fill(255);
   ellipse(circle2.x, circle2.y, circle2.size);
 }
 //displays user
@@ -74,12 +77,17 @@ function userController() {
   if (keyIsDown(UP_ARROW)) {
     user.y -= user.speed;
   }
+  // SHIFT FOR SPEED BOOST
+  if (keyIsDown(SHIFT)) {
+    user.speed += user.boost;
+  } else {
+    user.speed = user.speeddefault;
+  }
+  // constrains the user's speed boost
+  user.speed = constrain(user.speed, 5, 9);
 }
 
 function circlesSetup() {
-  user.x = width / 3;
-  circle2.x = 2 * width / 3;
-
   circle2.vx = random(-circle2.speed, circle2.speed);
   circle2.vy = random(-circle2.speed, circle2.speed);
 }
@@ -87,10 +95,10 @@ function circlesSetup() {
 
 function title() {
   push();
-  textSize(90);
+  textSize(40);
   fill(142, 0, 0);
   textAlign(CENTER, TOP);
-  text('Catch The Ball!', 500, 350);
+  text('Catch The Ball! Use the mouse keys to begin!', 500, 380);
   pop();
 }
 
@@ -130,8 +138,8 @@ function overLap() {
 }
 //Checking if circles gone off screen
 function offScreen() {
-  if (user.x > width || user.x < 0 || user.x > height || user.y < 0 || user.y > height || circle2.x < 0 || circle2 > width || circle2.y < 0 || circle2.y > height) {
-    //state = 'sadness';
+  if (user.x > 1000 || user.x < 0 || user.x > 1000 || user.y < 0 || user.y > 800 || circle2.x < 0 || circle2 > 1000 || circle2.y < 0 || circle2.y > 800) {
+    state = 'sadness';
   }
 }
 
