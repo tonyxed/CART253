@@ -43,25 +43,43 @@ function draw() {
   }
 }
 //Moves the circle2
-function circlemove() {
+function circle2move() {
   circle2.x = circle2.x + circle2.vx;
   circle2.y = circle2.y + circle2.vy;
 }
-
+//displays circle2
 function displaycircle2() {
   ellipse(circle2.x, circle2.y, circle2.size);
 }
-
+//displays user
 function displayuser() {
   fill(255);
-  ellipse(user.x,user.y,user.size)
+  ellipse(user.x, user.y, user.size)
 }
+//user movement with arrow keys
+function userController() {
+  // LEFT ARROW MOVEMENT
+  if (keyIsDown(LEFT_ARROW)) {
+    user.x -= user.speed;
+  }
+  // RIGHT ARROW MOVEMENT
+  if (keyIsDown(RIGHT_ARROW)) {
+    user.x += user.speed;
+  }
+  // DOWN ARROW MOVEMENT
+  if (keyIsDown(DOWN_ARROW)) {
+    user.y += user.speed;
+  }
+  // UP ARROW MOVEMENT
+  if (keyIsDown(UP_ARROW)) {
+    user.y -= user.speed;
+  }
+}
+
 function circlesSetup() {
   user.x = width / 3;
   circle2.x = 2 * width / 3;
 
-  user.vx = random(-user.speed, user.speed);
-  user.vy = random(-user.speed, user.speed);
   circle2.vx = random(-circle2.speed, circle2.speed);
   circle2.vy = random(-circle2.speed, circle2.speed);
 }
@@ -77,11 +95,12 @@ function title() {
 }
 
 function simulation() {
-  circlemove();
+  circle2move();
   offScreen();
   overLap();
   displaycircle2();
   displayuser();
+  userController();
 }
 
 function love() {
@@ -112,7 +131,7 @@ function overLap() {
 //Checking if circles gone off screen
 function offScreen() {
   if (user.x > width || user.x < 0 || user.x > height || user.y < 0 || user.y > height || circle2.x < 0 || circle2 > width || circle2.y < 0 || circle2.y > height) {
-    state = 'sadness';
+    //state = 'sadness';
   }
 }
 
