@@ -25,7 +25,7 @@ let circle2 = {
   ax: 0,
   ay: 0,
   acceleration: 0.2,
-  maxspeed: 2,
+  maxspeed: 2, //
 };
 
 let state = 'title'; // title, simulation, love, sadness
