@@ -11,13 +11,15 @@ acidity essential for bacterial growth.
 - user controlled player (white blood cell) (KEYBOARD) //DONE
 - user on top of bacteria === bacteria decrease in size else bacteria keeps growing over time // DONE
 - agent's (acidity1, 2 & 3) coming into screen like a shooting star and user has to dodge them. //DONE
+- Time limit? // DONE
+- Title // DONE
+- Game over // DONE
+- Winning State? // DONE
 - when bacterias get too big, flash colors, and reset to original color when back to default size?
-- Time limit?
-- Title
-- Game over
-- Winning State?
  */
 "use strict";
+let timer = 60;
+
 let shade = {
   r: 81,
   g: 196,
@@ -110,12 +112,37 @@ let bacteria4 = {
   maxsize: 300,
 };
 
+let state = 'title'; // title, simulation, lose, win, bacterialose
+
 function setup() {
   createCanvas(1900, 1000);
 }
 
 function draw() {
   background(shade.r, shade.g, shade.b);
+  //when timer reaches 0 --> timerWin state
+  if (timer === 0) {
+    state = 'timerWin';
+  }
+  if (state === 'title') {
+    title();
+  }
+  if (state === 'simulation') {
+    simulation();
+    timerCountdown();
+  }
+  if (state === 'lose') {
+    lose();
+  }
+  if (state === 'bacterialose') {
+    bacterialose();
+  }
+  if (state === 'timerWin') {
+    timerWin();
+  }
+}
+
+function simulation() {
   bacteria1Controller();
   bacteria2Controller();
   bacteria3Controller();
@@ -140,7 +167,7 @@ function bacteria1Controller() {
     bacteria1.size -= bacteria1.growthreduce;
   }
   if (bacteria1.size >= bacteria1.maxsize) {
-    noLoop();
+    state = 'bacterialose';
   }
 }
 
@@ -156,7 +183,7 @@ function bacteria2Controller() {
     bacteria2.size -= bacteria2.growthreduce;
   }
   if (bacteria2.size >= bacteria2.maxsize) {
-    noLoop();
+    state = 'bacterialose';
   }
 }
 
@@ -172,7 +199,7 @@ function bacteria3Controller() {
     bacteria3.size -= bacteria3.growthreduce;
   }
   if (bacteria3.size >= bacteria3.maxsize) {
-    noLoop();
+    state = 'bacterialose';
   }
 }
 
@@ -188,7 +215,7 @@ function bacteria4Controller() {
     bacteria4.size -= bacteria4.growthreduce;
   }
   if (bacteria4.size >= bacteria4.maxsize) {
-    noLoop();
+    state = 'bacterialose';
   }
 }
 
@@ -233,7 +260,7 @@ function userController() {
 function acidity1Controller() {
   push();
   let x = random(-600, 1800);
-  stroke(10);
+  stroke(1);
   fill(acidity1.r, acidity1.g, acidity1.b);
   acidity1.x = acidity1.x + acidity1.vx;
   acidity1.y = acidity1.y + acidity1.vy;
@@ -242,7 +269,7 @@ function acidity1Controller() {
   //collision between acidity1 and user
   let da1 = dist(user.x, user.y, acidity1.x, acidity1.y);
   if (da1 < acidity1.size / 2 + user.size / 2) {
-    noLoop();
+    state = 'lose';
   }
   // if acidity1 leaves right or bottom of screen, spawned at random (x,y)
   if (acidity1.x > width) {
@@ -254,7 +281,7 @@ function acidity1Controller() {
 function acidity2Controller() {
   push();
   let x = random(-600, 1800);
-  stroke(10);
+  stroke(1);
   fill(acidity2.r, acidity2.g, acidity2.b);
   acidity2.x = acidity2.x + acidity2.vx;
   acidity2.y = acidity2.y + acidity2.vy;
@@ -263,7 +290,7 @@ function acidity2Controller() {
   //collision between acidity2 and user
   let da2 = dist(user.x, user.y, acidity2.x, acidity2.y);
   if (da2 < acidity2.size / 2 + user.size / 2) {
-    noLoop();
+    state = 'lose';
   }
   // if acidity2 leaves right or bottom of screen, spawned at random (x,y)
   if (acidity2.x > width) {
@@ -275,7 +302,7 @@ function acidity2Controller() {
 function acidity3Controller() {
   push();
   let x = random(-600, 1800);
-  stroke(10);
+  stroke(1);
   fill(acidity3.r, acidity3.g, acidity3.b);
   acidity3.x = acidity3.x + acidity3.vx;
   acidity3.y = acidity3.y + acidity3.vy;
@@ -284,11 +311,69 @@ function acidity3Controller() {
   //collision between acidity3 and user
   let da3 = dist(user.x, user.y, acidity3.x, acidity3.y);
   if (da3 < acidity3.size / 2 + user.size / 2) {
-    noLoop();
+    state = 'lose';
   }
   // if acidity3 leaves right or bottom of screen, spawned at random (x,y)
   if (acidity3.x > width) {
     acidity3.x = x;
     acidity3.y = 0;
+  }
+}
+
+// STATES
+
+// title state
+function title() {
+  push();
+  textSize(27);
+  textStyle(BOLDITALIC);
+  fill(0);
+  textAlign(CENTER, CENTER);
+  text("Avoid the Acidity beneficial for Bacteria growth, and prevent the Bacteria from getting too large and killing off your host. Win by beating the timer!", 950, 500);
+  pop();
+}
+// losing state
+function lose() {
+  push();
+  textSize(40);
+  textStyle(BOLDITALIC);
+  fill(0, 0, 0);
+  textAlign(CENTER, CENTER);
+  text("You've been tagged by the Acidity, better luck next time! Refresh the page to try again!", 950, 500);
+  pop();
+}
+//winning state
+function timerWin() {
+  push();
+  textSize(35);
+  textStyle(BOLDITALIC);
+  fill(0, 0, 0);
+  textAlign(CENTER, CENTER);
+  text("You've prevented the Bacteria from engulfing your host, congratulations! Refresh the page to play again!", 940, 500);
+  pop();
+}
+
+function bacterialose() {
+  push();
+  textSize(40);
+  textStyle(BOLDITALIC);
+  fill(0, 0, 0);
+  textAlign(CENTER, CENTER);
+  text("The Bacteria has gotten too large and has killed your host! Refresh the page to try again!", 940, 500);
+  pop();
+}
+// starting the game state
+function mousePressed() {
+  if (state === 'title') {
+    state = 'simulation';
+  }
+}
+//timerCountdown
+function timerCountdown() {
+  textAlign(CENTER, CENTER);
+  textSize(30);
+  text(timer, 900, 40);
+  if (frameCount % 60 === 0 && timer > 0) {
+    timer--;
   }
 }
