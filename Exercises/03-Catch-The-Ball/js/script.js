@@ -4,9 +4,9 @@ Anthony Calderone
 */
 "use strict";
 
-let circle1 = {
-  x: undefined,
-  y: 250,
+let user = {
+  x: 500,
+  y: 400,
   size: 100,
   speed: 5,
   vx: 0,
@@ -14,8 +14,8 @@ let circle1 = {
 };
 
 let circle2 = {
-  x: undefined,
-  y: 250,
+  x: 500,
+  y: 400,
   size: 100,
   speed: 5,
   vx: 0,
@@ -25,23 +25,12 @@ let circle2 = {
 let state = 'title'; // title, simulation, love, sadness
 
 function setup() {
-  createCanvas(500, 500);
+  createCanvas(1000, 800);
   circlesSetup();
-}
-
-function circlesSetup() {
-  circle1.x = width / 3;
-  circle2.x = 2 * width / 3;
-
-  circle1.vx = random(-circle1.speed, circle1.speed);
-  circle1.vy = random(-circle1.speed, circle1.speed);
-  circle2.vx = random(-circle2.speed, circle2.speed);
-  circle2.vy = random(-circle2.speed, circle2.speed);
 }
 
 function draw() {
   background(0);
-
 
   if (state === 'title') {
     title();
@@ -53,66 +42,78 @@ function draw() {
     sad();
   }
 }
+//Moves the circle2
+function circlemove() {
+  circle2.x = circle2.x + circle2.vx;
+  circle2.y = circle2.y + circle2.vy;
+}
+
+function displaycircle2() {
+  ellipse(circle2.x, circle2.y, circle2.size);
+}
+
+function displayuser() {
+  fill(255);
+  ellipse(user.x,user.y,user.size)
+}
+function circlesSetup() {
+  user.x = width / 3;
+  circle2.x = 2 * width / 3;
+
+  user.vx = random(-user.speed, user.speed);
+  user.vy = random(-user.speed, user.speed);
+  circle2.vx = random(-circle2.speed, circle2.speed);
+  circle2.vy = random(-circle2.speed, circle2.speed);
+}
+
 
 function title() {
   push();
-  textSize(100);
+  textSize(90);
   fill(142, 0, 0);
   textAlign(CENTER, TOP);
-  text('love?', 250, 100);
+  text('Catch The Ball!', 500, 350);
   pop();
 }
 
 function simulation() {
-  move();
+  circlemove();
   offScreen();
   overLap();
-  display();
+  displaycircle2();
+  displayuser();
 }
 
 function love() {
   push();
-  textSize(100);
+  textSize(80);
   fill(142, 100, 0);
   textAlign(CENTER, TOP);
-  text('Loved!', 250, 100);
+  text("You've caught the Ball!", 500, 350);
   pop();
 }
 
 function sad() {
   push();
-  textSize(100);
+  textSize(80);
   fill(142, 200, 0);
   textAlign(CENTER, TOP);
-  text('Sadness!', 250, 100);
+  text("You didn't catch the ball!", 500, 350);
   pop();
-}
-//Moves the circles
-function move() {
-  circle1.x = circle1.x + circle1.vx;
-  circle1.y = circle1.y + circle1.vy;
-
-  circle2.x = circle2.x + circle2.vx;
-  circle2.y = circle2.y + circle2.vy;
 }
 
 function overLap() {
   //Check if two circles are overlapping
-  let d = dist(circle1.x, circle1.y, circle2.x, circle2.y);
-  if (d < circle1.size / 2 + circle2.size / 2) {
+  let d = dist(user.x, user.y, circle2.x, circle2.y);
+  if (d < user.size / 2 + circle2.size / 2) {
     state = 'love';
   }
 }
 //Checking if circles gone off screen
 function offScreen() {
-  if (circle1.x > width || circle1.x < 0 || circle1.x > height || circle1.y < 0 || circle1.y > height || circle2.x < 0 || circle2 > width || circle2.y < 0 || circle2.y > height) {
+  if (user.x > width || user.x < 0 || user.x > height || user.y < 0 || user.y > height || circle2.x < 0 || circle2 > width || circle2.y < 0 || circle2.y > height) {
     state = 'sadness';
   }
-}
-
-function display() {
-  ellipse(circle1.x, circle1.y, circle1.size);
-  ellipse(circle2.x, circle2.y, circle2.size);
 }
 
 function mousePressed() {
