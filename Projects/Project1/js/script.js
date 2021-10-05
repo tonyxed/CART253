@@ -40,32 +40,32 @@ let user = {
 
 };
 let acidity1 = {
-  x: 100,
-  y: 50,
+  x: 900,
+  y: 0,
   size: 80,
-  r: 255,
-  g: 200,
-  b: 0,
+  r: 10,
+  g: 173,
+  b: 54,
   vx: 15,
   vy: 15,
 };
 let acidity2 = {
-  x: 500,
+  x: 10,
   y: 50,
   size: 80,
-  r: 255,
-  g: 0,
-  b: 200,
+  r: 77,
+  g: 201,
+  b: 110,
   vx: 15,
   vy: 15,
 };
 let acidity3 = {
-  x: 900,
-  y: 50,
+  x: 0,
+  y: 500,
   size: 80,
-  r: 255,
-  g: 200,
-  b: 200,
+  r: 1,
+  g: 94,
+  b: 26,
   vx: 15,
   vy: 15,
 };
@@ -122,7 +122,7 @@ function setup() {
 
 function draw() {
   background(shade.r, shade.g, shade.b);
-  //when timer reaches 0 --> timerWin state
+  // when timer reaches 0 --> timerWin state
   if (timer === 0) {
     state = 'timerWin';
   }
@@ -156,14 +156,14 @@ function simulation() {
 }
 
 function bacteria1Controller() {
-  //bacteria1
+  // bacteria1
   push();
   fill(bacteria1.r, bacteria1.g, bacteria1.b);
   ellipse(bacteria1.x, bacteria1.y, bacteria1.size);
   pop();
   bacteria1.size += bacteria1.growthrate;
 
-  //bacteria1 dist
+  // bacteria1 dist
   let db1 = dist(user.x, user.y, bacteria1.x, bacteria1.y);
   if (db1 < bacteria1.size / 4 + bacteria1.size / 4) {
     bacteria1.size -= bacteria1.growthreduce;
@@ -174,7 +174,7 @@ function bacteria1Controller() {
 }
 
 function bacteria2Controller() {
-  //bacteria2
+  // bacteria2
   push();
   fill(bacteria2.r, bacteria2.g, bacteria2.b);
   ellipse(bacteria2.x, bacteria2.y, bacteria2.size);
@@ -190,7 +190,7 @@ function bacteria2Controller() {
 }
 
 function bacteria3Controller() {
-  //bacteria3
+  // bacteria3
   push();
   fill(bacteria3.r, bacteria3.g, bacteria3.b);
   ellipse(bacteria3.x, bacteria3.y, bacteria3.size);
@@ -206,7 +206,7 @@ function bacteria3Controller() {
 }
 
 function bacteria4Controller() {
-  //bacteria4
+  // bacteria4
   push();
   fill(bacteria4.r, bacteria4.g, bacteria4.b);
   ellipse(bacteria4.x, bacteria4.y, bacteria4.size);
@@ -222,14 +222,14 @@ function bacteria4Controller() {
 }
 
 function userController() {
-  //user
+  // user
   push();
   stroke(1);
   fill(user.r, user.g, user.b);
   ellipse(user.x, user.y, user.size);
   pop();
 
-  //userController
+  // userController
   if (keyIsDown(LEFT_ARROW)) {
     user.x -= user.speed;
   }
@@ -243,28 +243,27 @@ function userController() {
     user.y += user.speed;
   }
 
-  //user speed boost
+  // user speed boost
   if (keyIsDown(SHIFT)) {
     user.speed += user.boost;
   } else {
     user.speed = user.speeddefault;
   }
 
-  //constrain users speed boost
+  // constrain users speed boost
   user.speed = constrain(user.speed, 5, 9);
 
-  //constrain users movement off screen from left to right
+  // constrain users movement off screen from left to right
   user.x = constrain(user.x, 0, 1900);
-  //constrain users movement off screen from top to bottom
+  // constrain users movement off screen from top to bottom
   user.y = constrain(user.y, 0, 1000);
 }
-//acidity1Controller
+// acidity1Controller y axis movement
 function acidity1Controller() {
   push();
-  let x = random(-600, 1800);
+  let x = random(0, height);
   stroke(1);
   fill(acidity1.r, acidity1.g, acidity1.b);
-  acidity1.x = acidity1.x + acidity1.vx;
   acidity1.y = acidity1.y + acidity1.vy;
   ellipse(acidity1.x, acidity1.y, acidity1.size);
   pop();
@@ -273,13 +272,14 @@ function acidity1Controller() {
   if (da1 < acidity1.size / 2 + user.size / 2) {
     state = 'lose';
   }
-  // if acidity1 leaves right or bottom of screen, spawned at random (x,y)
-  if (acidity1.x > width) {
+  // if acidity1 leaves bottom of screen, spawned at random (x,y) %% the speed increases by .1
+  if (acidity1.y > width) {
     acidity1.x = x;
     acidity1.y = 0;
+    acidity1.vy += .1;
   }
 }
-
+// acidity2Controller x & y movement
 function acidity2Controller() {
   push();
   let x = random(-600, 1800);
@@ -294,31 +294,32 @@ function acidity2Controller() {
   if (da2 < acidity2.size / 2 + user.size / 2) {
     state = 'lose';
   }
-  // if acidity2 leaves right or bottom of screen, spawned at random (x,y)
+  // if acidity2 leaves right or bottom of screen, spawned at random (x,y) %% the speed increases by .1
   if (acidity2.x > width) {
     acidity2.x = x;
     acidity2.y = 0;
+    acidity2.vx += .1;
   }
 }
-
+// acidity3Controller x axis movement
 function acidity3Controller() {
   push();
-  let x = random(-600, 1800);
+  let y = random(0, height);
   stroke(1);
   fill(acidity3.r, acidity3.g, acidity3.b);
   acidity3.x = acidity3.x + acidity3.vx;
-  acidity3.y = acidity3.y + acidity3.vy;
   ellipse(acidity3.x, acidity3.y, acidity3.size);
   pop();
-  //collision between acidity3 and user
+  // collision between acidity3 and user
   let da3 = dist(user.x, user.y, acidity3.x, acidity3.y);
   if (da3 < acidity3.size / 2 + user.size / 2) {
     state = 'lose';
   }
-  // if acidity3 leaves right or bottom of screen, spawned at random (x,y)
+  // if acidity3 leaves right or bottom of screen, spawned at random (x,y) %% the speed increases by .1
   if (acidity3.x > width) {
-    acidity3.x = x;
-    acidity3.y = 0;
+    acidity3.x = 0;
+    acidity3.y = y;
+    acidity3.vx += .1;
   }
 }
 
@@ -365,7 +366,7 @@ function lose() {
   text("You've been tagged by the Acidity, better luck next time!", 950, 500);
   pop();
 }
-//winning state
+// winning state
 function timerWin() {
   push();
   textSize(40);
@@ -375,7 +376,7 @@ function timerWin() {
   text("You've prevented the Bacteria from engulfing your host, congratulations!", 940, 500);
   pop();
 }
-
+// bacteria size lose
 function bacterialose() {
   push();
   textSize(40);
@@ -391,7 +392,7 @@ function mousePressed() {
     state = 'simulation';
   }
 }
-//timerCountdown //looked up the reference in how to implement a countdown timer
+// timerCountdown //looked up the reference in how to implement a countdown timer
 function timerCountdown() {
   textAlign(CENTER, CENTER); //
   textSize(30);
