@@ -7,10 +7,10 @@ Anthony Calderone
 let user = {
   x: 50,
   y: 50,
-  size: 100,
+  size: 70,
   speed: 5,
   speeddefault: 5,
-  boost: 0.2,
+  boost: 0.1,
   vx: 0,
   vy: 0,
 };
@@ -18,14 +18,10 @@ let user = {
 let circle2 = {
   x: 500,
   y: 400,
-  size: 100,
-  speed: 5,
-  vx: 0,
-  vy: 0,
-  ax: 0,
-  ay: 0,
-  acceleration: 0.2,
-  maxspeed: 2, //
+  size: 70,
+  speed: 30,
+  vx: 10,
+  vy: 20,
 };
 
 let state = 'title'; // title, simulation, love, sadness
@@ -50,8 +46,8 @@ function draw() {
 }
 //Moves the circle2
 function circle2move() {
-  circle2.x = circle2.x + circle2.vx;
-  circle2.y = circle2.y + circle2.vy;
+  circle2.x = circle2.x + random(-circle2.speed, circle2.speed);
+  circle2.y = circle2.y + random(-circle2.speed, circle2.speed);
 }
 //displays circle2
 function displaycircle2() {
@@ -60,8 +56,8 @@ function displaycircle2() {
 }
 //circle2Setup
 function circle2Setup() {
-  circle2.vx = random(-circle2.speed, circle2.speed);
-  circle2.vy = random(-circle2.speed, circle2.speed);
+  circle2.vx = circle2.vx + random(-circle2.speed, circle2.speed);
+  circle2.vy = circle2.vy + random(-circle2.speed, circle2.speed);
 }
 //displays user
 function displayuser() {
@@ -94,6 +90,9 @@ function userController() {
   }
   // constrains the user's speed boost
   user.speed = constrain(user.speed, 5, 9);
+  // constrains user's movement off screen
+  user.x = constrain(user.x, 0, 1000);
+  user.y = constrain(user.y, 0, 800);
 }
 
 function title() {
@@ -125,10 +124,10 @@ function love() {
 
 function sad() {
   push();
-  textSize(80);
+  textSize(60);
   fill(142, 200, 0);
   textAlign(CENTER, TOP);
-  text("You didn't catch the ball!", 500, 350);
+  text("You've failed to catch the ball!", 500, 370);
   pop();
 }
 
@@ -141,7 +140,7 @@ function overLap() {
 }
 //Checking if circles gone off screen
 function offScreen() {
-  if (user.x > 1000 || user.x < 0 || user.x > 1000 || user.y < 0 || user.y > 800 || circle2.x < 0 || circle2.x > 1000 || circle2.y < 0 || circle2.y > 800) {
+  if (circle2.x < 0 || circle2.x > 1000 || circle2.y < 0 || circle2.y > 800) {
     state = 'sadness';
   }
 }
