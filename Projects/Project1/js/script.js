@@ -393,7 +393,7 @@ function mousePressed() {
 }
 //timerCountdown //looked up the reference in how to implement a countdown timer
 function timerCountdown() {
-  textAlign(CENTER, CENTER);
+  textAlign(CENTER, CENTER); //
   textSize(30);
   text(timer, 900, 40);
   if (frameCount % 60 === 0 && timer > 0) {

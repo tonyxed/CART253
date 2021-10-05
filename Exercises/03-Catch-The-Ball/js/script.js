@@ -22,13 +22,17 @@ let circle2 = {
   speed: 5,
   vx: 0,
   vy: 0,
+  ax: 0,
+  ay: 0,
+  acceleration: 0.2,
+  maxspeed: 2,
 };
 
 let state = 'title'; // title, simulation, love, sadness
 
 function setup() {
   createCanvas(1000, 800);
-  circlesSetup();
+  circle2Setup();
 }
 
 function draw() {
@@ -53,6 +57,11 @@ function circle2move() {
 function displaycircle2() {
   fill(255);
   ellipse(circle2.x, circle2.y, circle2.size);
+}
+//circle2Setup
+function circle2Setup() {
+  circle2.vx = random(-circle2.speed, circle2.speed);
+  circle2.vy = random(-circle2.speed, circle2.speed);
 }
 //displays user
 function displayuser() {
@@ -87,18 +96,12 @@ function userController() {
   user.speed = constrain(user.speed, 5, 9);
 }
 
-function circlesSetup() {
-  circle2.vx = random(-circle2.speed, circle2.speed);
-  circle2.vy = random(-circle2.speed, circle2.speed);
-}
-
-
 function title() {
   push();
-  textSize(40);
+  textSize(50);
   fill(142, 0, 0);
   textAlign(CENTER, TOP);
-  text('Catch The Ball! Use the mouse keys to begin!', 500, 380);
+  text('Catch The Ball! Use the mouse to begin!', 500, 380);
   pop();
 }
 
@@ -138,7 +141,7 @@ function overLap() {
 }
 //Checking if circles gone off screen
 function offScreen() {
-  if (user.x > 1000 || user.x < 0 || user.x > 1000 || user.y < 0 || user.y > 800 || circle2.x < 0 || circle2 > 1000 || circle2.y < 0 || circle2.y > 800) {
+  if (user.x > 1000 || user.x < 0 || user.x > 1000 || user.y < 0 || user.y > 800 || circle2.x < 0 || circle2.x > 1000 || circle2.y < 0 || circle2.y > 800) {
     state = 'sadness';
   }
 }
