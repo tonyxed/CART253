@@ -16,18 +16,19 @@ let user = {
 };
 
 let circle2 = {
-  x: 500,
+  x: 800,
   y: 400,
-  size: 70,
+  size: 100,
+  sizeshrink: .15,
   speed: 30,
-  vx: 10,
-  vy: 20,
+  vx: 100,
+  vy: 100,
 };
 
 let state = 'title'; // title, simulation, love, sadness
 
 function setup() {
-  createCanvas(1000, 800);
+  createCanvas(1600, 800);
   circle2Setup();
 }
 
@@ -42,6 +43,8 @@ function draw() {
     love();
   } else if (state === 'sadness') {
     sad();
+  } else if (state === 'small') {
+    small();
   }
 }
 //Moves the circle2
@@ -51,7 +54,8 @@ function circle2move() {
 }
 //displays circle2
 function displaycircle2() {
-  fill(255);
+  stroke(1);
+  fill(190, 235, 14);
   ellipse(circle2.x, circle2.y, circle2.size);
 }
 //circle2Setup
@@ -61,7 +65,8 @@ function circle2Setup() {
 }
 //displays user
 function displayuser() {
-  fill(255);
+  stroke(1);
+  fill(0, 170, 179);
   ellipse(user.x, user.y, user.size)
 }
 //user movement with arrow keys
@@ -89,7 +94,7 @@ function userController() {
     user.speed = user.speeddefault;
   }
   // constrains the user's speed boost
-  user.speed = constrain(user.speed, 5, 9);
+  user.speed = constrain(user.speed, 5, 7);
   // constrains user's movement off screen
   user.x = constrain(user.x, 0, 1000);
   user.y = constrain(user.y, 0, 800);
@@ -99,8 +104,8 @@ function title() {
   push();
   textSize(50);
   fill(142, 0, 0);
-  textAlign(CENTER, TOP);
-  text('Catch The Ball! Use the mouse to begin!', 500, 380);
+  textAlign(CENTER, CENTER);
+  text('Catch the Ball! Press any mouse button to begin!', 800, 380);
   pop();
 }
 
@@ -111,6 +116,8 @@ function simulation() {
   displaycircle2();
   displayuser();
   userController();
+  circle2size();
+  toosmall();
 }
 
 function love() {
@@ -118,7 +125,7 @@ function love() {
   textSize(80);
   fill(142, 100, 0);
   textAlign(CENTER, TOP);
-  text("You've caught the Ball!", 500, 350);
+  text("You've caught the Ball!", 800, 350);
   pop();
 }
 
@@ -127,7 +134,16 @@ function sad() {
   textSize(60);
   fill(142, 200, 0);
   textAlign(CENTER, TOP);
-  text("You've failed to catch the ball!", 500, 370);
+  text("You've failed to catch the ball!", 800, 370);
+  pop();
+}
+
+function small() {
+  push();
+  textSize(60);
+  fill(142, 100, 200);
+  textAlign(CENTER, CENTER);
+  text("The Circle has gotten too small!", 800, 390);
   pop();
 }
 
@@ -140,11 +156,20 @@ function overLap() {
 }
 //Checking if circles gone off screen
 function offScreen() {
-  if (circle2.x < 0 || circle2.x > 1000 || circle2.y < 0 || circle2.y > 800) {
+  if (circle2.x < 0 || circle2.x > 1600 || circle2.y < 0 || circle2.y > 800) {
     state = 'sadness';
   }
 }
-
+// as time goes on circle2 will shrink
+function circle2size() {
+  circle2.size -= circle2.sizeshrink;
+}
+// if circle2 is too small, new state will apear (easter egg)
+function toosmall() {
+  if (circle2.size <= 80) {
+    state = 'small';
+  }
+}
 function mousePressed() {
   if (state === 'title') {
     state = 'simulation';
