@@ -102,10 +102,10 @@ function userController() {
 
 function title() {
   push();
-  textSize(50);
+  textSize(40);
   fill(142, 0, 0);
   textAlign(CENTER, CENTER);
-  text('Catch the Ball! Press any mouse button to begin!', 800, 380);
+  text('Catch the Ball! Hold SHIFT for a speed boost. Press the mouse button to begin!', 800, 380);
   pop();
 }
 
