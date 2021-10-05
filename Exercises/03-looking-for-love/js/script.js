@@ -78,15 +78,14 @@ function love() {
   text('Loved!', 250, 100);
   pop();
 }
-
-function sad() {
-  push();
-  textSize(100);
-  fill(142, 200, 0);
-  textAlign(CENTER, TOP);
-  text('Sadness!', 250, 100);
-  pop();
-}
+  function sad() {
+    push();
+    textSize(100);
+    fill(142, 200, 0);
+    textAlign(CENTER, TOP);
+    text('Sadness!', 250, 100);
+    pop();
+  }
 //Moves the circles
 function move() {
   circle1.x = circle1.x + circle1.vx;

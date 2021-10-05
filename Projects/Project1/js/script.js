@@ -6,6 +6,7 @@ You are a White Blood Cell and you need to ensure that the bacteria in your host
 body doesn't enlarge to be able to take over essential organs, while avoiding the
 acidity essential for bacterial growth.
 */
+
 /**
 - Bacteria grows over time //DONE
 - user controlled player (white blood cell) (KEYBOARD) //DONE
@@ -16,6 +17,7 @@ acidity essential for bacterial growth.
 - Game over // DONE
 - Winning State? // DONE
 - when bacterias get too big, flash colors, and reset to original color when back to default size?
+- sound
  */
 "use strict";
 let timer = 60;
@@ -325,11 +327,32 @@ function acidity3Controller() {
 // title state
 function title() {
   push();
-  textSize(27);
+  textSize(28);
   textStyle(BOLDITALIC);
   fill(0);
   textAlign(CENTER, CENTER);
-  text("Avoid the Acidity beneficial for Bacteria growth, and prevent the Bacteria from getting too large and killing off your host. Win by beating the timer!", 950, 500);
+  text("Avoid the raining Acidities that are beneficial for Bacteria growth, and prevent the Bacteria's from getting too large and killing off your host.", 950, 470);
+  pop();
+  push();
+  textSize(28);
+  textStyle(BOLDITALIC);
+  fill(0);
+  textAlign(CENTER, CENTER);
+  text("Press the SHIFT key for a speed boost!", 950, 500);
+  pop();
+  push();
+  textSize(28);
+  textStyle(BOLDITALIC);
+  fill(0);
+  textAlign(CENTER, CENTER);
+  text("Win by beating the timer!", 950, 530);
+  pop();
+  push();
+  textSize(28);
+  textStyle(BOLDITALIC);
+  fill(0);
+  textAlign(CENTER, CENTER);
+  text("Press any key on the mouse to begin playing!", 950, 560);
   pop();
 }
 // losing state
@@ -337,19 +360,19 @@ function lose() {
   push();
   textSize(40);
   textStyle(BOLDITALIC);
-  fill(0, 0, 0);
+  fill(0);
   textAlign(CENTER, CENTER);
-  text("You've been tagged by the Acidity, better luck next time! Refresh the page to try again!", 950, 500);
+  text("You've been tagged by the Acidity, better luck next time!", 950, 500);
   pop();
 }
 //winning state
 function timerWin() {
   push();
-  textSize(35);
+  textSize(40);
   textStyle(BOLDITALIC);
-  fill(0, 0, 0);
+  fill(0);
   textAlign(CENTER, CENTER);
-  text("You've prevented the Bacteria from engulfing your host, congratulations! Refresh the page to play again!", 940, 500);
+  text("You've prevented the Bacteria from engulfing your host, congratulations!", 940, 500);
   pop();
 }
 
@@ -357,9 +380,9 @@ function bacterialose() {
   push();
   textSize(40);
   textStyle(BOLDITALIC);
-  fill(0, 0, 0);
+  fill(0);
   textAlign(CENTER, CENTER);
-  text("The Bacteria has gotten too large and has killed your host! Refresh the page to try again!", 940, 500);
+  text("The Bacteria has gotten too large and has killed your host!", 940, 500);
   pop();
 }
 // starting the game state
@@ -368,7 +391,7 @@ function mousePressed() {
     state = 'simulation';
   }
 }
-//timerCountdown
+//timerCountdown //looked up the reference in how to implement a countdown timer
 function timerCountdown() {
   textAlign(CENTER, CENTER);
   textSize(30);
