@@ -25,7 +25,7 @@ let circle2 = {
   vy: 100,
 };
 
-let state = 'title'; // title, simulation, love, sadness
+let state = 'title'; // title, simulation, love, sadness, small
 
 function setup() {
   createCanvas(1600, 800);
@@ -166,10 +166,11 @@ function circle2size() {
 }
 // if circle2 is too small, new state will apear (easter egg)
 function toosmall() {
-  if (circle2.size <= 80) {
+  if (circle2.size <= 60) {
     state = 'small';
   }
 }
+
 function mousePressed() {
   if (state === 'title') {
     state = 'simulation';
