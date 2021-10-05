@@ -1,5 +1,5 @@
 /**
-Looking for Love
+Catch The Ball!
 Anthony Calderone
 */
 "use strict";
@@ -78,14 +78,15 @@ function love() {
   text('Loved!', 250, 100);
   pop();
 }
-  function sad() {
-    push();
-    textSize(100);
-    fill(142, 200, 0);
-    textAlign(CENTER, TOP);
-    text('Sadness!', 250, 100);
-    pop();
-  }
+
+function sad() {
+  push();
+  textSize(100);
+  fill(142, 200, 0);
+  textAlign(CENTER, TOP);
+  text('Sadness!', 250, 100);
+  pop();
+}
 //Moves the circles
 function move() {
   circle1.x = circle1.x + circle1.vx;
@@ -94,18 +95,18 @@ function move() {
   circle2.x = circle2.x + circle2.vx;
   circle2.y = circle2.y + circle2.vy;
 }
-//Checking if circles gone off screen
-function offScreen() {
-  if (circle1.x > width || circle1.x < 0 || circle1.x > height || circle1.y < 0 || circle1.y > height || circle2.x < 0 || circle2 > width || circle2.y < 0 || circle2.y > height) {
-    state = 'sadness';
-  }
-}
 
 function overLap() {
   //Check if two circles are overlapping
   let d = dist(circle1.x, circle1.y, circle2.x, circle2.y);
   if (d < circle1.size / 2 + circle2.size / 2) {
     state = 'love';
+  }
+}
+//Checking if circles gone off screen
+function offScreen() {
+  if (circle1.x > width || circle1.x < 0 || circle1.x > height || circle1.y < 0 || circle1.y > height || circle2.x < 0 || circle2 > width || circle2.y < 0 || circle2.y > height) {
+    state = 'sadness';
   }
 }
 
