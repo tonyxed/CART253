@@ -16,24 +16,23 @@ acidity essential for bacterial growth.
 - Title // DONE
 - Game over // DONE
 - Winning State? // DONE
-- when bacterias get too big, flash colors, and reset to original color when back to default size?
 - sound
  */
 "use strict";
 let timer = 60;
 
 let shade = {
-  r: 81,
-  g: 196,
-  b: 160,
+  r: 0,
+  g: 110,
+  b: 105,
 };
 let user = {
   x: 100,
   y: 900,
   size: 60,
-  r: 0,
-  g: 0,
-  b: 0,
+  r: 255,
+  g: 255,
+  b: 255,
   speeddefault: 5,
   speed: 5,
   boost: 0.12,
@@ -43,9 +42,9 @@ let acidity1 = {
   x: 900,
   y: 0,
   size: 80,
-  r: 10,
-  g: 173,
-  b: 54,
+  r: 152,
+  g: 186,
+  b: 115,
   vx: 15,
   vy: 15,
 };
@@ -53,9 +52,9 @@ let acidity2 = {
   x: 10,
   y: 50,
   size: 80,
-  r: 77,
-  g: 201,
-  b: 110,
+  r: 152,
+  g: 186,
+  b: 115,
   vx: 15,
   vy: 15,
 };
@@ -63,9 +62,9 @@ let acidity3 = {
   x: 0,
   y: 500,
   size: 80,
-  r: 1,
-  g: 94,
-  b: 26,
+  r: 152,
+  g: 186,
+  b: 115,
   vx: 15,
   vy: 15,
 };
@@ -117,11 +116,20 @@ let bacteria4 = {
 let state = 'title'; // title, simulation, lose, win, bacterialose
 
 function setup() {
-  createCanvas(1900, 1000);
+  createCanvas(1950, 1000);
 }
 
 function draw() {
   background(shade.r, shade.g, shade.b);
+
+  // background for loop in simulation state
+  for (let i = 0; i < 80; i++) {
+    let numX = random(0, width);
+    let numY = random(0, height);
+    stroke(5);
+    ellipse(numX, numY, 0, 50);
+  }
+
   // when timer reaches 0 --> timerWin state
   if (timer === 0) {
     state = 'timerWin';
@@ -154,7 +162,7 @@ function simulation() {
   acidity2Controller();
   acidity3Controller();
 }
-
+// background loop
 function bacteria1Controller() {
   // bacteria1
   push();
@@ -328,63 +336,95 @@ function acidity3Controller() {
 // title state
 function title() {
   push();
-  textSize(28);
+  textSize(40);
+  background(12, 65, 89);
   textStyle(BOLDITALIC);
-  fill(0);
+  fill(200, 215, 222);
   textAlign(CENTER, CENTER);
-  text("Avoid the raining Acidities that are beneficial for Bacteria growth, and prevent the Bacteria's from getting too large and killing off your host.", 950, 470);
+  text("Avoid the raining Acidities that are beneficial for Bacteria growth, \r\n and prevent the Bacteria's from getting too large and killing off your host.", 930, 350);
   pop();
   push();
-  textSize(28);
+  textSize(50);
   textStyle(BOLDITALIC);
-  fill(0);
+  fill(200, 215, 222);
   textAlign(CENTER, CENTER);
-  text("Press the SHIFT key for a speed boost!", 950, 500);
+  text("Use the Arrow keys to move. Press the SHIFT key for a speed boost!", 930, 800);
   pop();
   push();
-  textSize(28);
+  textSize(50);
   textStyle(BOLDITALIC);
-  fill(0);
+  fill(200, 215, 222);
   textAlign(CENTER, CENTER);
-  text("Win by beating the timer!", 950, 530);
+  text("Win by beating the timer!", 930, 860);
   pop();
   push();
-  textSize(28);
+  textSize(50);
   textStyle(BOLDITALIC);
-  fill(0);
+  fill(200, 215, 222);
   textAlign(CENTER, CENTER);
-  text("Press any key on the mouse to begin playing!", 950, 560);
+  text("Press any key on the mouse to begin playing!", 930, 920);
   pop();
+  // title screen background for loop
+  for (let i1 = 0; i1 < 20; i1++) {
+    let numX = random(0, width);
+    let numY = random(0, height);
+    stroke(255);
+    ellipse(numX, numY, 0, 50);
+  }
 }
 // losing state
 function lose() {
   push();
-  textSize(40);
+  textSize(50);
+  background(12, 65, 89);
   textStyle(BOLDITALIC);
-  fill(0);
+  fill(200, 215, 222);
   textAlign(CENTER, CENTER);
-  text("You've been tagged by the Acidity, better luck next time!", 950, 500);
+  text("You've been tagged by the Acidity, better luck next time!", 930, 500);
   pop();
+  // lose screen background for loop
+  for (let i1 = 0; i1 < 20; i1++) {
+    let numX = random(0, width);
+    let numY = random(0, height);
+    stroke(255);
+    ellipse(numX, numY, 0, 50);
+  }
 }
 // winning state
 function timerWin() {
   push();
-  textSize(40);
+  textSize(50);
+  background(12, 65, 89);
   textStyle(BOLDITALIC);
-  fill(0);
+  fill(200, 215, 222);
   textAlign(CENTER, CENTER);
-  text("You've prevented the Bacteria from engulfing your host, congratulations!", 940, 500);
+  text("You've prevented the Bacteria from engulfing your host, congratulations!", 930, 500);
   pop();
+  // timerWin screen background for loop
+  for (let i1 = 0; i1 < 20; i1++) {
+    let numX = random(0, width);
+    let numY = random(0, height);
+    stroke(255);
+    ellipse(numX, numY, 0, 50);
+  }
 }
 // bacteria size lose
 function bacterialose() {
   push();
-  textSize(40);
+  textSize(50);
+  background(12, 65, 89);
   textStyle(BOLDITALIC);
-  fill(0);
+  fill(200, 215, 222);
   textAlign(CENTER, CENTER);
-  text("The Bacteria has gotten too large and has killed your host!", 940, 500);
+  text("The Bacteria has gotten too large and has killed your host!", 930, 500);
   pop();
+  // bacterialose screen background for loop
+  for (let i1 = 0; i1 < 20; i1++) {
+    let numX = random(0, width);
+    let numY = random(0, height);
+    stroke(255);
+    ellipse(numX, numY, 0, 50);
+  }
 }
 // starting the game state
 function mousePressed() {
@@ -396,7 +436,7 @@ function mousePressed() {
 function timerCountdown() {
   textAlign(CENTER, CENTER); //
   textSize(30);
-  text(timer, 900, 40);
+  text(timer, 950, 40);
   if (frameCount % 60 === 0 && timer > 0) {
     timer--;
   }
