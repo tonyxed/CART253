@@ -198,7 +198,7 @@ function bacteria1Controller() {
   }
   // bacteria1 movement constrain
   bacteria1.x = constrain(bacteria1.x, 200, 1200);
-  bacteria1.y = constrain(bacteria1.y, 200, 1200);
+  bacteria1.y = constrain(bacteria1.y, 400, 1200);
 }
 
 function bacteria2Controller() {
@@ -377,7 +377,7 @@ function title() {
   textStyle(BOLDITALIC);
   fill(200, 215, 222);
   textAlign(CENTER, CENTER);
-  text("Avoid the raining Acidities that are beneficial for Bacteria growth, \r\n Prevent the Bacteria's from getting too large and killing off your host.", 930, 350);
+  text("Avoid the raining Acidities that are beneficial for Bacteria growth. \r\n Prevent the Bacteria's from getting too large and killing off your host.", 930, 350);
   pop();
   push();
   textSize(50);
