@@ -16,15 +16,16 @@ acidity essential for bacterial growth.
 - Title // DONE
 - Game over // DONE
 - Winning State? // DONE
+- if have time maybe make bacteria moving around?
 - sound
  */
 "use strict";
-let timer = 60;
+let timer = 90;
 
 let shade = {
-  r: 0,
-  g: 110,
-  b: 105,
+  r: 12,
+  g: 65,
+  b: 89,
 };
 let user = {
   x: 100,
@@ -45,8 +46,9 @@ let acidity1 = {
   r: 152,
   g: 186,
   b: 115,
-  vx: 15,
-  vy: 15,
+  vx: 5,
+  vy: 5,
+  acceleration: .5,
 };
 let acidity2 = {
   x: 10,
@@ -55,8 +57,9 @@ let acidity2 = {
   r: 152,
   g: 186,
   b: 115,
-  vx: 15,
-  vy: 15,
+  vx: 5,
+  vy: 5,
+  acceleration: .5,
 };
 let acidity3 = {
   x: 0,
@@ -65,51 +68,60 @@ let acidity3 = {
   r: 152,
   g: 186,
   b: 115,
-  vx: 15,
-  vy: 15,
+  vx: 5,
+  vy: 5,
+  acceleration: .5,
 };
 let bacteria1 = {
-  x: 300,
-  y: 200,
+  x: 500,
+  y: 300,
   size: 5,
-  r: 255,
-  g: 255,
-  b: 255,
+  r: 191,
+  g: 75,
+  b: 75,
+  speed: 5,
+  vx: 2.5,
+  vy: 3.6,
   growthrate: .2,
-  growthreduce: 0.5,
+  growthreduce: 0.7,
   maxsize: 300,
 };
 let bacteria2 = {
-  x: 1700,
+  x: 1600,
   y: 700,
   size: 5,
-  r: 255,
-  g: 255,
-  b: 255,
+  r: 245,
+  g: 129,
+  b: 247,
+  speed: 5,
+  vx: 2.5,
+  vy: 3.6,
   growthrate: .1,
-  growthreduce: .3,
+  growthreduce: .7,
   maxsize: 300,
 };
 let bacteria3 = {
-  x: 700,
-  y: 600,
+  x: 300,
+  y: 800,
   size: 5,
-  r: 255,
-  g: 255,
-  b: 255,
-  growthrate: .05,
-  growthreduce: .1,
+  r: 164,
+  g: 55,
+  b: 204,
+  speed: 10,
+  growthrate: .11,
+  growthreduce: .7,
   maxsize: 300,
 };
 let bacteria4 = {
-  x: 1600,
+  x: 1400,
   y: 300,
   size: 5,
-  r: 255,
-  g: 255,
-  b: 255,
-  growthrate: .03,
-  growthreduce: .1,
+  r: 90,
+  g: 129,
+  b: 230,
+  speed: 10,
+  growthrate: .09,
+  growthreduce: .7,
   maxsize: 300,
 };
 
@@ -123,10 +135,10 @@ function draw() {
   background(shade.r, shade.g, shade.b);
 
   // background for loop in simulation state
-  for (let i = 0; i < 80; i++) {
+  for (let i = 0; i < 20; i++) {
     let numX = random(0, width);
     let numY = random(0, height);
-    stroke(5);
+    stroke(255);
     ellipse(numX, numY, 0, 50);
   }
 
@@ -166,26 +178,40 @@ function simulation() {
 function bacteria1Controller() {
   // bacteria1
   push();
+  stroke('red');
+  strokeWeight(7);
   fill(bacteria1.r, bacteria1.g, bacteria1.b);
   ellipse(bacteria1.x, bacteria1.y, bacteria1.size);
   pop();
   bacteria1.size += bacteria1.growthrate;
-
+  bacteria1.x = bacteria1.x + random(-bacteria1.speed, bacteria1.speed);
+  bacteria1.y = bacteria1.y + random(-bacteria1.speed, bacteria1.speed);
+  bacteria1.vx = bacteria1.vx + random(-bacteria1.speed, bacteria1.speed);
+  bacteria1.vy = bacteria1.vy + random(-bacteria1.speed, bacteria1.speed);
   // bacteria1 dist
   let db1 = dist(user.x, user.y, bacteria1.x, bacteria1.y);
   if (db1 < bacteria1.size / 4 + bacteria1.size / 4) {
     bacteria1.size -= bacteria1.growthreduce;
   }
-  if (bacteria1.size >= bacteria1.maxsize) {
+  if (bacteria1.size > bacteria1.maxsize) {
     state = 'bacterialose';
   }
+  // bacteria1 movement constrain
+  bacteria1.x = constrain(bacteria1.x, 200, 1200);
+  bacteria1.y = constrain(bacteria1.y, 200, 1200);
 }
 
 function bacteria2Controller() {
   // bacteria2
   push();
   fill(bacteria2.r, bacteria2.g, bacteria2.b);
+  stroke('#fae');
+  strokeWeight(7);
   ellipse(bacteria2.x, bacteria2.y, bacteria2.size);
+  bacteria2.x = bacteria2.x + random(-bacteria2.speed, bacteria2.speed);
+  bacteria2.y = bacteria2.y + random(-bacteria2.speed, bacteria2.speed);
+  bacteria2.vx = bacteria2.vx + random(-bacteria2.speed, bacteria2.speed);
+  bacteria2.vy = bacteria2.vy + random(-bacteria2.speed, bacteria2.speed);
   pop();
   bacteria2.size += bacteria2.growthrate;
   let db2 = dist(user.x, user.y, bacteria2.x, bacteria2.y);
@@ -195,12 +221,17 @@ function bacteria2Controller() {
   if (bacteria2.size >= bacteria2.maxsize) {
     state = 'bacterialose';
   }
+  // bacteria1 movement constrain
+  bacteria2.x = constrain(bacteria2.x, 500, 1400);
+  bacteria2.y = constrain(bacteria2.y, 500, 1400);
 }
 
 function bacteria3Controller() {
   // bacteria3
   push();
   fill(bacteria3.r, bacteria3.g, bacteria3.b);
+  stroke('rgba(100%,0%,100%,0.5)');
+  strokeWeight(7);
   ellipse(bacteria3.x, bacteria3.y, bacteria3.size);
   pop();
   bacteria3.size += bacteria3.growthrate;
@@ -217,6 +248,8 @@ function bacteria4Controller() {
   // bacteria4
   push();
   fill(bacteria4.r, bacteria4.g, bacteria4.b);
+  stroke(color(0, 0, 255));
+  strokeWeight(4);
   ellipse(bacteria4.x, bacteria4.y, bacteria4.size);
   pop();
   bacteria4.size += bacteria4.growthrate;
@@ -270,7 +303,8 @@ function userController() {
 function acidity1Controller() {
   push();
   let x = random(0, height);
-  stroke(1);
+  stroke('rgb(10,255,0)');
+  strokeWeight(7);
   fill(acidity1.r, acidity1.g, acidity1.b);
   acidity1.y = acidity1.y + acidity1.vy;
   ellipse(acidity1.x, acidity1.y, acidity1.size);
@@ -284,14 +318,15 @@ function acidity1Controller() {
   if (acidity1.y > width) {
     acidity1.x = x;
     acidity1.y = 0;
-    acidity1.vy += .1;
+    acidity1.vy += acidity1.acceleration;
   }
 }
 // acidity2Controller x & y movement
 function acidity2Controller() {
   push();
   let x = random(-600, 1800);
-  stroke(1);
+  stroke('rgb(10,255,0)');
+  strokeWeight(7);
   fill(acidity2.r, acidity2.g, acidity2.b);
   acidity2.x = acidity2.x + acidity2.vx;
   acidity2.y = acidity2.y + acidity2.vy;
@@ -306,14 +341,15 @@ function acidity2Controller() {
   if (acidity2.x > width) {
     acidity2.x = x;
     acidity2.y = 0;
-    acidity2.vx += .1;
+    acidity2.vx += acidity2.acceleration;
   }
 }
 // acidity3Controller x axis movement
 function acidity3Controller() {
   push();
   let y = random(0, height);
-  stroke(1);
+  stroke('rgb(10,255,0)');
+  strokeWeight(7);
   fill(acidity3.r, acidity3.g, acidity3.b);
   acidity3.x = acidity3.x + acidity3.vx;
   ellipse(acidity3.x, acidity3.y, acidity3.size);
@@ -327,7 +363,7 @@ function acidity3Controller() {
   if (acidity3.x > width) {
     acidity3.x = 0;
     acidity3.y = y;
-    acidity3.vx += .1;
+    acidity3.vx += acidity3.acceleration;
   }
 }
 
@@ -341,7 +377,7 @@ function title() {
   textStyle(BOLDITALIC);
   fill(200, 215, 222);
   textAlign(CENTER, CENTER);
-  text("Avoid the raining Acidities that are beneficial for Bacteria growth, \r\n and prevent the Bacteria's from getting too large and killing off your host.", 930, 350);
+  text("Avoid the raining Acidities that are beneficial for Bacteria growth, \r\n Prevent the Bacteria's from getting too large and killing off your host.", 930, 350);
   pop();
   push();
   textSize(50);
@@ -435,7 +471,7 @@ function mousePressed() {
 // timerCountdown //looked up the reference in how to implement a countdown timer
 function timerCountdown() {
   textAlign(CENTER, CENTER); //
-  textSize(30);
+  textSize(40);
   text(timer, 950, 40);
   if (frameCount % 60 === 0 && timer > 0) {
     timer--;
