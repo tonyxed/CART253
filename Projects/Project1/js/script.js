@@ -16,12 +16,11 @@ acidity essential for bacterial growth.
 - Title // DONE
 - Game over // DONE
 - Winning State? // DONE
-- if have time maybe make bacteria moving around?
 - sound
  */
 "use strict";
 let timer = 90;
-
+let rain;
 let shade = {
   r: 12,
   g: 65,
@@ -34,6 +33,7 @@ let user = {
   r: 255,
   g: 255,
   b: 255,
+  transparency: 110,
   speeddefault: 5,
   speed: 5,
   boost: 0.12,
@@ -124,11 +124,16 @@ let bacteria4 = {
   growthreduce: .7,
   maxsize: 300,
 };
+function preload() {
+  rain = loadSound('assets/sounds/Rain Sound1.mp3');
+}
 
 let state = 'title'; // title, simulation, lose, win, bacterialose
 
 function setup() {
   createCanvas(1950, 1000);
+  rain.play();
+  rain.setVolume(.1);
 }
 
 function draw() {
@@ -266,7 +271,7 @@ function userController() {
   // user
   push();
   stroke(1);
-  fill(user.r, user.g, user.b);
+  fill(user.r, user.g, user.b, user.transparency);
   ellipse(user.x, user.y, user.size);
   pop();
 
