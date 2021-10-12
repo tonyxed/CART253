@@ -16,7 +16,7 @@ acidity essential for bacterial growth.
 - Title // DONE
 - Game over // DONE
 - Winning State? // DONE
-- sound
+- sound // DONE
  */
 "use strict";
 let timer = 90;
@@ -124,6 +124,7 @@ let bacteria4 = {
   growthreduce: .7,
   maxsize: 300,
 };
+
 function preload() {
   rain = loadSound('assets/sounds/Rain Sound1.mp3');
 }
