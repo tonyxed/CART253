@@ -4,12 +4,17 @@ Anthony Calderone
 
 Eat them Fishes!
 */
-
-let school = [];
-let schoolSize = 4;
-
 "use strict";
 
+let school = [];
+let schoolSize = 10;
+
+let user = {
+  x: 300,
+  y: 300,
+  size: 50,
+  speed: 4,
+}
 
 function setup() {
   createCanvas(600, 600);
@@ -26,7 +31,8 @@ function createFish(x, y) {
     size: 50,
     vx: 0,
     vy: 0,
-    speed: 2,
+    speed: 4,
+    eaten: false,
   };
   return fish;
 }
@@ -42,6 +48,8 @@ function draw() {
   for (let i = 0; i < school.length; i++) {
     displayFish(school[i]);
   }
+  displayUser();
+  userMove();
 }
 // moves the fish
 function moveFish(fish) {
@@ -66,3 +74,33 @@ function displayFish(fish) {
   ellipse(fish.x, fish.y, fish.size);
   pop();
 }
+// displays the user
+function displayUser() {
+  push();
+  fill(255);
+  noStroke();
+  ellipse(user.x, user.y, user.size);
+  pop();
+}
+// user movement
+function userMove() {
+  if (keyIsDown(LEFT_ARROW)) {
+    user.x -= user.speed;
+  }
+  if (keyIsDown(RIGHT_ARROW)) {
+    user.x += user.speed;
+  }
+  if (keyIsDown(UP_ARROW)) {
+    user.y -= user.speed;
+  }
+  if (keyIsDown(DOWN_ARROW)) {
+    user.y += user.speed;
+  }
+  // constains the user from going off screen
+  user.x = constrain(user.x, 0, width);
+  user.y = constrain(user.y, 0, height);
+}
+  // collision with user and fish
+  function fishEaten(fish){
+
+  }
