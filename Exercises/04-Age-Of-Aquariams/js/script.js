@@ -9,7 +9,7 @@ Eat them Fishes!
 let school = [];
 let schoolSize = 10;
 
-let user = {
+let shark = {
   x: 300,
   y: 300,
   size: 50,
@@ -21,6 +21,7 @@ function setup() {
   // for loop for drawing amount of fish on screen
   for (let i = 0; i < schoolSize; i++) {
     school[i] = createFish(random(0, width), random(0, height));
+
   }
 }
 
@@ -43,13 +44,11 @@ function draw() {
   // for loop for moving the fish
   for (let i = 0; i < school.length; i++) {
     moveFish(school[i]);
-  }
-  // for loop for displaying the fish
-  for (let i = 0; i < school.length; i++) {
     displayFish(school[i]);
+    checkContact(school[i]);
   }
-  displayUser();
-  userMove();
+  displayShark();
+  sharkMove();
 }
 // moves the fish
 function moveFish(fish) {
@@ -68,39 +67,47 @@ function moveFish(fish) {
 }
 // displays the fish
 function displayFish(fish) {
-  push();
-  fill(200, 100, 100);
-  noStroke();
-  ellipse(fish.x, fish.y, fish.size);
-  pop();
+  if(!fish.eaten) {
+    push();
+    fill(200, 100, 100);
+    noStroke();
+    ellipse(fish.x, fish.y, fish.size);
+    pop();
+  }
 }
 // displays the user
-function displayUser() {
+function displayShark() {
   push();
   fill(255);
   noStroke();
-  ellipse(user.x, user.y, user.size);
+  ellipse(shark.x, shark.y, shark.size);
   pop();
 }
 // user movement
-function userMove() {
+function sharkMove() {
   if (keyIsDown(LEFT_ARROW)) {
-    user.x -= user.speed;
+    shark.x -= shark.speed;
   }
   if (keyIsDown(RIGHT_ARROW)) {
-    user.x += user.speed;
+    shark.x += shark.speed;
   }
   if (keyIsDown(UP_ARROW)) {
-    user.y -= user.speed;
+    shark.y -= shark.speed;
   }
   if (keyIsDown(DOWN_ARROW)) {
-    user.y += user.speed;
+    shark.y += shark.speed;
   }
   // constains the user from going off screen
-  user.x = constrain(user.x, 0, width);
-  user.y = constrain(user.y, 0, height);
+  shark.x = constrain(shark.x, 0, width);
+  shark.y = constrain(shark.y, 0, height);
 }
-  // collision with user and fish
-  function fishEaten(fish){
-
+// checks to see if user overlaps fish
+// if overlaps then the user eats the fish
+function checkContact(fish) {
+  if (!fish.eaten) {
+    let d = dist(shark.x, shark.y, fish.x, fish.y);
+    if (d < shark.size / 2 + fish.size / 2) {
+      fish.eaten = true;
+    }
   }
+}
