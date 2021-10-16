@@ -30,13 +30,13 @@ function createFish(x, y) {
   let fish = {
     x: x,
     y: y,
-    size: 30,
-    vx: 1,
-    vy: 1,
+    size: random(15, 30),
+    vx: random(1, 3),
+    vy: random(1, 3),
     r: random(255),
     g: random(100,200),
     b: random(100),
-    speed: 5,
+    speed: random(1, 8),
     eaten: false,
   };
   return fish;
