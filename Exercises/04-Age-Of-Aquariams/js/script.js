@@ -4,10 +4,11 @@ Anthony Calderone
 
 Eat them Fishes!
 */
+
 "use strict";
 
 let school = [];
-let schoolSize = 10;
+let schoolSize = 25;
 
 let shark = {
   x: 300,
@@ -29,10 +30,13 @@ function createFish(x, y) {
   let fish = {
     x: x,
     y: y,
-    size: 50,
-    vx: 0,
-    vy: 0,
-    speed: 4,
+    size: 30,
+    vx: 1,
+    vy: 1,
+    r: random(255),
+    g: random(100,200),
+    b: random(100),
+    speed: 5,
     eaten: false,
   };
   return fish;
@@ -45,7 +49,7 @@ function draw() {
   for (let i = 0; i < school.length; i++) {
     moveFish(school[i]);
     displayFish(school[i]);
-    checkContact(school[i]);
+    checkOverlap(school[i]);
   }
   displayShark();
   sharkMove();
@@ -67,14 +71,15 @@ function moveFish(fish) {
 }
 // displays the fish
 function displayFish(fish) {
-  if(!fish.eaten) {
+  if (!fish.eaten) {
     push();
-    fill(200, 100, 100);
     noStroke();
+    fill(fish.r, fish.g, fish.b);
     ellipse(fish.x, fish.y, fish.size);
     pop();
   }
 }
+
 // displays the user
 function displayShark() {
   push();
@@ -103,10 +108,12 @@ function sharkMove() {
 }
 // checks to see if user overlaps fish
 // if overlaps then the user eats the fish
-function checkContact(fish) {
+function checkOverlap(fish) {
   if (!fish.eaten) {
     let d = dist(shark.x, shark.y, fish.x, fish.y);
-    if (d < shark.size / 2 + fish.size / 2) {
+    if (d < fish.size / 2 + shark.size / 2) {
+      shark.size += 5;
+      shark.speed -= .1;
       fish.eaten = true;
     }
   }
