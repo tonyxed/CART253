@@ -417,12 +417,12 @@ function title() {
 // losing state
 function lose() {
   push();
-  textSize(50);
+  textSize(40);
   background(12, 65, 89);
   textStyle(BOLDITALIC);
   fill(200, 215, 222);
   textAlign(CENTER, CENTER);
-  text("You've been tagged by the Acidity, better luck next time!", 930, 500);
+  text("You've been tagged by the Acidity, better luck next time! Press 'Space' to try again!", 930, 500);
   pop();
   // lose screen background for loop
   for (let i1 = 0; i1 < 20; i1++) {
@@ -431,16 +431,19 @@ function lose() {
     stroke(255);
     ellipse(numX, numY, 0, 50);
   }
+  if (keyIsDown(32)) {
+    location.reload();
+  }
 }
 // winning state
 function timerWin() {
   push();
-  textSize(50);
+  textSize(40);
   background(12, 65, 89);
   textStyle(BOLDITALIC);
   fill(200, 215, 222);
   textAlign(CENTER, CENTER);
-  text("You've prevented the Bacteria from engulfing your host, congratulations!", 930, 500);
+  text("You've prevented the Bacteria from engulfing your host, congratulations! \r\n Press 'Space' to play again!", 960, 500);
   pop();
   // timerWin screen background for loop
   for (let i1 = 0; i1 < 20; i1++) {
@@ -453,12 +456,12 @@ function timerWin() {
 // bacteria size lose
 function bacterialose() {
   push();
-  textSize(50);
+  textSize(40);
   background(12, 65, 89);
   textStyle(BOLDITALIC);
   fill(200, 215, 222);
   textAlign(CENTER, CENTER);
-  text("The Bacteria has gotten too large and has killed your host!", 930, 500);
+  text("The Bacteria has gotten too large and has killed your host! Press 'Space' to try again!", 930, 500);
   pop();
   // bacterialose screen background for loop
   for (let i1 = 0; i1 < 20; i1++) {
@@ -466,6 +469,9 @@ function bacterialose() {
     let numY = random(0, height);
     stroke(255);
     ellipse(numX, numY, 0, 50);
+  }
+  if (keyIsDown(32)) {
+    location.reload();
   }
 }
 // starting the game state
