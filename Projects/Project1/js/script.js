@@ -126,7 +126,7 @@ let bacteria4 = {
 };
 
 function preload() {
-  rain = loadSound('assets/sounds/Rain Sound1.mp3');
+  rain = loadSound('assets/sounds/Guitar Beat.mp3');
 }
 
 let state = 'title'; // title, simulation, lose, win, bacterialose
