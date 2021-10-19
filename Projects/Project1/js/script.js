@@ -17,8 +17,13 @@ acidity essential for bacterial growth.
 - Game over // DONE
 - Winning State? // DONE
 - sound // DONE
+
+My image of the bacteria wouldn't work properly, so unfortunately, they don't receive an image. :(
  */
 "use strict";
+let bacteria;
+let acidity;
+let cell;
 let timer = 90;
 let rain;
 let shade = {
@@ -79,9 +84,9 @@ let bacteria1 = {
   r: 191,
   g: 75,
   b: 75,
-  speed: 5,
-  vx: 2.5,
-  vy: 3.6,
+  speed: 1,
+  vx: 1,
+  vy: 1,
   growthrate: .2,
   growthreduce: 0.7,
   maxsize: 300,
@@ -93,9 +98,9 @@ let bacteria2 = {
   r: 245,
   g: 129,
   b: 247,
-  speed: 5,
-  vx: 2.5,
-  vy: 3.6,
+  speed: 1,
+  vx: 1,
+  vy: 1,
   growthrate: .1,
   growthreduce: .7,
   maxsize: 300,
@@ -127,6 +132,9 @@ let bacteria4 = {
 
 function preload() {
   rain = loadSound('assets/sounds/Guitar Beat.mp3');
+  cell = loadImage('assets/images/whitebloodcell.png');
+  acidity = loadImage('assets/images/acidity.png');
+  bacteria = loadImage('assets/images/bacteria5.png');
 }
 
 let state = 'title'; // title, simulation, lose, win, bacterialose
@@ -196,7 +204,7 @@ function bacteria1Controller() {
   bacteria1.vy = bacteria1.vy + random(-bacteria1.speed, bacteria1.speed);
   // bacteria1 dist
   let db1 = dist(user.x, user.y, bacteria1.x, bacteria1.y);
-  if (db1 < bacteria1.size / 4 + bacteria1.size / 4) {
+  if (db1 < bacteria1.size / 2 + bacteria1.size / 2) {
     bacteria1.size -= bacteria1.growthreduce;
   }
   if (bacteria1.size > bacteria1.maxsize) {
@@ -221,7 +229,7 @@ function bacteria2Controller() {
   pop();
   bacteria2.size += bacteria2.growthrate;
   let db2 = dist(user.x, user.y, bacteria2.x, bacteria2.y);
-  if (db2 < bacteria2.size / 4 + user.size / 4) {
+  if (db2 < bacteria2.size / 2 + user.size / 2) {
     bacteria2.size -= bacteria2.growthreduce;
   }
   if (bacteria2.size >= bacteria2.maxsize) {
@@ -242,7 +250,7 @@ function bacteria3Controller() {
   pop();
   bacteria3.size += bacteria3.growthrate;
   let db3 = dist(user.x, user.y, bacteria3.x, bacteria3.y);
-  if (db3 < bacteria3.size / 4 + user.size / 4) {
+  if (db3 < bacteria3.size / 2 + user.size / 2) {
     bacteria3.size -= bacteria3.growthreduce;
   }
   if (bacteria3.size >= bacteria3.maxsize) {
@@ -260,7 +268,7 @@ function bacteria4Controller() {
   pop();
   bacteria4.size += bacteria4.growthrate;
   let db4 = dist(user.x, user.y, bacteria4.x, bacteria4.y);
-  if (db4 < bacteria4.size / 4 + user.size / 4) {
+  if (db4 < bacteria4.size / 2 + user.size / 2) {
     bacteria4.size -= bacteria4.growthreduce;
   }
   if (bacteria4.size >= bacteria4.maxsize) {
@@ -273,7 +281,7 @@ function userController() {
   push();
   stroke(1);
   fill(user.r, user.g, user.b, user.transparency);
-  ellipse(user.x, user.y, user.size);
+  image(cell, user.x, user.y, 100, 100);
   pop();
 
   // userController
@@ -309,11 +317,11 @@ function userController() {
 function acidity1Controller() {
   push();
   let x = random(0, height);
-  stroke('rgb(10,255,0)');
-  strokeWeight(7);
-  fill(acidity1.r, acidity1.g, acidity1.b);
+  // stroke('rgb(10,255,0)');
+  // strokeWeight(7);
+  // fill(acidity1.r, acidity1.g, acidity1.b);
   acidity1.y = acidity1.y + acidity1.vy;
-  ellipse(acidity1.x, acidity1.y, acidity1.size);
+  image(acidity, acidity1.x, acidity1.y, 70, 70);
   pop();
   //collision between acidity1 and user
   let da1 = dist(user.x, user.y, acidity1.x, acidity1.y);
@@ -331,12 +339,12 @@ function acidity1Controller() {
 function acidity2Controller() {
   push();
   let x = random(-600, 1800);
-  stroke('rgb(10,255,0)');
-  strokeWeight(7);
-  fill(acidity2.r, acidity2.g, acidity2.b);
+  // stroke('rgb(10,255,0)');
+  // strokeWeight(7);
+  // fill(acidity2.r, acidity2.g, acidity2.b);
   acidity2.x = acidity2.x + acidity2.vx;
   acidity2.y = acidity2.y + acidity2.vy;
-  ellipse(acidity2.x, acidity2.y, acidity2.size);
+  image(acidity, acidity2.x, acidity2.y, 70, 70);
   pop();
   //collision between acidity2 and user
   let da2 = dist(user.x, user.y, acidity2.x, acidity2.y);
@@ -354,11 +362,11 @@ function acidity2Controller() {
 function acidity3Controller() {
   push();
   let y = random(0, height);
-  stroke('rgb(10,255,0)');
-  strokeWeight(7);
-  fill(acidity3.r, acidity3.g, acidity3.b);
+  // stroke('rgb(10,255,0)');
+  // strokeWeight(7);
+  // fill(acidity3.r, acidity3.g, acidity3.b);
   acidity3.x = acidity3.x + acidity3.vx;
-  ellipse(acidity3.x, acidity3.y, acidity3.size);
+  image(acidity, acidity3.x, acidity3.y, 70, 70);
   pop();
   // collision between acidity3 and user
   let da3 = dist(user.x, user.y, acidity3.x, acidity3.y);
