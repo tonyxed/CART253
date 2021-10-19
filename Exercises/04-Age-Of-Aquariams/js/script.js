@@ -76,9 +76,9 @@ function draw() {
   }
   // simulation
   function simulation() {
-      displayspecialFish();
-      movespecialFish();
-      checkspecialFish();
+    displayspecialFish();
+    movespecialFish();
+    checkspecialFish();
     for (let i = 0; i < school.length; i++) {
       moveFish(school[i]);
       displayFish(school[i]);
@@ -113,7 +113,8 @@ function displayFish(fish) {
     pop();
   }
 }
-function displayspecialFish(){
+
+function displayspecialFish() {
   if (!fishSpecial.eaten) {
     push();
     noStroke();
@@ -122,6 +123,7 @@ function displayspecialFish(){
     pop();
   }
 }
+
 function movespecialFish() {
   let change = random(0, 1);
   if (change < 0.05) {
@@ -175,7 +177,7 @@ function checkOverlap(fish) {
   }
 }
 // checks if fishSpecial overlaps with user
-function checkspecialFish(){
+function checkspecialFish() {
   if (!fishSpecial.eaten) {
     let d1 = dist(shark.x, shark.y, fishSpecial.x, fishSpecial.y);
     if (d1 < fishSpecial.size / 2 + shark.size / 2) {
