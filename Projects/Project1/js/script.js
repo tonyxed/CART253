@@ -18,6 +18,9 @@ acidity essential for bacterial growth.
 - Winning State? // DONE
 - sound // DONE
 
+Music: https://www.youtube.com/watch?v=KKX59TdHHrU
+Images: https://www.clipartmax.com/
+
 My image of the bacteria wouldn't work properly, so unfortunately, they don't receive an image. :(
  */
 "use strict";
