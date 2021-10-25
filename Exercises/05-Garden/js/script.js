@@ -1,6 +1,6 @@
 /**
-Bees are trying to polinate flowers, while the MokingBird(user-controlled) is trying to
-eat the Bees, while the Hawk is trying to eat the MokingBird.
+Bees are trying to polinate flowers, while the snake(user-controlled) is trying to
+eat the Bees, while the Hawk is trying to eat the snake.
 */
 "use strict";
 // Our garden
@@ -20,7 +20,7 @@ let garden = {
     b: 120
   }
 };
-let bird = {
+let snake = {
   x: 300,
   y: 300,
   size: 50,
@@ -85,34 +85,33 @@ function draw() {
 }
 
 //birdController
-function displayBird() {
-  //body
+function displaySnake() {
+  //mainbody
   push();
-  fill(255, 222, 222);
-  noStroke();
-  ellipse(bird.x, bird.y, bird.size);
+  fill(0);
+  ellipse(snake.x, snake.y, snake.size);
   pop();
 
 }
 
-function moveBird() {
+function moveSnake() {
   if (keyIsDown(LEFT_ARROW)) {
-    bird.x -= bird.speed;
+    snake.x -= snake.speed;
   }
   if (keyIsDown(RIGHT_ARROW)) {
-    bird.x += bird.speed;
+    snake.x += snake.speed;
   }
   if (keyIsDown(UP_ARROW)) {
-    bird.y -= bird.speed;
+    snake.y -= snake.speed;
   }
   if (keyIsDown(DOWN_ARROW)) {
-    bird.y += bird.speed;
+    snake.y += snake.speed;
   }
-  bird.x = constrain(bird.x, 0, 600);
-  bird.y = constrain(bird.y, 0, 600);
+  snake.x = constrain(snake.x, 0, 600);
+  snake.y = constrain(snake.y, 0, 600);
 }
 
 function simulation() {
-  moveBird();
-  displayBird();
+  moveSnake();
+  displaySnake();
 }

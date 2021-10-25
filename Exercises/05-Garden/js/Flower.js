@@ -34,12 +34,10 @@ class Flower {
     let shrinkage = random(0, 0.1);
     this.size = this.size - shrinkage;
     this.petalThickness = this.petalThickness - shrinkage/10;
-    if (this.size <= 0 || this.petalThickness <= 0) {
-      this.alive = false;
-    }
+    this.size = constrain(this.size, 20, this.size);
   }
   pollinate() {
-    let growth = random(0, 0.5);
+    let growth = 0.5;
     this.size = this.size + growth;
     this.petalThickness = this.petalThickness + growth / 10;
 
