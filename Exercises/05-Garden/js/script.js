@@ -1,3 +1,7 @@
+/**
+Bees are trying to polinate flowers, while the MokingBird(user-controlled) is trying to
+eat the Bees, while the Hawk is trying to eat the MokingBird.
+*/
 "use strict";
 // Our garden
 let garden = {
@@ -6,9 +10,9 @@ let garden = {
   // An array for bees
   bees: [],
   // How many bees in the garden
-  numBees: 10,
+  numBees: 5,
   // How many flowers in the garden
-  numFlowers: 30,
+  numFlowers: 25,
   // The color of the grass (background)
   grassColor: {
     r: 120,
@@ -16,6 +20,13 @@ let garden = {
     b: 120
   }
 };
+let bird = {
+  x: 300,
+  y: 300,
+  size: 50,
+  speed: 3,
+};
+
 
 function setup() {
   createCanvas(600, 600);
@@ -46,7 +57,8 @@ function setup() {
 function draw() {
   // Display the grass
   background(garden.grassColor.r, garden.grassColor.g, garden.grassColor.b);
-
+  //bird Simulation
+  simulation();
   // Loop through all the flowers in the array and display them
   for (let i = 0; i < garden.flowers.length; i++) {
     let flower = garden.flowers[i];
@@ -55,10 +67,10 @@ function draw() {
       flower.display();
     }
   }
+
   for (let i = 0; i < garden.bees.length; i++) {
     let bee = garden.bees[i];
     if (bee.alive) {
-      bee.shrink();
       bee.display();
       bee.move();
 
@@ -72,9 +84,35 @@ function draw() {
   }
 }
 
-function mousePressed() {
-  for (let i = 0; i < garden.flowers.length; i++) {
-    let flower = garden.flowers[i];
-    flower.mousePressed();
+//birdController
+function displayBird() {
+  //body
+  push();
+  fill(255, 222, 222);
+  noStroke();
+  ellipse(bird.x, bird.y, bird.size);
+  pop();
+
+}
+
+function moveBird() {
+  if (keyIsDown(LEFT_ARROW)) {
+    bird.x -= bird.speed;
   }
+  if (keyIsDown(RIGHT_ARROW)) {
+    bird.x += bird.speed;
+  }
+  if (keyIsDown(UP_ARROW)) {
+    bird.y -= bird.speed;
+  }
+  if (keyIsDown(DOWN_ARROW)) {
+    bird.y += bird.speed;
+  }
+  bird.x = constrain(bird.x, 0, 600);
+  bird.y = constrain(bird.y, 0, 600);
+}
+
+function simulation() {
+  moveBird();
+  displayBird();
 }

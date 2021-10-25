@@ -10,27 +10,14 @@ class Bee {
     this.vx = 0;
     this.vy = 0;
     this.speed = 5;
-    this.growRate = 0.05;
-    this.shrinkRate = 0.05; // How much smaller we get each frame
     this.jitteriness = 0.1; // How likely the bee is to change direction
     this.alive = true; // The Bee starts out alive!
   }
 
-  // shrink() causes the bee to get smaller over time
-  shrink() {
-    // Shrink by reducing the size by a set amount
-    this.size = this.size - this.shrinkRate;
-    // Check if we're smaller than the minimum size
-    if (this.size < this.minSize) {
-      // If so, we're dead
-      this.alive = false;
-    }
-  }
 
   tryToPollinate(flower) {
     let d = dist(this.x,this.y,flower.x,flower.y);
     if (d < this.size/2 + flower.size/2 + flower.petalThickness){
-      this.grow();
       flower.pollinate();
     }
   }
