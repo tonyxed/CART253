@@ -10,11 +10,11 @@ let garden = {
   // An array for bees
   bees: [],
   // How many bees in the garden
-  numBees: 15,
+  numBees: 11,
   // an array for hawks
   hawks: [],
   // how many hawks in the garden
-  numHawks: 4,
+  numHawks: 3,
   // How many flowers in the garden
   numFlowers: 20,
   // The color of the grass (background)
