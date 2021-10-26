@@ -10,9 +10,13 @@ let garden = {
   // An array for bees
   bees: [],
   // How many bees in the garden
-  numBees: 5,
+  numBees: 15,
+  // an array for hawks
+  hawks: [],
+  // how many hawks in the garden
+  numHawks: 4,
   // How many flowers in the garden
-  numFlowers: 25,
+  numFlowers: 20,
   // The color of the grass (background)
   grassColor: {
     r: 120,
@@ -23,8 +27,10 @@ let garden = {
 let snake = {
   x: 300,
   y: 300,
-  size: 50,
+  size: 30,
   speed: 3,
+  eatSize: 10,
+  eatSpeed: 1,
 };
 
 
@@ -52,6 +58,10 @@ function setup() {
     // pushes the bees to show up in the array
     garden.bees.push(bee);
   }
+  for (let i = 0; i < garden.numHawks; i++) {
+    let hawk = new Hawk(random(0, width), random(0, height));
+    garden.hawks.push(hawk);
+  }
 }
 
 function draw() {
@@ -66,6 +76,12 @@ function draw() {
       flower.shrink();
       flower.display();
     }
+  }
+  for (let i = 0; i < garden.hawks.length; i++){
+    let hawk = garden.hawks[i];
+    hawk.display();
+    hawk.move();
+    hawk.checkOverLap();
   }
 
   for (let i = 0; i < garden.bees.length; i++) {
@@ -94,7 +110,7 @@ function displaySnake() {
   pop();
 
 }
-
+// snake controller
 function moveSnake() {
   if (keyIsDown(LEFT_ARROW)) {
     snake.x -= snake.speed;
@@ -111,7 +127,7 @@ function moveSnake() {
   snake.x = constrain(snake.x, 0, 600);
   snake.y = constrain(snake.y, 0, 600);
 }
-
+// snake simulation
 function simulation() {
   moveSnake();
   displaySnake();

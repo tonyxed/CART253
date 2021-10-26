@@ -5,23 +5,24 @@ class Bee {
     this.x = x;
     this.y = y;
     this.size = 40;
-    this.minSize = 10; // If we get smaller than this minimum we're dead
+    this.minSize = 10;
     this.maxSize = 40;
     this.vx = 0;
     this.vy = 0;
     this.speed = 5;
-    this.jitteriness = 0.1; // How likely the bee is to change direction
-    this.alive = true; // The Bee starts out alive!
+    this.jitteriness = 0.1;
+    this.alive = true;
     this.eaten = false;
   }
 
-
+  // tries to polinate
   tryToPollinate(flower) {
     let d = dist(this.x, this.y, flower.x, flower.y);
     if (d < this.size / 2 + flower.size / 2 + flower.petalThickness) {
       flower.pollinate();
     }
   }
+  // bee growth
   grow() {
     this.size = this.size + this.growRate;
     this.size = constrain(this.size, this.minSize, this.maxSize);
@@ -73,11 +74,17 @@ class Bee {
       pop();
     }
   }
+  // checks overlap between snake and bee
+  // if overlapped, and !eaten, then snake eats them
   overLap() {
     if (!this.eaten) {
       let d = dist(this.x, this.y, snake.x, snake.y);
       if (d < this.size / 2 + snake.size / 2) {
+        snake.size += snake.eatSize;
+        snake.speed + snake.eatSpeed;
+        this.alive = false;
         this.eaten = true;
+
       }
     }
   }

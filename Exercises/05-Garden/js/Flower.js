@@ -33,10 +33,10 @@ class Flower {
   shrink() {
     let shrinkage = random(0, 0.1);
     this.size = this.size - shrinkage;
-    this.petalThickness = this.petalThickness - shrinkage/10;
+    this.petalThickness = this.petalThickness - shrinkage / 10;
     if (this.size <= 0 || this.petalThickness <= 0) {
-     this.alive = false;
-   }
+      this.alive = false;
+    }
   }
   pollinate() {
     let growth = 0.5;
@@ -61,11 +61,10 @@ class Flower {
     pop();
   }
   mousePressed() {
-    let d = dist(this.x,this.y,mouseX, mouseY);
-     if (d < this.size/2 + this.petalThickness) {
-       this.stemLength = this.stemLength + 5;
-       this.y = this.y - 5;
-     }
-
+    let d = dist(this.x, this.y, mouseX, mouseY);
+    if (d < this.size / 2 + this.petalThickness) {
+      this.stemLength = this.stemLength + 5;
+      this.y = this.y - 5;
+    }
   }
 }
