@@ -73,6 +73,7 @@ function draw() {
     if (bee.alive) {
       bee.display();
       bee.move();
+      bee.overLap();
 
       for (let j = 0; j < garden.flowers.length; j++) {
         let flower = garden.flowers[j];

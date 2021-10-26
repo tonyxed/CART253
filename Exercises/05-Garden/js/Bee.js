@@ -12,16 +12,17 @@ class Bee {
     this.speed = 5;
     this.jitteriness = 0.1; // How likely the bee is to change direction
     this.alive = true; // The Bee starts out alive!
+    this.eaten = false;
   }
 
 
   tryToPollinate(flower) {
-    let d = dist(this.x,this.y,flower.x,flower.y);
-    if (d < this.size/2 + flower.size/2 + flower.petalThickness){
+    let d = dist(this.x, this.y, flower.x, flower.y);
+    if (d < this.size / 2 + flower.size / 2 + flower.petalThickness) {
       flower.pollinate();
     }
   }
-  grow () {
+  grow() {
     this.size = this.size + this.growRate;
     this.size = constrain(this.size, this.minSize, this.maxSize);
   }
@@ -47,27 +48,37 @@ class Bee {
 
   // display() draws our bee onto the canvas
   display() {
-    push();
-    // Wings on either side
-    fill(255, 255, 255);
-    noStroke();
-    ellipse(this.x - this.size / 2, this.y, this.size / 2);
-    ellipse(this.x + this.size / 2, this.y, this.size / 2);
-    pop();
+    if (!this.eaten) {
+      push();
+      // Wings on either side
+      fill(255, 255, 255);
+      noStroke();
+      ellipse(this.x - this.size / 2, this.y, this.size / 2);
+      ellipse(this.x + this.size / 2, this.y, this.size / 2);
+      pop();
 
-    // Body
-    push();
-    fill(225, 225, 50);
-    noStroke();
-    ellipse(this.x, this.y, this.size);
-    pop();
+      // Body
+      push();
+      fill(225, 225, 50);
+      noStroke();
+      ellipse(this.x, this.y, this.size);
+      pop();
 
-    // Eyes
-    push();
-    fill(0, 0, 0);
-    noStroke();
-    ellipse(this.x - this.size / 10, this.y, this.size / 10);
-    ellipse(this.x + this.size / 10, this.y, this.size / 10);
-    pop();
+      // Eyes
+      push();
+      fill(0, 0, 0);
+      noStroke();
+      ellipse(this.x - this.size / 10, this.y, this.size / 10);
+      ellipse(this.x + this.size / 10, this.y, this.size / 10);
+      pop();
+    }
+  }
+  overLap() {
+    if (!this.eaten) {
+      let d = dist(this.x, this.y, snake.x, snake.y);
+      if (d < this.size / 2 + snake.size / 2) {
+        this.eaten = true;
+      }
+    }
   }
 }
