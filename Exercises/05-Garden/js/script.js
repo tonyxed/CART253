@@ -16,7 +16,7 @@ let garden = {
   // how many hawks in the garden
   numHawks: 3,
   // How many flowers in the garden
-  numFlowers: 20,
+  numFlowers: 18,
   // The color of the grass (background)
   grassColor: {
     r: 120,
@@ -26,7 +26,7 @@ let garden = {
 };
 let snake = {
   x: 300,
-  y: 300,
+  y: 250,
   size: 30,
   speed: 3,
   eatSize: 10,
@@ -63,38 +63,56 @@ function setup() {
     garden.hawks.push(hawk);
   }
 }
-
+let state = 'title'; //title,simulation,win,lose
 function draw() {
-  // Display the grass
   background(garden.grassColor.r, garden.grassColor.g, garden.grassColor.b);
-  //bird Simulation
-  simulation();
+  //states
+  if (state === 'title') {
+    state = 'title';
+    title();
+  }
+  if (state === 'simulation') {
+    state = 'simulation';
+    simulation();
+  }
+  if (state === 'win') {
+    state = 'win';
+  }
+  if (state === 'lose') {
+    state = 'lose';
+    lose();
+  }
+  // simulates everything in the simulation() function
+  function simulation() {
+    moveSnake();
+    displaySnake();
   // Loop through all the flowers in the array and display them
-  for (let i = 0; i < garden.flowers.length; i++) {
-    let flower = garden.flowers[i];
-    if (flower.alive) {
-      flower.shrink();
-      flower.display();
+    for (let i = 0; i < garden.flowers.length; i++) {
+      let flower = garden.flowers[i];
+      if (flower.alive) {
+        flower.shrink();
+        flower.display();
+      }
     }
-  }
-  for (let i = 0; i < garden.hawks.length; i++){
-    let hawk = garden.hawks[i];
-    hawk.display();
-    hawk.move();
-    hawk.checkOverLap();
-  }
+    for (let i = 0; i < garden.hawks.length; i++) {
+      let hawk = garden.hawks[i];
+      hawk.display();
+      hawk.move();
+      hawk.checkOverLap();
+    }
 
-  for (let i = 0; i < garden.bees.length; i++) {
-    let bee = garden.bees[i];
-    if (bee.alive) {
-      bee.display();
-      bee.move();
-      bee.overLap();
+    for (let i = 0; i < garden.bees.length; i++) {
+      let bee = garden.bees[i];
+      if (bee.alive) {
+        bee.display();
+        bee.move();
+        bee.overLap();
 
-      for (let j = 0; j < garden.flowers.length; j++) {
-        let flower = garden.flowers[j];
-        if (flower.alive) {
-          bee.tryToPollinate(flower);
+        for (let j = 0; j < garden.flowers.length; j++) {
+          let flower = garden.flowers[j];
+          if (flower.alive) {
+            bee.tryToPollinate(flower);
+          }
         }
       }
     }
@@ -108,7 +126,13 @@ function displaySnake() {
   fill(0);
   ellipse(snake.x, snake.y, snake.size);
   pop();
-
+  //eyes
+  push();
+  fill(255);
+  noStroke();
+  ellipse(snake.x - snake.size / 5, snake.y, snake.size / 5);
+  ellipse(snake.x + snake.size / 5, snake.y, snake.size / 5);
+  pop();
 }
 // snake controller
 function moveSnake() {
@@ -128,7 +152,30 @@ function moveSnake() {
   snake.y = constrain(snake.y, 0, 600);
 }
 // snake simulation
-function simulation() {
-  moveSnake();
-  displaySnake();
+
+function title() {
+  push();
+  textSize(25);
+  background(0);
+  textStyle(BOLDITALIC);
+  fill(200, 215, 222);
+  textAlign(CENTER, CENTER);
+  text("You are a Snake, and you must eat all\r\n the Bees in the garden who are polinating \r\n the flowers while avoiding the Hawks \r\n trying to eat you! \r\n\r\n\r\n Press 'SHIFT' in order to play!", 300, 300);
+  pop();
+  if (keyIsDown(SHIFT)) {
+    state = 'simulation';
+  }
+}
+function lose() {
+  push();
+  textSize(25);
+  background(0);
+  textStyle(BOLDITALIC);
+  fill(200, 215, 222);
+  textAlign(CENTER, CENTER);
+  text("You were eaten by the Hawk, unlucky. \r\n\r\n Press SHIFT to play again!", 300, 300);
+  pop();
+  if (keyIsDown(SHIFT)){
+    location.reload();
+  }
 }

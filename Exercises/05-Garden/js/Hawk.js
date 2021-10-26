@@ -46,7 +46,7 @@ class Hawk {
   checkOverLap() {
     let d = dist(this.x,this.y, snake.x,snake.y);
     if (d < this.size/2 + snake.size/2){
-      noLoop();
+      state = 'lose';
     }
   }
 }
