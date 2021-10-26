@@ -3,6 +3,7 @@ Bees are trying to polinate flowers, while the snake(user-controlled) is trying 
 eat the Bees, while the Hawk is trying to eat the snake.
 */
 "use strict";
+let timer = 20;
 // Our garden
 let garden = {
   // An array to store the individual flowers
@@ -10,7 +11,7 @@ let garden = {
   // An array for bees
   bees: [],
   // How many bees in the garden
-  numBees: 11,
+  numBees: 2,
   // an array for hawks
   hawks: [],
   // how many hawks in the garden
@@ -63,7 +64,7 @@ function setup() {
     garden.hawks.push(hawk);
   }
 }
-let state = 'title'; //title,simulation,win,lose
+let state = 'title'; //title,simulation,timerLose,lose
 function draw() {
   background(garden.grassColor.r, garden.grassColor.g, garden.grassColor.b);
   //states
@@ -74,9 +75,11 @@ function draw() {
   if (state === 'simulation') {
     state = 'simulation';
     simulation();
+    timerCountdown();
   }
-  if (state === 'win') {
-    state = 'win';
+  if (timer === 0) {
+    state = 'timerLose';
+    timerLose();
   }
   if (state === 'lose') {
     state = 'lose';
@@ -86,7 +89,8 @@ function draw() {
   function simulation() {
     moveSnake();
     displaySnake();
-  // Loop through all the flowers in the array and display them
+
+    // Loop through all the flowers in the array and display them
     for (let i = 0; i < garden.flowers.length; i++) {
       let flower = garden.flowers[i];
       if (flower.alive) {
@@ -151,7 +155,6 @@ function moveSnake() {
   snake.x = constrain(snake.x, 0, 600);
   snake.y = constrain(snake.y, 0, 600);
 }
-// snake simulation
 
 function title() {
   push();
@@ -166,6 +169,7 @@ function title() {
     state = 'simulation';
   }
 }
+
 function lose() {
   push();
   textSize(25);
@@ -173,9 +177,33 @@ function lose() {
   textStyle(BOLDITALIC);
   fill(200, 215, 222);
   textAlign(CENTER, CENTER);
-  text("You were eaten by the Hawk, unlucky. \r\n\r\n Press SHIFT to play again!", 300, 300);
+  text("You were eaten by the Hawk, unlucky. \r\n\r\n Press 'SHIFT' to play again!", 300, 300);
   pop();
-  if (keyIsDown(SHIFT)){
+  if (keyIsDown(SHIFT)) {
     location.reload();
+  }
+}
+
+function timerLose() {
+  push();
+  textSize(25);
+  background(0);
+  textStyle(BOLDITALIC);
+  fill(200, 215, 222);
+  textAlign(CENTER, CENTER);
+  text("You've ran out of time! \r\n\r\n Press 'SHIFT' to play again!", 300, 300);
+  pop();
+  if (keyIsDown(SHIFT)) {
+    location.reload();
+  }
+}
+function timerCountdown() {
+  textAlign(CENTER, CENTER);
+  fill(255);
+  textSize(40);
+  stroke(1);
+  text(timer, 300, 30);
+  if (frameCount % 60 === 0 && timer > 0) {
+    timer--;
   }
 }

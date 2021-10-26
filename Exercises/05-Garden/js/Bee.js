@@ -84,7 +84,6 @@ class Bee {
         snake.speed + snake.eatSpeed;
         this.alive = false;
         this.eaten = true;
-
       }
     }
   }

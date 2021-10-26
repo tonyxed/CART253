@@ -33,7 +33,7 @@ class Flower {
   shrink() {
     let shrinkage = random(0, 0.3);
     this.size = this.size - shrinkage;
-    this.size = constrain(this.size, 40, 80);
+    this.size = constrain(this.size, 25, 80);
   }
   pollinate() {
     let growth = 0.8;
