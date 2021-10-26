@@ -3,7 +3,7 @@ Bees are trying to polinate flowers, while the snake(user-controlled) is trying 
 eat the Bees, while the Hawk is trying to eat the snake.
 */
 "use strict";
-let timer = 20;
+let timer = 10;
 // Our garden
 let garden = {
   // An array to store the individual flowers
@@ -11,7 +11,7 @@ let garden = {
   // An array for bees
   bees: [],
   // How many bees in the garden
-  numBees: 2,
+  numBees: 15,
   // an array for hawks
   hawks: [],
   // how many hawks in the garden
