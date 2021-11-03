@@ -7,17 +7,17 @@ class Rock1 {
     this.vx = vx;
     this.size = size;
     this.color = {
-      r: random(200),
-      g: random(100),
-      b: random(50),
+      r: 138,
+      g: 179,
+      b: 186,
     }
   }
   display() {
     push();
-    rectMode(CENTER);
-    stroke(1000);
+    ellipseMode(CENTER);
+    noStroke();
     fill(this.color.r, this.color.g, this.color.b);
-    rect(this.x, this.y, this.size);
+    ellipse(this.x, this.y, this.size);
     pop();
   }
   movement() {
@@ -25,11 +25,11 @@ class Rock1 {
   }
   offScreen(){
     let x = random(820, 110);
-    let y = random(600, 880);
+    let y = random(450, 880);
     let w = random(60, 110);
-    let red = random(255);
-    let blue = random(255);
-    let green = random(255);
+    let red = random(138, 166);
+    let blue = random(179, 216);
+    let green = random(166, 225);
     let vx = random (3, 8);
     if (this.x < 0) {
       this.x = width;

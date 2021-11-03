@@ -6,16 +6,20 @@ Anthony Calderone
 let debris = {
   //trucks and the # of them
   rocks2: [],
-  numRocks2: 40,
+  numRocks2: 30,
   //cars and the # of them
   rocks1: [],
-  numRocks1: 40,
+  numRocks1: 30,
 };
+let crew = {
+  astronauts: [],
+  numAstronaut: 2,
+}
 
 
 let user = {
   x: 450,
-  y: 450,
+  y: 380,
   size: 20,
   speed: 3,
   r: 252,
@@ -26,33 +30,44 @@ let user = {
 
 function setup() {
   createCanvas(900, 900);
-  // creates the trucks in the array
+  //  creates rocks1 in the array
+  for (let i = 0; i < debris.numRocks1; i++) {
+    let x = random(820, 70);
+    let y = random(450, 820);
+    let w = random(50, 110);
+    let h = 20;
+    let vx = random(2, 5);
+    let size = random(10, 30);
+    let rocks1 = new Rock1(x, y, w, h, vx, size);
+    debris.rocks1.push(rocks1);
+  }
+  // creates rocks2 in the array
   for (let i = 0; i < debris.numRocks2; i++) {
-    let x = random(0, 600);
+    let x = random(0, 900);
     let y = random(20, 300);
     let w = random(100, 130);
     let h = 20;
     let vx = random(2, 5);
-    let size = 15;
+    let size = random(10, 30);
     let rocks2 = new Rock2(x, y, w, h, vx, size);
     debris.rocks2.push(rocks2);
   }
-  //  creates the cars in the array
-  for (let i = 0; i < debris.numRocks1; i++) {
-    let x = random(820, 70);
-    let y = random(520, 820);
-    let w = random(50, 110);
-    let h = 20;
-    let vx = random(2, 5);
-    let size = 15;
-    let rocks1 = new Rock1(x, y, w, h, vx, size);
-    debris.rocks1.push(rocks1);
+  // creates the astronauts in the array
+  for (let i = 0; i < crew.numAstronaut; i++) {
+    let x = random(0, 900);
+    let y = random(10, 900);
+    let size = random(20, 30);
+    let vx = random(.1, .26);
+    let vy = random(.1, .26);
+    let astronauts = new Astronaut(x, y, size, vx, vy);
+    crew.astronauts.push(astronauts);
   }
 }
 
 function draw() {
-  background(0);
+  background(30);
   userSimulation();
+  allSaved();
   //displays rocks1 in the array
   for (let i = 0; i < debris.rocks1.length; i++) {
     let rocks1 = debris.rocks1[i];
@@ -69,6 +84,18 @@ function draw() {
     rocks2.offScreen();
     rocks2.collision();
   }
+  //displays the astronauts in the array
+  for (let i = 0; i < crew.astronauts.length; i++) {
+    let astronauts = crew.astronauts[i];
+    astronauts.display();
+    astronauts.checkCollision();
+    astronauts.move();
+    astronauts.constrain();
+  }
+}
+
+function allSaved() {
+
 }
 
 

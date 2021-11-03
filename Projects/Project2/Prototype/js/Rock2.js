@@ -7,9 +7,9 @@ class Rock2 {
     this.size = size;
     this.vx = vx;
     this.color = {
-      r: random(0, 200),
-      g: random(0),
-      b: random(0, 100, 50),
+      r: 138,
+      g: 202,
+      b: 214,
     };
   }
 
@@ -20,9 +20,9 @@ class Rock2 {
   offScreen() {
     let y = random(50, 300);
     let w = random(60, 110);
-    let red = random(255);
-    let blue = random(255);
-    let green = random(255);
+    let red = random(104, 138);
+    let blue = random(137, 205);
+    let green = random(143, 220);
     let vx = random(2, 10);
     if (this.x > width) {
       this.x = 0;
@@ -43,10 +43,10 @@ class Rock2 {
 
   display() {
     push();
-    rectMode(CENTER);
-    stroke(1000);
+    ellipseMode(CENTER);
+    noStroke();
     fill(this.color.r, this.color.g, this.color.b);
-    rect(this.x, this.y, this.size);
+    ellipse(this.x, this.y, this.size);
     pop();
   }
 }
