@@ -1,4 +1,4 @@
-class Truck {
+class Rock2 {
   constructor(x, y, w, h, vx, size) {
     this.x = x;
     this.y = y;

@@ -3,13 +3,13 @@ Prototype
 Anthony Calderone
 
 */
-let traffic = {
+let debris = {
   //trucks and the # of them
-  trucks: [],
-  numTrucks: 40,
+  rocks2: [],
+  numRocks2: 40,
   //cars and the # of them
-  cars: [],
-  numCars: 40,
+  rocks1: [],
+  numRocks1: 40,
 };
 
 
@@ -27,48 +27,47 @@ let user = {
 function setup() {
   createCanvas(900, 900);
   // creates the trucks in the array
-  for (let i = 0; i < traffic.numTrucks; i++) {
+  for (let i = 0; i < debris.numRocks2; i++) {
     let x = random(0, 600);
     let y = random(20, 300);
     let w = random(100, 130);
     let h = 20;
     let vx = random(2, 5);
     let size = 15;
-    let truck = new Truck(x, y, w, h, vx, size);
-    traffic.trucks.push(truck);
+    let rocks2 = new Rock2(x, y, w, h, vx, size);
+    debris.rocks2.push(rocks2);
   }
-//  creates the cars in the array
-  for (let i = 0; i < traffic.numCars; i++) {
+  //  creates the cars in the array
+  for (let i = 0; i < debris.numRocks1; i++) {
     let x = random(820, 70);
     let y = random(520, 820);
     let w = random(50, 110);
     let h = 20;
     let vx = random(2, 5);
     let size = 15;
-    let car = new Car(x, y, w, h, vx, size);
-    traffic.cars.push(car);
+    let rocks1 = new Rock1(x, y, w, h, vx, size);
+    debris.rocks1.push(rocks1);
   }
 }
 
 function draw() {
   background(0);
   userSimulation();
-
-  //displays the trucks in the array
-  for (let i = 0; i < traffic.trucks.length; i++) {
-    let truck = traffic.trucks[i];
-    truck.movement();
-    truck.display();
-    truck.offScreen();
-    truck.collision();
+  //displays rocks1 in the array
+  for (let i = 0; i < debris.rocks1.length; i++) {
+    let rocks1 = debris.rocks1[i];
+    rocks1.movement();
+    rocks1.display();
+    rocks1.offScreen();
+    rocks1.collision();
   }
-  //displays the cars in the array
-  for (let i = 0; i < traffic.cars.length; i++) {
-    let car = traffic.cars[i];
-    car.movement();
-    car.display();
-    car.offScreen();
-    car.collision();
+  //displays rocks2 in the array
+  for (let i = 0; i < debris.rocks2.length; i++) {
+    let rocks2 = debris.rocks2[i];
+    rocks2.movement();
+    rocks2.display();
+    rocks2.offScreen();
+    rocks2.collision();
   }
 }
 

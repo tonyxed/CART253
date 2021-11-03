@@ -1,4 +1,4 @@
-class Car {
+class Rock1 {
   constructor(x, y, w, h, vx, size) {
     this.x = x;
     this.y = y;
