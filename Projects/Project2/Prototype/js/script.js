@@ -191,6 +191,5 @@ function lose(){
   pop();
   if (keyIsDown(SHIFT)){
     location.reload();
-    state = 'simulation';
   }
 }
