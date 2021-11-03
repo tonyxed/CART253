@@ -23,6 +23,7 @@ class Astronaut {
       pop();
     }
   }
+
   move() {
     this.x = this.x + this.vx;
     this.y = this.y + this.vy;
