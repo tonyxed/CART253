@@ -20,9 +20,9 @@ class Truck {
   offScreen() {
     let y = random(50, 300);
     let w = random(60, 110);
-    let red = random(16, 100);
-    let blue = random(100, 200);
-    let green = random(100, 255);
+    let red = random(255);
+    let blue = random(255);
+    let green = random(255);
     let vx = random(2, 10);
     if (this.x > width) {
       this.x = 0;

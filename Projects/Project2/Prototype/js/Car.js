@@ -24,11 +24,12 @@ class Car {
     this.x -= this.vx;
   }
   offScreen(){
+    let x = random(820, 110);
     let y = random(600, 880);
     let w = random(60, 110);
-    let red = random(16, 100);
-    let blue = random(100, 200);
-    let green = random(100, 255);
+    let red = random(255);
+    let blue = random(255);
+    let green = random(255);
     let vx = random (3, 8);
     if (this.x < 0) {
       this.x = width;

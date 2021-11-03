@@ -15,12 +15,12 @@ let traffic = {
 
 let user = {
   x: 450,
-  y: 890,
+  y: 450,
   size: 20,
   speed: 3,
-  r: 255,
-  g: 255,
-  b: 255,
+  r: 252,
+  g: 186,
+  b: 3,
 };
 "use strict";
 
@@ -39,8 +39,8 @@ function setup() {
   }
 //  creates the cars in the array
   for (let i = 0; i < traffic.numCars; i++) {
-    let x = random(900, 0);
-    let y = random(400, 840);
+    let x = random(820, 70);
+    let y = random(520, 820);
     let w = random(50, 110);
     let h = 20;
     let vx = random(2, 5);
@@ -76,6 +76,7 @@ function draw() {
 function userSimulation() {
   // properties of the user
   push();
+  stroke(1000);
   fill(user.r, user.g, user.b);
   ellipseMode(CENTER);
   ellipse(user.x, user.y, user.size);
@@ -93,4 +94,6 @@ function userSimulation() {
   if (keyIsDown(DOWN_ARROW)) {
     user.y += user.speed;
   }
+  user.x = constrain(user.x, 0, width);
+  user.y = constrain(user.y, 0, height);
 }
