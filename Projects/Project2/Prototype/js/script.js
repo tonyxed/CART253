@@ -13,7 +13,7 @@ let debris = {
 };
 let crew = {
   astronauts: [],
-  numAstronaut: 2,
+  numAstronaut: 3,
 }
 
 
@@ -63,11 +63,34 @@ function setup() {
     crew.astronauts.push(astronauts);
   }
 }
+//state
+let state = 'title';
 
 function draw() {
   background(30);
-  userSimulation();
-  allSaved();
+  //states
+  if (state === 'title') {
+    title();
+    } else if (state === 'backStory') {
+
+  } else if (state === 'tutorial') {
+
+  } else if (state === 'simulation') {
+    userSimulation();
+    debrisSimulation();
+    crewSimulation();
+  } else if (state === 'levels') {
+
+  } else if (state === 'crewSaved') {
+    win();
+  } else if (state === 'lose') {
+    lose();
+  } else if (timer === 0) {
+
+  }
+}
+  // simulation of the crew members
+function debrisSimulation(){
   //displays rocks1 in the array
   for (let i = 0; i < debris.rocks1.length; i++) {
     let rocks1 = debris.rocks1[i];
@@ -84,19 +107,25 @@ function draw() {
     rocks2.offScreen();
     rocks2.collision();
   }
-  //displays the astronauts in the array
-  for (let i = 0; i < crew.astronauts.length; i++) {
-    let astronauts = crew.astronauts[i];
-    astronauts.display();
-    astronauts.checkCollision();
-    astronauts.move();
-    astronauts.constrain();
+
+}
+  function crewSimulation(){
+    //displays the astronauts in the array
+    let astronautsSaved = 0;
+    for (let i = 0; i < crew.astronauts.length; i++) {
+      let astronauts = crew.astronauts[i];
+      astronauts.display();
+      astronauts.checkCollision();
+      astronauts.move();
+      astronauts.constrain();
+      if (astronauts.saved === true) {
+        astronautsSaved += 1;
+      }
+    }
+    if (astronautsSaved === crew.astronauts.length) {
+      state = 'crewSaved';
+    }
   }
-}
-
-function allSaved() {
-
-}
 
 
 function userSimulation() {
@@ -122,4 +151,46 @@ function userSimulation() {
   }
   user.x = constrain(user.x, 0, width);
   user.y = constrain(user.y, 0, height);
+}
+
+// title state
+function title(){
+  push();
+  textSize(25);
+  background(0);
+  textStyle(BOLDITALIC);
+  fill(200, 215, 222);
+  textAlign(CENTER, CENTER);
+  text("Welcome to my Prototype! (Save your Crew!) (Title in progress)\r\n\r\n [PROTOTYPE! SUBJECT TO CHANGE] \r\n  \r\n Press 'SHIFT' to start prototyping! ", 450, 450);
+  pop();
+  if (keyIsDown(SHIFT)){
+    state = 'simulation';
+  }
+
+}
+
+// crew saved state
+function win() {
+  push();
+  textSize(30);
+  background(0);
+  textStyle(BOLDITALIC);
+  fill(200, 215, 222);
+  textAlign(CENTER, CENTER);
+  text("You've saved all the crew members!\r\n\r\n [PROTOTYPE! SUBJECT TO CHANGE] \r\n", 450, 450);
+  pop();
+}
+function lose(){
+  push();
+  textSize(30);
+  background(0);
+  textStyle(BOLDITALIC);
+  fill(200, 215, 222);
+  textAlign(CENTER, CENTER);
+  text("You got owned by the debris!\r\n\r\n [PROTOTYPE! SUBJECT TO CHANGE] \r\n \r\n Press 'SHIFT' to prototype again!", 450, 450);
+  pop();
+  if (keyIsDown(SHIFT)){
+    location.reload();
+    state = 'simulation';
+  }
 }

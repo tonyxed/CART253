@@ -6,16 +6,16 @@ class Astronaut {
     this.vx = vx;
     this.vy = vy;
     this.color = {
-      r: 255,
+      r: 145,
       g: 255,
-      b: 255,
+      b: 0,
     };
     this.alive = true;
-    this.eaten = false;
+    this.saved = false;
   }
 
   display() {
-    if (!this.eaten) {
+    if (!this.saved) {
       push();
       noStroke();
       fill(this.color.r, this.color.g, this.color.b);
@@ -36,11 +36,11 @@ class Astronaut {
   }
 
   checkCollision() {
-    if (!this.eaten) {
+    if (!this.saved) {
       let d = dist(user.x, user.y, this.x, this.y);
       if (d < this.size / 2 + user.size / 2) {
         this.alive = false;
-        this.eaten = true;
+        this.saved = true;
       }
     }
   }

@@ -23,14 +23,14 @@ class Rock1 {
   movement() {
     this.x -= this.vx;
   }
-  offScreen(){
+  offScreen() {
     let x = random(820, 110);
     let y = random(450, 880);
     let w = random(60, 110);
     let red = random(138, 166);
     let blue = random(179, 216);
     let green = random(166, 225);
-    let vx = random (3, 8);
+    let vx = random(3, 8);
     if (this.x < 0) {
       this.x = width;
       this.y = y;
@@ -44,7 +44,7 @@ class Rock1 {
   collision() {
     let d = dist(user.x, user.y, this.x, this.y);
     if (d < this.size / 2 + user.size / 2) {
-      location.reload();
+      state = 'lose';
     }
   }
 }
