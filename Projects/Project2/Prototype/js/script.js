@@ -15,6 +15,7 @@ let crew = {
   astronauts: [],
   numAstronaut: 3,
 }
+//user
 let user = {
   x: 450,
   y: 380,
