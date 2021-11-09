@@ -15,8 +15,6 @@ let crew = {
   astronauts: [],
   numAstronaut: 3,
 }
-
-
 let user = {
   x: 450,
   y: 380,
@@ -26,6 +24,7 @@ let user = {
   g: 186,
   b: 3,
 };
+
 "use strict";
 
 function setup() {
@@ -162,7 +161,7 @@ function title() {
   textStyle(BOLDITALIC);
   fill(200, 215, 222);
   textAlign(CENTER, CENTER);
-  text("Welcome to my Prototype! (Save your Crew!) (Title in progress)\r\n\r\n [PROTOTYPE! SUBJECT TO CHANGE] \r\n  \r\n Press 'SHIFT' to start prototyping! ", 450, 450);
+  text("Welcome to my Prototype! (Save your Crew!)(Green) (Title in progress)\r\n\r\n [PROTOTYPE! SUBJECT TO CHANGE] \r\n  \r\n Press 'SHIFT' to start prototyping! ", 450, 450);
   pop();
   if (keyIsDown(SHIFT)) {
     state = 'simulation';
@@ -189,7 +188,7 @@ function lose() {
   textStyle(BOLDITALIC);
   fill(200, 215, 222);
   textAlign(CENTER, CENTER);
-  text("You got owned by the debris!\r\n\r\n [PROTOTYPE! SUBJECT TO CHANGE] \r\n \r\n Press 'SHIFT' to prototype again!", 450, 450);
+  text("You got crushed by the debris!\r\n\r\n [PROTOTYPE! SUBJECT TO CHANGE] \r\n \r\n Press 'SHIFT' to prototype again!", 450, 450);
   pop();
   if (keyIsDown(SHIFT)) {
     location.reload();
