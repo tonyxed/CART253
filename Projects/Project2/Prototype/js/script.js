@@ -1,7 +1,13 @@
 /**
 Prototype
 Anthony Calderone
-
+(rough idea of needed implementations)
+- life system (every time hit by debris, hp decrease + debris gone)
+- different types of debris for each level
+- sound of some sort of sounds
+- interative menu
+- background planets
+- images
 */
 let debris = {
   //trucks and the # of them
@@ -15,7 +21,7 @@ let crew = {
   astronauts: [],
   numAstronaut: 3,
 }
-//user
+
 let user = {
   x: 450,
   y: 380,
@@ -25,7 +31,6 @@ let user = {
   g: 186,
   b: 3,
 };
-
 "use strict";
 
 function setup() {
@@ -75,11 +80,13 @@ function draw() {
 
   } else if (state === 'tutorial') {
 
-  } else if (state === 'simulation') {
+  } else if (state === 'level1') {
     userSimulation();
     debrisSimulation();
     crewSimulation();
-  } else if (state === 'levels') {
+  } else if (state === 'level2') {
+
+  } else if (state === 'level3') {
 
   } else if (state === 'crewSaved') {
     win();
@@ -165,7 +172,7 @@ function title() {
   text("Welcome to my Prototype! (Save your Crew!)(Green) (Title in progress)\r\n\r\n [PROTOTYPE! SUBJECT TO CHANGE] \r\n  \r\n Press 'SHIFT' to start prototyping! ", 450, 450);
   pop();
   if (keyIsDown(SHIFT)) {
-    state = 'simulation';
+    state = 'level1';
   }
 
 }
