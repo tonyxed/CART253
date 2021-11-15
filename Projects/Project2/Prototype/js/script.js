@@ -19,7 +19,7 @@ let debris = {
 };
 let crew = {
   astronauts: [],
-  numAstronaut: 3,
+  numAstronauts: 3,
 }
 
 let user = {
@@ -58,7 +58,7 @@ function setup() {
     debris.rocks2.push(rocks2);
   }
   // creates the astronauts in the array
-  for (let i = 0; i < crew.numAstronaut; i++) {
+  for (let i = 0; i < crew.numAstronauts; i++) {
     let x = random(0, 900);
     let y = random(10, 900);
     let size = random(20, 30);
