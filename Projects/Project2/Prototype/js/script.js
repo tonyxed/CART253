@@ -4,7 +4,7 @@ Anthony Calderone
 (rough idea of needed implementations)
 - life system (every time hit by debris, hp decrease + debris gone)
 - different types of debris for each level
-- sound of some sort of sounds
+- sound of some sort
 - interative menu
 - background planets
 - images
