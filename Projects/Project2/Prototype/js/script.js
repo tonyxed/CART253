@@ -69,13 +69,13 @@ function setup() {
   }
 }
 //state
-let state = 'title';
+let state = 'mainMenu';
 
 function draw() {
   background(30);
   //states
-  if (state === 'title') {
-    title();
+  if (state === 'mainMenu') {
+    mainMenu();
   } else if (state === 'backStory') {
 
   } else if (state === 'tutorial') {
@@ -92,6 +92,8 @@ function draw() {
     win();
   } else if (state === 'lose') {
     lose();
+  } else if (state === 'livesLost') {
+
   } else if (timer === 0) {
 
   }
@@ -161,9 +163,10 @@ function userSimulation() {
   user.y = constrain(user.y, 0, height);
 }
 
-// title state
-function title() {
+// mainMenu state
+function mainMenu() {
   push();
+  noCursor();
   textSize(25);
   background(0);
   textStyle(BOLDITALIC);
