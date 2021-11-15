@@ -10,10 +10,10 @@ Anthony Calderone
 - images
 */
 let debris = {
-  //trucks and the # of them
+  //rocks2 and the # of them
   rocks2: [],
   numRocks2: 30,
-  //cars and the # of them
+  //rocks1 and the # of them
   rocks1: [],
   numRocks1: 30,
 };
