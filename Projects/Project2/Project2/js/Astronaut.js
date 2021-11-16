@@ -28,8 +28,8 @@ class Astronaut {
     this.x = this.x + this.vx;
     this.y = this.y + this.vy;
     //floating
-    this.vx = random(-.3, .3);
-    this.vy = random(-.3, .3);
+    this.vx = random(-1, 1);
+    this.vy = random(-1, 1);
   }
   constrain() {
     this.x = constrain(this.x, 10, 900);

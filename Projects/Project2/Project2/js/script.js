@@ -7,6 +7,7 @@ WHAT I WANT DONE FOR NEXT CLASS
 - DIFFERENT LEVELS WITH DEBRIS + MOVEMENT
 
 */
+let shipImg;
 let score = 0;
 let lives = 25;
 let debris = {
@@ -32,6 +33,9 @@ let user = {
   b: 3,
 };
 "use strict";
+function preload(){
+  shipImg = loadImage("assets/images/spaceship.png");
+}
 
 
 function setup() {
@@ -145,8 +149,10 @@ function userSimulation() {
   push();
   stroke(1000);
   fill(user.r, user.g, user.b);
-  ellipseMode(CENTER);
-  ellipse(user.x, user.y, user.size);
+  image(shipImg, user.x, user.y, 35, 35);
+  imageMode(CENTER);
+  //ellipseMode(CENTER);
+  //ellipse(user.x, user.y, user.size);
   pop();
   // user movement
   if (keyIsDown(LEFT_ARROW)) {
@@ -206,7 +212,7 @@ function controls() {
   text("Pick up power ups for special abilities!", 430, 450);
   textSize(25)
   fill(150 + cos(frameCount * 0.1) * 128);
-  text("Move around using WASD!", 430, 550);
+  text("Move around using the arrow keys!", 430, 550);
   textSize(25)
   fill(255, 100, 100);
   text("Every saved crew member is worth 500 points!", 460, 630);
