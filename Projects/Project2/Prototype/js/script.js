@@ -76,14 +76,14 @@ function draw() {
   //states
   if (state === 'mainMenu') {
     mainMenu();
-  } else if (state === 'backStory') {
+  } else if (state === 'controls') {
 
   } else if (state === 'tutorial') {
-
-  } else if (state === 'level1') {
     userSimulation();
     debrisSimulation();
     crewSimulation();
+  } else if (state === 'level1') {
+
   } else if (state === 'level2') {
 
   } else if (state === 'level3') {
@@ -92,8 +92,6 @@ function draw() {
     win();
   } else if (state === 'lose') {
     lose();
-  } else if (state === 'livesLost') {
-
   } else if (timer === 0) {
 
   }
@@ -175,7 +173,7 @@ function mainMenu() {
   text("Welcome to my Prototype! (Save your Crew!)(Green) (Title in progress)\r\n\r\n [PROTOTYPE! SUBJECT TO CHANGE] \r\n  \r\n Press 'SHIFT' to start prototyping! ", 450, 450);
   pop();
   if (keyIsDown(SHIFT)) {
-    state = 'level1';
+    state = 'tutorial';
   }
 
 }
