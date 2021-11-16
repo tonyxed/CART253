@@ -78,6 +78,7 @@ let state = 'mainMenu';
 
 function draw() {
   background(30);
+  print(mouseX,mouseY);
   //states
   if (state === 'mainMenu') {
     mainMenu();
@@ -151,8 +152,6 @@ function userSimulation() {
   fill(user.r, user.g, user.b);
   image(shipImg, user.x, user.y, 35, 35);
   imageMode(CENTER);
-  //ellipseMode(CENTER);
-  //ellipse(user.x, user.y, user.size);
   pop();
   // user movement
   if (keyIsDown(LEFT_ARROW)) {
@@ -175,21 +174,20 @@ function userSimulation() {
 function mainMenu() {
   push();
   strokeWeight(2);
+  fill(255);
   textSize(40);
   textAlign(CENTER, TOP);
   background(0);
   textStyle(BOLDITALIC);
   fill(150 + cos(frameCount * 0.2) * 128);
   text("SPACE STORM IS NOW ONLINE!", 450, 70);
-  textSize(40);
-  textStyle(BOLDITALIC);
-  textAlign(CENTER, BOTTOM);
-  fill(150 + sin(frameCount * 0.2) * 128);
-  text("Press 'SPACE' to find out how to play!", 450, 850);
+  //play button
+  fill(0, 255, 0);
+  rect(50, 400, 200, 75);
+  fill(255);
+  text("START", 150, 420);
   pop();
-  if (keyCode === 32) {
-    state = "controls";
-  }
+
 }
   //control state
 function controls() {
@@ -297,5 +295,14 @@ function loseLife() {
   pop();
   if (keyIsDown(SHIFT)) {
     location.reload();
+  }
+}
+function mouseClicked(){
+  if(state === 'mainMenu'){
+    if(mouseX < 150 && mouseX > 110){
+      if(mouseY < 450 && mouseY > 140){
+              state = "tutorial";
+      }
+    }
   }
 }
