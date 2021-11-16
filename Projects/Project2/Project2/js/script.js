@@ -9,6 +9,8 @@ Anthony Calderone
 - background planets
 - images
 */
+let score = 0;
+let lives = 30;
 let debris = {
   //rocks2 and the # of them
   rocks2: [],
@@ -70,7 +72,7 @@ function setup() {
   }
 }
 //state
-let state = 'mainMenu';
+let state = 'controls';
 
 function draw() {
   background(30);
@@ -83,6 +85,9 @@ function draw() {
     userSimulation();
     debrisSimulation();
     crewSimulation();
+    tutorialText();
+    points();
+    life();
   } else if (state === 'level1') {
 
   } else if (state === 'level2') {
@@ -91,8 +96,8 @@ function draw() {
 
   } else if (state === 'crewSaved') {
     win();
-  } else if (state === 'lose') {
-    lose();
+  } else if (state === 'loseLife') {
+    loseLife();
   } else if (timer === 0) {
 
   }
@@ -191,26 +196,59 @@ function controls() {
   background(0);
   textStyle(BOLDITALIC);
   fill(150 + cos(frameCount * 0.1) * 128);
-  text("How to play Space Storm! \r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n Press 'ENTER' to begin playing!", 450, 70);
+  text("Don't know how to play Space Storm? \r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n Press 'ENTER' to begin playing!", 450, 60);
   fill(150 + sin(frameCount * 0.1) * 128);
   textSize(25);
-  text("Save your crew members before they are swept away in space!", 450, 300);
+  text("Save your crew members before they are swept away in space!", 450, 250);
   textSize(25)
   fill(150 + cos(frameCount * 0.1) * 128);
-  textSize(25);
-  text("Avoid the debris!", 430, 400);
+  text("Avoid the debris!", 430, 350);
   textSize(25);
   fill(150 + sin(frameCount * 0.1) * 128);
-  text("Pick up power ups for special abilities!", 430, 500);
+  text("Pick up power ups for special abilities!", 430, 450);
   textSize(25)
   fill(150 + cos(frameCount * 0.1) * 128);
-  text("Move around using WASD!", 430, 600);
+  text("Move around using WASD!", 430, 550);
+  textSize(25)
+  fill(255, 100, 100);
+  text("Every saved crew member is worth 500 points!", 450, 630);
+  textSize(25)
+  fill(255, 100, 100);
+  text("If your lives fall below 30 you lose!", 430, 710);
+  textSize(25)
+  fill(255, 100, 100);
+  text("Every power up is worth 200 points!", 430, 670);
   pop();
   if (keyCode === 13) {
     state = "tutorial";
   }
 }
-
+// tutorial state
+ function tutorialText(){
+   push();
+   textAlign(CENTER,TOP);
+   textSize(20);
+   fill(255);
+   text("Tutorial", 40, 10 );
+   pop();
+ }
+ // scorepoints state
+ function points(){
+   push();
+   textAlign(CENTER,RIGHT);
+   textSize(20);
+   fill(255);
+   text(score, 870, 30);
+   pop();
+ }
+ function life(){
+   push();
+   textAlign(CENTER,RIGHT);
+   textSize(20);
+   fill(255);
+   text(lives, 450, 30);
+   pop();
+ }
 // crew saved state
 function win() {
   push();
@@ -223,14 +261,14 @@ function win() {
   pop();
 }
 
-function lose() {
+function loseLife() {
   push();
   textSize(30);
   background(0);
   textStyle(BOLDITALIC);
-  fill(200, 215, 222);
+  fill(150 + sin(frameCount * 0.1) * 128);
   textAlign(CENTER, CENTER);
-  text("You got crushed by the debris!\r\n\r\n [PROTOTYPE! SUBJECT TO CHANGE] \r\n \r\n Press 'SHIFT' to prototype again!", 450, 450);
+  text("You've lost all your lives!", 450, 450);
   pop();
   if (keyIsDown(SHIFT)) {
     location.reload();

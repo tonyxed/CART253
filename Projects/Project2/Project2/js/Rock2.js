@@ -37,7 +37,10 @@ class Rock2 {
   collision() {
     let d = dist(user.x, user.y, this.x, this.y);
     if (d < this.size / 2 + user.size / 2) {
-      state = 'lose';
+    lives = lives - 1;
+    if (lives === 0){
+      state = 'loseLife';
+    }
     }
   }
 

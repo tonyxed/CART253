@@ -40,6 +40,7 @@ class Astronaut {
     if (!this.saved) {
       let d = dist(user.x, user.y, this.x, this.y);
       if (d < this.size / 2 + user.size / 2) {
+        score = score + 500;
         this.alive = false;
         this.saved = true;
       }
