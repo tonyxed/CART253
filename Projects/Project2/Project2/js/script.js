@@ -33,6 +33,7 @@ let user = {
 };
 "use strict";
 
+
 function setup() {
   createCanvas(900, 900);
   //  creates rocks1 in the array
@@ -77,7 +78,7 @@ function draw() {
   if (state === 'mainMenu') {
     mainMenu();
   } else if (state === 'controls') {
-
+    controls();
   } else if (state === 'tutorial') {
     userSimulation();
     debrisSimulation();
@@ -164,18 +165,50 @@ function userSimulation() {
 // mainMenu state
 function mainMenu() {
   push();
-  noCursor();
-  textSize(25);
+  strokeWeight(2);
+  textSize(40);
+  textAlign(CENTER, TOP);
   background(0);
   textStyle(BOLDITALIC);
-  fill(128 + sin(frameCount*0.1) * 128);
-  textAlign(CENTER, CENTER);
-  text("Welcome to my Prototype! (Save your Crew!)(Green) (Title in progress)\r\n\r\n [PROTOTYPE! SUBJECT TO CHANGE] \r\n  \r\n Press 'SHIFT' to start prototyping! ", 450, 450);
+  fill(150 + cos(frameCount * 0.2) * 128);
+  text("SPACE STORM IS NOW ONLINE!", 450, 70);
+  textSize(40);
+  textStyle(BOLDITALIC);
+  textAlign(CENTER, BOTTOM);
+  fill(150 + sin(frameCount * 0.2) * 128);
+  text("Press 'SPACE' to find out how to play!", 450, 850);
   pop();
-  if (keyIsDown(SHIFT)) {
-    state = 'tutorial';
+  if (keyCode === 32) {
+    state = "controls";
   }
-
+}
+  //control state
+function controls() {
+  push();
+  strokeWeight(2);
+  textSize(30);
+  textAlign(CENTER, TOP);
+  background(0);
+  textStyle(BOLDITALIC);
+  fill(150 + cos(frameCount * 0.1) * 128);
+  text("How to play Space Storm! \r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n Press 'ENTER' to begin playing!", 450, 70);
+  fill(150 + sin(frameCount * 0.1) * 128);
+  textSize(25);
+  text("Save your crew members before they are swept away in space!", 450, 300);
+  textSize(25)
+  fill(150 + cos(frameCount * 0.1) * 128);
+  textSize(25);
+  text("Avoid the debris!", 430, 400);
+  textSize(25);
+  fill(150 + sin(frameCount * 0.1) * 128);
+  text("Pick up power ups for special abilities!", 430, 500);
+  textSize(25)
+  fill(150 + cos(frameCount * 0.1) * 128);
+  text("Move around using WASD!", 430, 600);
+  pop();
+  if (keyCode === 13) {
+    state = "tutorial";
+  }
 }
 
 // crew saved state
