@@ -21,7 +21,7 @@ let debris = {
 };
 let crew = {
   astronauts: [],
-  numAstronauts: 3,
+  numAstronauts: 4,
 }
 
 let user = {
@@ -72,7 +72,7 @@ function setup() {
   }
 }
 //state
-let state = 'controls';
+let state = 'mainMenu';
 
 function draw() {
   background(30);
@@ -98,8 +98,6 @@ function draw() {
     win();
   } else if (state === 'loseLife') {
     loseLife();
-  } else if (timer === 0) {
-
   }
 }
 // simulation of the crew members
@@ -211,13 +209,13 @@ function controls() {
   text("Move around using WASD!", 430, 550);
   textSize(25)
   fill(255, 100, 100);
-  text("Every saved crew member is worth 500 points!", 450, 630);
+  text("Every saved crew member is worth 500 points!", 460, 630);
   textSize(25)
   fill(255, 100, 100);
-  text("If your lives fall below 30 you lose!", 430, 710);
+  text("If your lives fall below 30 you lose!", 460, 710);
   textSize(25)
   fill(255, 100, 100);
-  text("Every power up is worth 200 points!", 430, 670);
+  text("Every power up is worth 200 points!", 460, 670);
   pop();
   if (keyCode === 13) {
     state = "tutorial";
@@ -228,8 +226,11 @@ function controls() {
    push();
    textAlign(CENTER,TOP);
    textSize(20);
-   fill(255);
-   text("Tutorial", 40, 10 );
+   fill(0, 255, 76);
+   text("Tutorial", 90, 5 );
+   textSize(20);
+   fill(0, 255, 76);
+   text("Level:", 30, 5 );
    pop();
  }
  // scorepoints state
@@ -237,16 +238,23 @@ function controls() {
    push();
    textAlign(CENTER,RIGHT);
    textSize(20);
-   fill(255);
-   text(score, 870, 30);
+   fill(212, 0, 255);
+   text(score, 870, 20);
+   textSize(20);
+   fill(212, 0, 255);
+   text("Total Points:", 790, 20);
    pop();
  }
+ // state lifes
  function life(){
    push();
    textAlign(CENTER,RIGHT);
    textSize(20);
-   fill(255);
-   text(lives, 450, 30);
+   fill(255, 0, 115);
+   text(lives, 460, 20);
+   textSize(20);
+   fill(255, 0, 115);
+   text("Lives:", 420, 20);
    pop();
  }
 // crew saved state
@@ -255,9 +263,9 @@ function win() {
   textSize(30);
   background(0);
   textStyle(BOLDITALIC);
-  fill(200, 215, 222);
+  fill(150 + sin(frameCount * 0.1) * 128);
   textAlign(CENTER, CENTER);
-  text("You've saved all the crew members!\r\n\r\n [PROTOTYPE! SUBJECT TO CHANGE] \r\n", 450, 450);
+  text("You've saved all the crew members!", 450, 450);
   pop();
 }
 
