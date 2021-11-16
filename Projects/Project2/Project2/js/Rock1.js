@@ -45,6 +45,7 @@ class Rock1 {
     let d = dist(user.x, user.y, this.x, this.y);
     if (d < this.size / 2 + user.size / 2) {
       lives = lives - 1;
+      this.color.r = 255;
       if (lives === 0){
         state = 'loseLife';
       }

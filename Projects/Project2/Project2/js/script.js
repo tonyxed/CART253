@@ -10,7 +10,7 @@ Anthony Calderone
 - images
 */
 let score = 0;
-let lives = 30;
+let lives = 25;
 let debris = {
   //rocks2 and the # of them
   rocks2: [],
@@ -98,6 +98,8 @@ function draw() {
     win();
   } else if (state === 'loseLife') {
     loseLife();
+  } else if (timer === 0) {
+
   }
 }
 // simulation of the crew members
@@ -212,7 +214,7 @@ function controls() {
   text("Every saved crew member is worth 500 points!", 460, 630);
   textSize(25)
   fill(255, 100, 100);
-  text("If your lives fall below 30 you lose!", 460, 710);
+  text("If your lives fall below 25 you lose!", 460, 710);
   textSize(25)
   fill(255, 100, 100);
   text("Every power up is worth 200 points!", 460, 670);
@@ -227,7 +229,7 @@ function controls() {
    textAlign(CENTER,TOP);
    textSize(20);
    fill(0, 255, 76);
-   text("Tutorial", 90, 5 );
+   text("1", 70, 5 );
    textSize(20);
    fill(0, 255, 76);
    text("Level:", 30, 5 );
@@ -263,6 +265,11 @@ function win() {
   textSize(30);
   background(0);
   textStyle(BOLDITALIC);
+  fill(255);
+  text("Your total score was:", 250, 600);
+  textStyle(BOLDITALIC);
+  fill(255);
+  text(score, 570, 600);
   fill(150 + sin(frameCount * 0.1) * 128);
   textAlign(CENTER, CENTER);
   text("You've saved all the crew members!", 450, 450);
@@ -274,8 +281,14 @@ function loseLife() {
   textSize(30);
   background(0);
   textStyle(BOLDITALIC);
+  fill(255);
+  text("Your total score was:", 250, 600);
+  fill(255);
+  textStyle(BOLDITALIC);
+  text(score, 570, 600);
   fill(150 + sin(frameCount * 0.1) * 128);
   textAlign(CENTER, CENTER);
+  textStyle(BOLDITALIC);
   text("You've lost all your lives!", 450, 450);
   pop();
   if (keyIsDown(SHIFT)) {
