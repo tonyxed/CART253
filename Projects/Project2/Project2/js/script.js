@@ -1,13 +1,11 @@
 /**
-Prototype
 Anthony Calderone
-(rough idea of needed implementations)
-- life system (every time hit by debris, hp decrease + debris gone)
-- different types of debris for each level
-- sound of some sort
-- interative menu
-- background planets
-- images
+WHAT I WANT DONE FOR NEXT CLASS
+- QOL CHANGES // MORE LIFE TO THE GAME IE: SOUND
+- BACKGROUND PLANETS
+- CREW MEMBER'S IMAGES
+- DIFFERENT LEVELS WITH DEBRIS + MOVEMENT
+
 */
 let score = 0;
 let lives = 25;
