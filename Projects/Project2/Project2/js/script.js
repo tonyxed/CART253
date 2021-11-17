@@ -5,8 +5,10 @@ WHAT I WANT DONE FOR NEXT CLASS
 - BACKGROUND PLANETS
 - CREW MEMBER'S IMAGES
 - DIFFERENT LEVELS WITH DEBRIS + MOVEMENT
+- ABLE TO SHOOT DEBRIS???
 
 */
+let playImg;
 let shipImg;
 let score = 0;
 let lives = 25;
@@ -35,6 +37,7 @@ let user = {
 "use strict";
 function preload(){
   shipImg = loadImage("assets/images/spaceship.png");
+  playImg = loadImage("assets/images/play.png");
 }
 
 
@@ -173,6 +176,7 @@ function userSimulation() {
 // mainMenu state
 function mainMenu() {
   push();
+  cursor(CROSS);
   strokeWeight(2);
   fill(255);
   textSize(40);
@@ -180,25 +184,27 @@ function mainMenu() {
   background(0);
   textStyle(BOLDITALIC);
   fill(150 + cos(frameCount * 0.2) * 128);
-  text("SPACE STORM IS NOW ONLINE!", 450, 70);
+  text("SPACE STORM IS NOW ONLINE!", 450, 450);
   //play button
-  fill(0, 255, 0);
-  rect(50, 400, 200, 75);
+  fill(255, 0, 0);
+  textSize(20);
+  rect(370, 200, 150, 75);
   fill(255);
-  text("START", 150, 420);
-  pop();
+  text("ENTER?", 445, 228);
+
 
 }
   //control state
 function controls() {
   push();
+  cursor(CROSS);
   strokeWeight(2);
   textSize(30);
   textAlign(CENTER, TOP);
   background(0);
   textStyle(BOLDITALIC);
   fill(150 + cos(frameCount * 0.1) * 128);
-  text("Don't know how to play Space Storm? \r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n Press 'ENTER' to begin playing!", 450, 60);
+  text("Don't know how to play Space Storm? \r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n Press 'ENTER' to begin playing!", 450, 60);
   fill(150 + sin(frameCount * 0.1) * 128);
   textSize(25);
   text("Save your crew members before they are swept away in space!", 450, 250);
@@ -207,19 +213,22 @@ function controls() {
   text("Avoid the debris!", 430, 350);
   textSize(25);
   fill(150 + sin(frameCount * 0.1) * 128);
-  text("Pick up power ups for special abilities!", 430, 450);
+  text("Pick up power ups for special abilities!", 450, 450);
   textSize(25)
   fill(150 + cos(frameCount * 0.1) * 128);
-  text("Move around using the arrow keys!", 430, 550);
+  text("Move around using the arrow keys!", 450, 550);
   textSize(25)
   fill(255, 100, 100);
-  text("Every saved crew member is worth 500 points!", 460, 630);
+  text("Use your mouse to shoot the debris!", 450, 600);
   textSize(25)
   fill(255, 100, 100);
-  text("If your lives fall below 25 you lose!", 460, 710);
+  text("Every saved crew member is worth 500 points!", 450, 640);
   textSize(25)
   fill(255, 100, 100);
-  text("Every power up is worth 200 points!", 460, 670);
+  text("If your lives fall below 25 you lose!", 450, 720);
+  textSize(25)
+  fill(255, 100, 100);
+  text("Every power up is worth 200 points!", 450, 680);
   pop();
   if (keyCode === 13) {
     state = "tutorial";
@@ -268,7 +277,7 @@ function win() {
   background(0);
   textStyle(BOLDITALIC);
   fill(255);
-  text("Your total score was:", 250, 600);
+  text("Your total score was:", 350, 600);
   textStyle(BOLDITALIC);
   fill(255);
   text(score, 570, 600);
@@ -298,11 +307,15 @@ function loseLife() {
   }
 }
 function mouseClicked(){
-  if(state === 'mainMenu'){
-    if(mouseX < 150 && mouseX > 110){
-      if(mouseY < 450 && mouseY > 140){
-              state = "tutorial";
+
+      if(state === 'mainMenu'){
+        if(mouseX < 450 && mouseX > 400){
+          if(mouseY < 275 && mouseY > 200) {
+            state = 'controls';
+          }
+        }
       }
     }
-  }
-}
+
+
+// 50x, 400y, 200w, 75h
