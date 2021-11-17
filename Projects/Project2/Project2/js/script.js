@@ -240,10 +240,10 @@ function controls() {
    textAlign(CENTER,TOP);
    textSize(20);
    fill(0, 255, 76);
-   text("1", 70, 5 );
+   text("1", 70, 10 );
    textSize(20);
    fill(0, 255, 76);
-   text("Level:", 30, 5 );
+   text("Level:", 30, 10 );
    pop();
  }
  // scorepoints state
@@ -252,10 +252,10 @@ function controls() {
    textAlign(CENTER,RIGHT);
    textSize(20);
    fill(212, 0, 255);
-   text(score, 870, 20);
+   text(score, 870, 10);
    textSize(20);
    fill(212, 0, 255);
-   text("Total Points:", 790, 20);
+   text("Total Points:", 790, 10);
    pop();
  }
  // state lifes
@@ -264,10 +264,10 @@ function controls() {
    textAlign(CENTER,RIGHT);
    textSize(20);
    fill(255, 0, 115);
-   text(lives, 460, 20);
+   text(lives, 460, 10);
    textSize(20);
    fill(255, 0, 115);
-   text("Lives:", 420, 20);
+   text("Lives:", 420, 10);
    pop();
  }
 // crew saved state
