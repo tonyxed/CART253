@@ -11,14 +11,17 @@ class Rock1 {
       g: 179,
       b: 186,
     }
+    this.destroyed = false;
   }
   display() {
+    if (!this.destroyed){
     push();
     ellipseMode(CENTER);
     noStroke();
     fill(this.color.r, this.color.g, this.color.b);
     ellipse(this.x, this.y, this.size);
     pop();
+  }
   }
   movement() {
     this.x -= this.vx;
@@ -51,4 +54,5 @@ class Rock1 {
       }
     }
   }
+  
 }

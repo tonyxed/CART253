@@ -10,6 +10,9 @@ WHAT I WANT DONE FOR NEXT CLASS
 */
 let playImg;
 let shipImg;
+let pickUp = 1;
+let lasers = [];
+let numLasers = 5;
 let score = 0;
 let lives = 25;
 let debris = {
@@ -34,8 +37,14 @@ let user = {
   g: 186,
   b: 3,
 };
+let pick ={
+  x: 500,
+  y: 500,
+  size: 20,
+};
 "use strict";
-function preload(){
+
+function preload() {
   shipImg = loadImage("assets/images/spaceship.png");
   playImg = loadImage("assets/images/play.png");
 }
@@ -81,7 +90,9 @@ let state = 'mainMenu';
 
 function draw() {
   background(30);
-  print(mouseX,mouseY);
+  //pickup
+  fill(255);
+  ellipse(pick.x, pick.y, pick.size);
   //states
   if (state === 'mainMenu') {
     mainMenu();
@@ -94,6 +105,7 @@ function draw() {
     tutorialText();
     points();
     life();
+    laserSimulation();
   } else if (state === 'level1') {
 
   } else if (state === 'level2') {
@@ -107,6 +119,15 @@ function draw() {
   } else if (timer === 0) {
 
   }
+}
+
+function laserSimulation() {
+  // displays the lasers in the array
+  for (let i = 0; i < lasers.length; i++) {
+    lasers[i].display();
+    lasers[i].move();
+    lasers[i].collision();
+}
 }
 // simulation of the crew members
 function debrisSimulation() {
@@ -126,7 +147,6 @@ function debrisSimulation() {
     rocks2.offScreen();
     rocks2.collision();
   }
-
 }
 
 function crewSimulation() {
@@ -171,6 +191,20 @@ function userSimulation() {
   }
   user.x = constrain(user.x, 0, width);
   user.y = constrain(user.y, 0, height);
+
+}
+// shoots the lasers
+function keyPressed() {
+  // shooting lasers
+  if (keyCode === 87) {
+    let laser = new Laser(user.x, user.y);
+    lasers.push(laser)
+    numLasers = numLasers - 1;
+    if(numLasers === 0){
+      location.reload();
+    }
+  }
+
 }
 
 // mainMenu state
@@ -194,7 +228,7 @@ function mainMenu() {
 
 
 }
-  //control state
+//control state
 function controls() {
   push();
   cursor(CROSS);
@@ -210,16 +244,13 @@ function controls() {
   text("Save your crew members before they are swept away in space!", 450, 250);
   textSize(25)
   fill(150 + cos(frameCount * 0.1) * 128);
-  text("Avoid the debris!", 430, 350);
+  text("Avoid the debris!", 450, 350);
   textSize(25);
   fill(150 + sin(frameCount * 0.1) * 128);
   text("Pick up power ups for special abilities!", 450, 450);
   textSize(25)
   fill(150 + cos(frameCount * 0.1) * 128);
   text("Move around using the arrow keys!", 450, 550);
-  textSize(25)
-  fill(255, 100, 100);
-  text("Use your mouse to shoot the debris!", 450, 600);
   textSize(25)
   fill(255, 100, 100);
   text("Every saved crew member is worth 500 points!", 450, 640);
@@ -229,47 +260,50 @@ function controls() {
   textSize(25)
   fill(255, 100, 100);
   text("Every power up is worth 200 points!", 450, 680);
+  textSize(25)
+  fill(255, 100, 100);
+  text("You only have 5 lasers, use them to pick up the powerups!", 450, 760);
   pop();
   if (keyCode === 13) {
     state = "tutorial";
   }
 }
 // tutorial state
- function tutorialText(){
-   push();
-   textAlign(CENTER,TOP);
-   textSize(20);
-   fill(0, 255, 76);
-   text("1", 70, 10 );
-   textSize(20);
-   fill(0, 255, 76);
-   text("Level:", 30, 10 );
-   pop();
- }
- // scorepoints state
- function points(){
-   push();
-   textAlign(CENTER,RIGHT);
-   textSize(20);
-   fill(212, 0, 255);
-   text(score, 870, 10);
-   textSize(20);
-   fill(212, 0, 255);
-   text("Total Points:", 790, 10);
-   pop();
- }
- // state lifes
- function life(){
-   push();
-   textAlign(CENTER,RIGHT);
-   textSize(20);
-   fill(255, 0, 115);
-   text(lives, 460, 10);
-   textSize(20);
-   fill(255, 0, 115);
-   text("Lives:", 420, 10);
-   pop();
- }
+function tutorialText() {
+  push();
+  textAlign(CENTER, TOP);
+  textSize(20);
+  fill(0, 255, 76);
+  text("1", 70, 10);
+  textSize(20);
+  fill(0, 255, 76);
+  text("Level:", 30, 10);
+  pop();
+}
+// scorepoints state
+function points() {
+  push();
+  textAlign(CENTER, RIGHT);
+  textSize(20);
+  fill(212, 0, 255);
+  text(score, 870, 10);
+  textSize(20);
+  fill(212, 0, 255);
+  text("Total Points:", 790, 10);
+  pop();
+}
+// state lifes
+function life() {
+  push();
+  textAlign(CENTER, RIGHT);
+  textSize(20);
+  fill(255, 0, 115);
+  text(lives, 460, 10);
+  textSize(20);
+  fill(255, 0, 115);
+  text("Lives:", 420, 10);
+  pop();
+}
 // crew saved state
 function win() {
   push();
@@ -281,7 +315,6 @@ function win() {
   textStyle(BOLDITALIC);
   fill(255);
   text(score, 570, 600);
-  fill(150 + sin(frameCount * 0.1) * 128);
   textAlign(CENTER, CENTER);
   text("You've saved all the crew members!", 450, 450);
   pop();
@@ -306,16 +339,14 @@ function loseLife() {
     location.reload();
   }
 }
-function mouseClicked(){
+// mainmenu
+function mouseClicked() {
 
-      if(state === 'mainMenu'){
-        if(mouseX < 450 && mouseX > 400){
-          if(mouseY < 275 && mouseY > 200) {
-            state = 'controls';
-          }
-        }
+  if (state === 'mainMenu') {
+    if (mouseX < 450 && mouseX > 400) {
+      if (mouseY < 275 && mouseY > 200) {
+        state = 'controls';
       }
     }
-
-
-// 50x, 400y, 200w, 75h
+  }
+}

@@ -11,6 +11,7 @@ class Rock2 {
       g: 202,
       b: 214,
     };
+    this.destroyed = false;
   }
 
   movement() {
@@ -43,9 +44,10 @@ class Rock2 {
       state = 'loseLife';
     }
     }
-  }
+    }
 
   display() {
+    if(!this.destroyed) {
     push();
     ellipseMode(CENTER);
     noStroke();
@@ -53,4 +55,6 @@ class Rock2 {
     ellipse(this.x, this.y, this.size);
     pop();
   }
+  }
+
 }
