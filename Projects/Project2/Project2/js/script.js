@@ -5,23 +5,25 @@ WHAT I WANT DONE FOR NEXT CLASS
 - BACKGROUND PLANETS
 - CREW MEMBER'S IMAGES
 - DIFFERENT LEVELS WITH DEBRIS + MOVEMENT
-- ABLE TO SHOOT DEBRIS???
 
 */
 let playImg;
 let shipImg;
-let pickUp = 1;
+let collect = {
+  pickups: [],
+  numPickUps: 5,
+};
 let lasers = [];
-let numLasers = 5;
+let numLasers = 10;
 let score = 0;
-let lives = 25;
+let lives = 100;
 let debris = {
-  //rocks2 and the # of them
+  //rocks2
   rocks2: [],
-  numRocks2: 30,
-  //rocks1 and the # of them
+  numRocks2: 100,
+  //rocks1
   rocks1: [],
-  numRocks1: 30,
+  numRocks1: 50,
 };
 let crew = {
   astronauts: [],
@@ -30,18 +32,14 @@ let crew = {
 
 let user = {
   x: 450,
-  y: 380,
+  y: 800,
   size: 20,
-  speed: 3,
+  speed: 3.5,
   r: 252,
   g: 186,
   b: 3,
 };
-let pick ={
-  x: 500,
-  y: 500,
-  size: 20,
-};
+
 "use strict";
 
 function preload() {
@@ -52,26 +50,34 @@ function preload() {
 
 function setup() {
   createCanvas(900, 900);
-  //  creates rocks1 in the array
-  for (let i = 0; i < debris.numRocks1; i++) {
-    let x = random(820, 70);
-    let y = random(450, 820);
-    let w = random(50, 110);
-    let h = 20;
-    let vx = random(2, 5);
-    let size = random(10, 30);
-    let rocks1 = new Rock1(x, y, w, h, vx, size);
-    debris.rocks1.push(rocks1);
+  //creates the powerup
+  for (let i = 0; i < collect.numPickUps; i++){
+    let x = random(0, 900);
+    let y = random(10, 900);
+    let size = 20;
+    pickups = new Pickup(x, y, size);
+    collect.pickups.push(pickups);
   }
+  //  creates rocks1 in the array
+  // for (let i = 0; i < debris.numRocks1; i++) {
+  //   let x = random(820, 70);
+  //   let y = random(450, 820);
+  //   let w = random(50, 110);
+  //   let h = 20;
+  //   let vx = random(2, 5);
+  //   let size = random(10, 30);
+  //   let rocks1 = new Rock1(x, y, w, h, vx, size);
+  //   debris.rocks1.push(rocks1);
+  // }
   // creates rocks2 in the array
   for (let i = 0; i < debris.numRocks2; i++) {
     let x = random(0, 900);
-    let y = random(20, 300);
+    let y = random(0, 0);
     let w = random(100, 130);
     let h = 20;
-    let vx = random(2, 5);
+    let vy = random(1, 3);
     let size = random(10, 30);
-    let rocks2 = new Rock2(x, y, w, h, vx, size);
+    let rocks2 = new Rock2(x, y, w, h, vy, size);
     debris.rocks2.push(rocks2);
   }
   // creates the astronauts in the array
@@ -90,9 +96,7 @@ let state = 'mainMenu';
 
 function draw() {
   background(30);
-  //pickup
-  fill(255);
-  ellipse(pick.x, pick.y, pick.size);
+
   //states
   if (state === 'mainMenu') {
     mainMenu();
@@ -106,6 +110,8 @@ function draw() {
     points();
     life();
     laserSimulation();
+    numLasersRemaining();
+    powerupSimulation()
   } else if (state === 'level1') {
 
   } else if (state === 'level2') {
@@ -116,17 +122,21 @@ function draw() {
     win();
   } else if (state === 'loseLife') {
     loseLife();
-  } else if (timer === 0) {
-
   }
 }
 
+function powerupSimulation(){
+  for (let i = 0; i < collect.pickups.length; i++){
+    let pickups = collect.pickups[i];
+      pickups.display();
+      pickups.collision();
+  }
+}
 function laserSimulation() {
   // displays the lasers in the array
   for (let i = 0; i < lasers.length; i++) {
     lasers[i].display();
-    lasers[i].move();
-    lasers[i].collision();
+    lasers[i].move1();
 }
 }
 // simulation of the crew members
@@ -146,6 +156,7 @@ function debrisSimulation() {
     rocks2.display();
     rocks2.offScreen();
     rocks2.collision();
+    rocks2.collisionLaser();
   }
 }
 
@@ -190,7 +201,7 @@ function userSimulation() {
     user.y += user.speed;
   }
   user.x = constrain(user.x, 0, width);
-  user.y = constrain(user.y, 0, height);
+  user.y = constrain(user.y, 0, 850);
 
 }
 // shoots the lasers
@@ -200,11 +211,10 @@ function keyPressed() {
     let laser = new Laser(user.x, user.y);
     lasers.push(laser)
     numLasers = numLasers - 1;
-    if(numLasers === 0){
-      location.reload();
-    }
   }
-
+  if (numLasers === 0) {
+    location.reload();
+  }
 }
 
 // mainMenu state
@@ -247,7 +257,7 @@ function controls() {
   text("Avoid the debris!", 450, 350);
   textSize(25);
   fill(150 + sin(frameCount * 0.1) * 128);
-  text("Pick up power ups for special abilities!", 450, 450);
+  text("(W)Shoot the debris with your lasers to avoid it!", 450, 450);
   textSize(25)
   fill(150 + cos(frameCount * 0.1) * 128);
   text("Move around using the arrow keys!", 450, 550);
@@ -256,13 +266,13 @@ function controls() {
   text("Every saved crew member is worth 500 points!", 450, 640);
   textSize(25)
   fill(255, 100, 100);
-  text("If your lives fall below 25 you lose!", 450, 720);
+  text("If your lives fall below 0 you lose!", 450, 720);
   textSize(25)
   fill(255, 100, 100);
   text("Every power up is worth 200 points!", 450, 680);
   textSize(25)
   fill(255, 100, 100);
-  text("You only have 5 lasers, use them to pick up the powerups!", 450, 760);
+  text("You start off with 10 lasers, use them to shoot pickups!", 450, 760);
   pop();
   if (keyCode === 13) {
     state = "tutorial";
@@ -319,7 +329,7 @@ function win() {
   text("You've saved all the crew members!", 450, 450);
   pop();
 }
-
+// losing all lives
 function loseLife() {
   push();
   textSize(30);
@@ -338,6 +348,15 @@ function loseLife() {
   if (keyIsDown(SHIFT)) {
     location.reload();
   }
+}
+
+function numLasersRemaining() {
+  push();
+  textAlign(LEFT, LEFT);
+  textSize(20);
+  fill(255);
+  text(numLasers, 0, 400);
+  pop();
 }
 // mainmenu
 function mouseClicked() {
