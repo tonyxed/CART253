@@ -1,5 +1,5 @@
 class Rock2 {
-  constructor(x, y, w, h, vy, size) {
+  constructor(x, y, w, h, vy,size) {
     this.x = x;
     this.y = y;
     this.w = w; //width
@@ -24,7 +24,7 @@ class Rock2 {
     let red = random(104, 138);
     let blue = random(137, 205);
     let green = random(143, 220);
-    let vy = 5;
+    let vy = random(1,3);
     if (this.y > height) {
       this.x = random(0, 900);
       this.y = 0;

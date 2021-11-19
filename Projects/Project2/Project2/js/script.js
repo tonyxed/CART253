@@ -7,6 +7,7 @@ WHAT I WANT DONE FOR NEXT CLASS
 - DIFFERENT LEVELS WITH DEBRIS + MOVEMENT
 - ASTRONAUTS WRAP BACK, AND IF U RUN OUT OF LASERS THE DREBRIS WILL KILL YOU? --LOSING STATE
 - SAVED ALL CREWMEMBERS -- WINING STATE
+- RANDOM MOVEMENT ON X-AXIS FOR CREW,DEBRIS,PICKUPS!
 */
 let playImg;
 let shipImg;
@@ -67,7 +68,7 @@ function setup() {
     let h = 20;
     let vy = random(1, 3);
     let size = random(10, 30);
-    let rocks2 = new Rock2(x, y, w, h, vy, size);
+    let rocks2 = new Rock2(x, y, w, h, vy,size);
     debris.rocks2.push(rocks2);
   }
   // creates the astronauts in the array
@@ -159,6 +160,7 @@ function crewSimulation() {
     astronauts.display();
     astronauts.checkCollision();
     astronauts.move();
+    astronauts.offScreen();
     if (astronauts.saved === true) {
       astronautsSaved += 1;
     }

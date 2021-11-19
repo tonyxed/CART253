@@ -27,7 +27,14 @@ class Astronaut {
     this.y = this.y + this.vy;
 
   }
-  
+  offScreen(){
+    let vy = random(1,3);
+    if (this.y > height) {
+      this.x = random(0, 900);
+      this.y = 0;
+      this.vx = vy;
+  }
+}
   checkCollision() {
     if (!this.saved) {
       let d = dist(user.x, user.y, this.x, this.y);
@@ -38,5 +45,4 @@ class Astronaut {
       }
     }
   }
-
 }
