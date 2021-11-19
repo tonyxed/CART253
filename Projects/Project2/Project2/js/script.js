@@ -207,13 +207,10 @@ function userSimulation() {
 // shoots the lasers
 function keyPressed() {
   // shooting lasers
-  if (keyCode === 87) {
+  if (keyCode === 32) {
     let laser = new Laser(user.x, user.y);
     lasers.push(laser)
     numLasers = numLasers - 1;
-  }
-  if (numLasers === 0) {
-    location.reload();
   }
 }
 
@@ -355,7 +352,7 @@ function numLasersRemaining() {
   textAlign(LEFT, LEFT);
   textSize(20);
   fill(255);
-  text(numLasers, 0, 400);
+  text(numLasers, user.x, user.y);
   pop();
 }
 // mainmenu
