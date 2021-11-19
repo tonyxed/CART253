@@ -244,16 +244,19 @@ function controls() {
   text("Move around using the arrow keys!", 450, 550);
   textSize(25)
   fill(255, 100, 100);
-  text("Every saved crew member is worth 500 points!", 450, 640);
+  text("Every saved crew member is worth 500 points!", 450, 600);
   textSize(25)
   fill(255, 100, 100);
-  text("If your lives fall below 0 you lose!", 450, 720);
+  text("If your lives fall below 0 you lose!", 450, 680);
   textSize(25)
   fill(255, 100, 100);
-  text("Every power up is worth 200 points!", 450, 680);
+  text("Every power up is worth 200 points!", 450, 640);
   textSize(25)
   fill(255, 100, 100);
-  text("You start off with 10 lasers, use them to shoot pickups!", 450, 760);
+  text("You start off with 10 lasers, use them to shoot pickups!", 450, 720);
+  textSize(25)
+  fill(255, 100, 100);
+  text("Pickups will give randomized properties; either good or bad!", 450, 760);
   pop();
   if (keyCode === 13) {
     state = "tutorial";
