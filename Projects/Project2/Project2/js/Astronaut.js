@@ -1,9 +1,8 @@
 class Astronaut {
-  constructor(x, y, size, vx, vy) {
+  constructor(x, y, size, vy) {
     this.x = x;
     this.y = y;
     this.size = size;
-    this.vx = vx;
     this.vy = vy;
     this.color = {
       r: 145,
@@ -25,17 +24,10 @@ class Astronaut {
   }
 
   move() {
-    this.x = this.x + this.vx;
     this.y = this.y + this.vy;
-    //floating
-    this.vx = random(-1, 1);
-    this.vy = random(-1, 1);
-  }
-  constrain() {
-    this.x = constrain(this.x, 10, 900);
-    this.y = constrain(this.y, 10, 900);
-  }
 
+  }
+  
   checkCollision() {
     if (!this.saved) {
       let d = dist(user.x, user.y, this.x, this.y);
@@ -46,5 +38,5 @@ class Astronaut {
       }
     }
   }
-  
+
 }
