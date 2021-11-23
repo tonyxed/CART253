@@ -25,7 +25,7 @@ let meteorImg;
 let laserImg;
 let collect = {
   pickups: [],
-  numPickUps: 3,
+  numPickUps: 4,
 };
 let lasers = [];
 let numLasers = 8;
@@ -91,9 +91,10 @@ function setup() {
   for (let i = 0; i < collect.numPickUps; i++) {
     let x = random(0, 900);
     let y = random(50, 800);
-    let vy = random(0);
+    let vy = 0;
+    let vx = random();
     let size = 20;
-    pickups = new Pickup(x, y, vy, size);
+    pickups = new Pickup(x, y, vy, vx, size);
     collect.pickups.push(pickups);
   }
   //creates the rocks2
@@ -102,9 +103,10 @@ function setup() {
     let y = random(50, 900);
     let w = random(100, 130);
     let h = 20;
-    let vy = random(2, 4);
+    let vy = random(1, 3);
+    let vx = 0;
     let size = random(10, 30);
-    let rocks2 = new Rock2(x, y, w, h, vy, size);
+    let rocks2 = new Rock2(x, y, w, h, vy, vx, size);
     debris.rocks2.push(rocks2);
   }
   // creates the astronauts in the array
@@ -113,7 +115,8 @@ function setup() {
     let y = random(50, 800);
     let size = random(20, 30);
     let vy = random(1, 3);
-    let astronauts = new Astronaut(x, y, size, vy);
+    let vx = 0;
+    let astronauts = new Astronaut(x, y, size, vy, vx);
     crew.astronauts.push(astronauts);
   }
   // creates the stars1
@@ -179,6 +182,7 @@ function pickupSimulation() {
     pickups.display();
     pickups.collision();
     pickups.move();
+    pickups.floating()
   }
 }
 
@@ -208,6 +212,7 @@ function debrisSimulation() {
     rocks2.offScreen();
     rocks2.collision();
     rocks2.collisionLaser();
+    rocks2.randomness();
   }
 }
 
@@ -220,6 +225,7 @@ function crewSimulation() {
     astronauts.checkCollision();
     astronauts.move();
     astronauts.offScreen();
+    astronauts.floating();
     if (astronauts.saved === true) {
       astronautsSaved += 1;
     }
@@ -234,11 +240,9 @@ function crewSimulation() {
 function userSimulation() {
   // properties of the user
   push();
-  noCursor();
-  stroke(1000);
   fill(user.r, user.g, user.b);
-  image(shipImg, user.x, user.y, 50, 50);
   imageMode(CENTER);
+  image(shipImg, user.x, user.y, 50, 50);
   pop();
   // user movement
   if (keyIsDown(LEFT_ARROW)) {
@@ -383,7 +387,7 @@ function numDurabilityRemaining() {
   textAlign(LEFT, LEFT);
   textSize(30);
   fill(255);
-  text(durability, user.x, user.y);
+  text(durability, user.x +50, user.y);
   pop();
 }
 // mainmenu

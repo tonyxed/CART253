@@ -1,10 +1,12 @@
 class Pickup {
-  constructor(x, y, vy, size) {
+  constructor(x, y, vy, vx, size) {
     this.x = x;
     this.y = y;
     this.vy = vy;
+    this.vx = vx;
     this.r = 20;
     this.size = size;
+    this.float = 0.2;
     this.shot = false;
     this.present = true;
   }
@@ -21,6 +23,13 @@ class Pickup {
   //moving
   move() {
     this.y += this.vy;
+    this.x += this.vx;
+  }
+  floating(){
+    let r = random();
+    if (r < this.float){
+      this.vx = random(-.6,.6);
+    }
   }
   //checks the collision between lasers in the array and this class
   collision() {

@@ -1,11 +1,13 @@
 class Rock2 {
-  constructor(x, y, w, h, vy, size) {
+  constructor(x, y, w, h, vy, vx, size) {
     this.x = x;
     this.y = y;
     this.w = w; //width
     this.h = h; //height
     this.size = size;
     this.vy = vy;
+    this.vx = vx;
+    this.r = .05;
     this.color = {
       r: 138,
       g: 202,
@@ -30,6 +32,13 @@ class Rock2 {
   // movement
   movement() {
     this.y += this.vy;
+    this.x += this.vx;
+  }
+  randomness(){
+    let r = random();
+    if (r < this.r){
+      this.vx = random(-.1,.1);
+    }
   }
   //checks if this class is offScreen
   offScreen() {
@@ -44,7 +53,7 @@ class Rock2 {
       this.color.r = red;
       this.color.g = green;
       this.color.b = blue;
-      this.vy = this.vy + .2;
+      this.vy = this.vy + .1;
     }
   }
   //checks the collision between this class and the user

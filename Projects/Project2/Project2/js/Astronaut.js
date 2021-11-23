@@ -1,9 +1,11 @@
 class Astronaut {
-  constructor(x, y, size, vy) {
+  constructor(x, y, size, vy, vx) {
     this.x = x;
     this.y = y;
     this.size = size;
     this.vy = vy;
+    this.vx = vx;
+    this.float = .5;
     this.color = {
       r: 145,
       g: 255,
@@ -26,7 +28,13 @@ class Astronaut {
   //moves
   move() {
     this.y = this.y + this.vy;
-
+    this.x = this.x + this.vx;
+  }
+  floating(){
+    let r = random();
+    if (r < this.float){
+      this.vx = random(-.4,.4);
+    }
   }
   // checks off screen
   offScreen() {
