@@ -13,19 +13,22 @@ class Rock1 {
     }
     this.destroyed = false;
   }
+  //displays the rock
   display() {
-    if (!this.destroyed){
-    push();
-    ellipseMode(CENTER);
-    noStroke();
-    fill(this.color.r, this.color.g, this.color.b);
-    ellipse(this.x, this.y, this.size);
-    pop();
+    if (!this.destroyed) {
+      push();
+      ellipseMode(CENTER);
+      noStroke();
+      fill(this.color.r, this.color.g, this.color.b);
+      ellipse(this.x, this.y, this.size);
+      pop();
+    }
   }
-  }
+  //moves the rock
   movement() {
     this.x -= this.vx;
   }
+  //checks if the rock is offScreen
   offScreen() {
     let x = random(820, 110);
     let y = random(450, 880);
@@ -44,15 +47,16 @@ class Rock1 {
       this.vx = vx;
     }
   }
+  //checks the collision between this class and the user
   collision() {
     let d = dist(user.x, user.y, this.x, this.y);
     if (d < this.size / 2 + user.size / 2) {
       lives = lives - 1;
       this.color.r = 255;
-      if (lives === 0){
+      if (lives === 0) {
         state = 'loseLife';
       }
     }
   }
-  
+
 }

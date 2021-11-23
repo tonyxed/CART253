@@ -6,7 +6,8 @@ WHAT I WANT DONE FOR NEXT CLASS
 - BACKGROUND PLANETS
 - REFERENCED ALL IMAGES AND SOUNDS
 */
-//sound images
+
+//sounds
 let laserSound;
 let debrisLaser;
 let savedSound;
@@ -14,7 +15,7 @@ let debrisImpact;
 let pickupSound;
 let victorySound;
 let loseSound;
-//object images
+//images
 let playImg;
 let shipImg;
 let pickupImg;
@@ -83,8 +84,9 @@ function preload() {
 
 function setup() {
   createCanvas(900, 900);
-  //creates the powerup
-  for (let i = 0; i < collect.numPickUps; i++){
+
+  //creates the pickup
+  for (let i = 0; i < collect.numPickUps; i++) {
     let x = random(0, 900);
     let y = random(50, 800);
     let vy = random(0);
@@ -92,14 +94,15 @@ function setup() {
     pickups = new Pickup(x, y, vy, size);
     collect.pickups.push(pickups);
   }
+  //creates the rocks2
   for (let i = 0; i < debris.numRocks2; i++) {
     let x = random(0, 900);
     let y = random(50, 900);
     let w = random(100, 130);
     let h = 20;
-    let vy = random(2,4);
+    let vy = random(2, 4);
     let size = random(10, 30);
-    let rocks2 = new Rock2(x, y, w, h, vy,size);
+    let rocks2 = new Rock2(x, y, w, h, vy, size);
     debris.rocks2.push(rocks2);
   }
   // creates the astronauts in the array
@@ -107,16 +110,16 @@ function setup() {
     let x = random(0, 900);
     let y = random(50, 800);
     let size = random(20, 30);
-    let vy = random(1,3);
+    let vy = random(1, 3);
     let astronauts = new Astronaut(x, y, size, vy);
     crew.astronauts.push(astronauts);
   }
   // creates the stars1
-  for (let i = 0; i < body.numStars1; i++){
+  for (let i = 0; i < body.numStars1; i++) {
     body.stars1[i] = new Stars1();
   }
   // creates the stars2
-  for (let i = 0; i < body.numStars2; i++){
+  for (let i = 0; i < body.numStars2; i++) {
     body.stars2[i] = new Stars2();
   }
 }
@@ -131,7 +134,7 @@ function draw() {
     mainMenu();
   } else if (state === 'controls') {
     controls();
-  } else if (state === 'tutorial') {
+  } else if (state === 'level1') {
     userSimulation();
     debrisSimulation();
     crewSimulation();
@@ -139,53 +142,52 @@ function draw() {
     points();
     laserSimulation();
     numLasersRemaining();
-    powerupSimulation();
+    pickupSimulation();
     numDurabilityRemaining();
     starsSimulation();
-  } else if (state === 'level1') {
-
   } else if (state === 'level2') {
 
   } else if (state === 'level3') {
 
   } else if (state === 'crewSaved') {
     win();
-  } else if (state === 'lose'){
+  } else if (state === 'lose') {
     lasersFinished();
-  } else if (state === 'durabilityLose'){
+  } else if (state === 'durabilityLose') {
     durabilityLose();
   }
 }
 // displays the stars
-function starsSimulation(){
+function starsSimulation() {
 
-    for (let i = 0; i < body.numStars1; i++){
-      body.stars1[i].move();
-      body.stars1[i].display();
-    }
+  for (let i = 0; i < body.numStars1; i++) {
+    body.stars1[i].move();
+    body.stars1[i].display();
+  }
 
-    for (let i = 0; i < body.numStars2; i++){
-      body.stars2[i].move();
-      body.stars2[i].display();
-    }
-}
-
-
-function powerupSimulation(){
-  for (let i = 0; i < collect.pickups.length; i++){
-    let pickups = collect.pickups[i];
-      pickups.display();
-      pickups.collision();
-      pickups.move();
+  for (let i = 0; i < body.numStars2; i++) {
+    body.stars2[i].move();
+    body.stars2[i].display();
   }
 }
+
+// pickupSimulation
+function pickupSimulation() {
+  for (let i = 0; i < collect.pickups.length; i++) {
+    let pickups = collect.pickups[i];
+    pickups.display();
+    pickups.collision();
+    pickups.move();
+  }
+}
+
 function laserSimulation() {
   // displays the lasers in the array
   for (let i = 0; i < lasers.length; i++) {
     lasers[i].display();
     lasers[i].move();
     lasers[i].lasersAtZero();
-}
+  }
 }
 // simulation of the crew members
 function debrisSimulation() {
@@ -244,7 +246,7 @@ function userSimulation() {
   if (keyIsDown(RIGHT_ARROW)) {
     user.x += user.speed;
   }
-
+  //constrains the user
   user.x = constrain(user.x, 0, 870);
 
 }
@@ -281,7 +283,7 @@ function mainMenu() {
 
 
 }
-//control state
+//controls state
 function controls() {
   push();
   cursor(CROSS);
@@ -321,7 +323,7 @@ function controls() {
   text("Your ships durability will decrease over time, so hurry up!", 450, 760);
   pop();
   if (keyCode === 13) {
-    state = "tutorial";
+    state = "level1";
   }
 }
 // tutorial state
@@ -362,18 +364,19 @@ function win() {
   fill(255);
   text(score, 570, 600);
   textAlign(CENTER, CENTER);
-  text("You've beaten the tutorial!", 450, 450);
+  text("You've beaten level 1!", 450, 450);
   pop();
 }
-
+// # of lasers left
 function numLasersRemaining() {
   push();
   textAlign(TOP, TOP);
   textSize(30);
   fill(255);
-  text(numLasers, 450,0);
+  text(numLasers, 450, 0);
   pop();
 }
+// total durability of the ship remaining
 function numDurabilityRemaining() {
   push();
   textAlign(LEFT, LEFT);
@@ -392,7 +395,8 @@ function mouseClicked() {
     }
   }
 }
-function lasersFinished(){
+// lasers finished
+function lasersFinished() {
   push();
   textSize(30);
   background(0);
@@ -406,7 +410,8 @@ function lasersFinished(){
   text("You've ran out of lasers!", 450, 450);
   pop();
 }
-function durabilityLose(){
+// durability lose
+function durabilityLose() {
   push();
   textSize(30);
   background(0);
