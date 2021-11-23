@@ -18,7 +18,9 @@ class Astronaut {
       push();
       noStroke();
       fill(this.color.r, this.color.g, this.color.b);
-      ellipse(this.x, this.y, this.size);
+      imageMode(CENTER,CENTER);
+      image(astronautImg, this.x, this.y, 30, 30);
+      //ellipse(this.x, this.y, this.size);
       pop();
     }
   }
@@ -42,6 +44,8 @@ class Astronaut {
         score = score + 500;
         this.alive = false;
         this.saved = true;
+        savedSound.setVolume(.1);
+        savedSound.play();
       }
     }
   }

@@ -24,7 +24,6 @@ class Rock2 {
     let red = random(104, 138);
     let blue = random(137, 205);
     let green = random(143, 220);
-    let vy = random(1,3);
     if (this.y > height) {
       this.x = random(0, 900);
       this.y = 0;
@@ -32,19 +31,20 @@ class Rock2 {
       this.color.r = red;
       this.color.g = green;
       this.color.b = blue;
-      this.vx = vy;
+      this.vy = this.vy + .2;
     }
   }
   collision() {
     let d = dist(user.x, user.y, this.x, this.y);
     if (d < this.size / 2 + user.size / 2) {
     this.color.r = 255;
-    lives = lives - 1;
-    if (lives === 0){
-      state = 'loseLife';
+    score = score - 1;
+    durability = durability - 1;
     }
+    if(durability === 0){
+      state = "durabilityLose";
     }
-    }
+  }
     collisionLaser(){
       if(!this.destroyed){
         for(let i = 0; i <lasers.length; i++){
@@ -53,6 +53,8 @@ class Rock2 {
           if (d < this.size/2 + lasers[i].size/2) {
             this.destroyed = true;
             this.alive = false;
+            debrisLaser.setVolume(0.1);
+            debrisLaser.play();
       }
         }
       }
@@ -65,7 +67,8 @@ class Rock2 {
     ellipseMode(CENTER);
     noStroke();
     fill(this.color.r, this.color.g, this.color.b);
-    ellipse(this.x, this.y, this.size);
+    imageMode(CENTER,CENTER);
+    image(meteorImg,this.x,this.y, 30, 30);
     pop();
   }
   }

@@ -12,7 +12,8 @@ class Pickup {
       if(!this.shot){
       push();
       fill(255);
-      ellipse(this.x, this.y, this.size);
+      imageMode(CENTER,CENTER);
+      image(pickupImg,this.x, this.y, 25, 25);
       pop();
 }
 
@@ -29,6 +30,9 @@ move(){
         this.shot = true;
         this.present = false;
         numLasers = numLasers + 5;
+        durability = durability + 50;
+        pickupSound.setVolume(.1);
+        pickupSound.play();
       }
     }
   }

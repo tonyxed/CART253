@@ -1,24 +1,37 @@
 /**
 Anthony Calderone
 WHAT I WANT DONE FOR NEXT CLASS
-- QOL CHANGES // MORE LIFE TO THE GAME IE: SOUND
-- BACKGROUND PLANETS
+- LASERS DON"T GO BELOW 0
 - CREW MEMBER'S IMAGES
-- DIFFERENT LEVELS WITH DEBRIS + MOVEMENT
+- PICKUP IMAGES
+- RANDOM MOVEMENT ON X-AXIS FOR CREW,DEBRIS,PICKUPS!
 - ASTRONAUTS WRAP BACK, AND IF U RUN OUT OF LASERS THE DREBRIS WILL KILL YOU? --LOSING STATE
 - SAVED ALL CREWMEMBERS -- WINING STATE
-- RANDOM MOVEMENT ON X-AXIS FOR CREW,DEBRIS,PICKUPS!
+- DIFFERENT LEVELS WITH DEBRIS + MOVEMENT
+- BACKGROUND PLANETS
 */
+//sound images
+let laserSound;
+let debrisLaser;
+let savedSound;
+let debrisImpact;
+let pickupSound;
+let victorySound;
+let loseSound;
+//object images
 let playImg;
 let shipImg;
+let pickupImg;
+let astronautImg;
+let meteorImg;
 let collect = {
   pickups: [],
-  numPickUps: 5,
+  numPickUps: 3,
 };
 let lasers = [];
-let numLasers = 10;
+let numLasers = 8;
 let score = 0;
-let lives = 100;
+let durability = 250;
 let debris = {
   //rocks2
   rocks2: [],
@@ -29,7 +42,7 @@ let debris = {
 };
 let crew = {
   astronauts: [],
-  numAstronauts: 10,
+  numAstronauts: 6,
 }
 
 let user = {
@@ -45,8 +58,20 @@ let user = {
 "use strict";
 
 function preload() {
+  // images
   shipImg = loadImage("assets/images/spaceship.png");
   playImg = loadImage("assets/images/play.png");
+  pickupImg = loadImage("assets/images/pickup.png");
+  astronautImg = loadImage("assets/images/astronaut.png");
+  meteorImg = loadImage("assets/images/meteor.png");
+  // sounds // ALL GOTTEN FROM FREESOUND.ORG
+  laserSound = loadSound("assets/sounds/laser.wav");
+  debrisLaser = loadSound("assets/sounds/debris.wav");
+  savedSound = loadSound("assets/sounds/saved.wav");
+  debrisImpact = loadSound("assets/sounds/debrisImpact.wav");
+  pickupSound = loadSound("assets/sounds/pickup.wav");
+  victorySound = loadSound("assets/sounds/victory.wav");
+  loseSound = loadSound("assets/sounds/lose.wav");
 }
 
 
@@ -55,18 +80,18 @@ function setup() {
   //creates the powerup
   for (let i = 0; i < collect.numPickUps; i++){
     let x = random(0, 900);
-    let y = random(50, 0);
-    let vy = random(.2, 1);
+    let y = random(50, 800);
+    let vy = random(0);
     let size = 20;
     pickups = new Pickup(x, y, vy, size);
     collect.pickups.push(pickups);
   }
   for (let i = 0; i < debris.numRocks2; i++) {
     let x = random(0, 900);
-    let y = random(50, 0);
+    let y = random(50, 900);
     let w = random(100, 130);
     let h = 20;
-    let vy = random(1, 3);
+    let vy = random(1,3);
     let size = random(10, 30);
     let rocks2 = new Rock2(x, y, w, h, vy,size);
     debris.rocks2.push(rocks2);
@@ -74,7 +99,7 @@ function setup() {
   // creates the astronauts in the array
   for (let i = 0; i < crew.numAstronauts; i++) {
     let x = random(0, 900);
-    let y = random(50, 0);
+    let y = random(50, 800);
     let size = random(20, 30);
     let vy = random(1,3);
     let astronauts = new Astronaut(x, y, size, vy);
@@ -98,10 +123,10 @@ function draw() {
     crewSimulation();
     tutorialText();
     points();
-    life();
     laserSimulation();
     numLasersRemaining();
-    powerupSimulation()
+    powerupSimulation();
+    numDurabilityRemaining();
   } else if (state === 'level1') {
 
   } else if (state === 'level2') {
@@ -110,9 +135,10 @@ function draw() {
 
   } else if (state === 'crewSaved') {
     win();
-  } else if (state === 'loseLife') {
-    loseLife();
-
+  } else if (state === 'lose'){
+    lasersFinished();
+  } else if (state === 'durabilityLose'){
+    durabilityLose();
   }
 }
 
@@ -128,7 +154,8 @@ function laserSimulation() {
   // displays the lasers in the array
   for (let i = 0; i < lasers.length; i++) {
     lasers[i].display();
-    lasers[i].move1();
+    lasers[i].move();
+    lasers[i].lasersAtZero();
 }
 }
 // simulation of the crew members
@@ -167,9 +194,10 @@ function crewSimulation() {
   }
   if (astronautsSaved === crew.astronauts.length) {
     state = 'crewSaved';
+    victorySound.setVolume(.1);
+    victorySound.play();
   }
 }
-
 
 function userSimulation() {
   // properties of the user
@@ -194,9 +222,11 @@ function userSimulation() {
 function keyPressed() {
   // shooting lasers
   if (keyCode === 32) {
+    numLasers = numLasers - 1;
     let laser = new Laser(user.x, user.y);
     lasers.push(laser)
-    numLasers = numLasers - 1;
+    laserSound.setVolume(.1);
+    laserSound.play();
   }
 }
 
@@ -249,16 +279,16 @@ function controls() {
   text("Every saved crew member is worth 500 points!", 450, 600);
   textSize(25)
   fill(255, 100, 100);
-  text("If your lives fall below 0 you lose!", 450, 680);
+  text("For every debris you hit, your points will be deducted!", 450, 680);
   textSize(25)
   fill(255, 100, 100);
-  text("Every power up is worth 200 points!", 450, 640);
+  text("Every pickup is worth 200 points!", 450, 640);
   textSize(25)
   fill(255, 100, 100);
-  text("You start off with 10 lasers, use them to shoot pickups!", 450, 720);
+  text("If your lasers reach 0, you lose!", 450, 720);
   textSize(25)
   fill(255, 100, 100);
-  text("Pickups will give randomized properties; either good or bad!", 450, 760);
+  text("Your ships durability will decrease over time, so hurry up!", 450, 760);
   pop();
   if (keyCode === 13) {
     state = "tutorial";
@@ -288,18 +318,8 @@ function points() {
   text("Total Points:", 790, 10);
   pop();
 }
-// state lifes
-function life() {
-  push();
-  textAlign(CENTER, RIGHT);
-  textSize(20);
-  fill(255, 0, 115);
-  text(lives, 460, 10);
-  textSize(20);
-  fill(255, 0, 115);
-  text("Lives:", 420, 10);
-  pop();
-}
+
+
 // crew saved state
 function win() {
   push();
@@ -316,38 +336,24 @@ function win() {
   pop();
 }
 
-// losing all lives
-function loseLife() {
-  push();
-  textSize(30);
-  background(0);
-  textStyle(BOLDITALIC);
-  fill(255);
-  text("Your total score was:", 250, 600);
-  fill(255);
-  textStyle(BOLDITALIC);
-  text(score, 570, 600);
-  fill(150 + sin(frameCount * 0.1) * 128);
-  textAlign(CENTER, CENTER);
-  textStyle(BOLDITALIC);
-  text("You've lost all your lives!", 450, 450);
-  pop();
-  if (keyIsDown(SHIFT)) {
-    location.reload();
-  }
-}
-
 function numLasersRemaining() {
+  push();
+  textAlign(TOP, TOP);
+  textSize(30);
+  fill(255);
+  text(numLasers, 450,0);
+  pop();
+}
+function numDurabilityRemaining() {
   push();
   textAlign(LEFT, LEFT);
   textSize(30);
   fill(255);
-  text(numLasers, user.x,user.y);
+  text(durability, user.x, user.y);
   pop();
 }
 // mainmenu
 function mouseClicked() {
-
   if (state === 'mainMenu') {
     if (mouseX < 450 && mouseX > 400) {
       if (mouseY < 275 && mouseY > 200) {
@@ -355,4 +361,32 @@ function mouseClicked() {
       }
     }
   }
+}
+function lasersFinished(){
+  push();
+  textSize(30);
+  background(0);
+  textStyle(BOLDITALIC);
+  fill(255);
+  text("Your total score was:", 350, 600);
+  textStyle(BOLDITALIC);
+  fill(255);
+  text(score, 570, 600);
+  textAlign(CENTER, CENTER);
+  text("You've ran out of lasers!", 450, 450);
+  pop();
+}
+function durabilityLose(){
+  push();
+  textSize(30);
+  background(0);
+  textStyle(BOLDITALIC);
+  fill(255);
+  text("Your total score was:", 350, 600);
+  textStyle(BOLDITALIC);
+  fill(255);
+  text(score, 570, 600);
+  textAlign(CENTER, CENTER);
+  text("Your ship ran out of durability!", 450, 450);
+  pop();
 }
