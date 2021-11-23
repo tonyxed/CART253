@@ -8,7 +8,9 @@ class Laser {
   display() {
     noStroke();
     fill(50, 0, 200);
-    ellipse(this.x, this.y, this.size);
+    imageMode(CENTER);
+    image(laserImg, this.x, this.y, 40, 40);
+
   }
   move() {
     this.y = this.y - 6;
@@ -16,7 +18,7 @@ class Laser {
   lasersAtZero(){
     if (numLasers === 0){
       state = 'lose';
-      loseSound.setVolume(.2);
+      loseSound.setVolume(.05);
       loseSound.play();
     }
   }

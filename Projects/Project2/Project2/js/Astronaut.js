@@ -18,9 +18,8 @@ class Astronaut {
       push();
       noStroke();
       fill(this.color.r, this.color.g, this.color.b);
-      imageMode(CENTER,CENTER);
+      imageMode(CENTER);
       image(astronautImg, this.x, this.y, 30, 30);
-      //ellipse(this.x, this.y, this.size);
       pop();
     }
   }

@@ -1,14 +1,10 @@
 /**
 Anthony Calderone
 WHAT I WANT DONE FOR NEXT CLASS
-- LASERS DON"T GO BELOW 0
-- CREW MEMBER'S IMAGES
-- PICKUP IMAGES
 - RANDOM MOVEMENT ON X-AXIS FOR CREW,DEBRIS,PICKUPS!
-- ASTRONAUTS WRAP BACK, AND IF U RUN OUT OF LASERS THE DREBRIS WILL KILL YOU? --LOSING STATE
-- SAVED ALL CREWMEMBERS -- WINING STATE
 - DIFFERENT LEVELS WITH DEBRIS + MOVEMENT
 - BACKGROUND PLANETS
+- REFERENCED ALL IMAGES AND SOUNDS
 */
 //sound images
 let laserSound;
@@ -24,6 +20,7 @@ let shipImg;
 let pickupImg;
 let astronautImg;
 let meteorImg;
+let laserImg;
 let collect = {
   pickups: [],
   numPickUps: 3,
@@ -32,6 +29,14 @@ let lasers = [];
 let numLasers = 8;
 let score = 0;
 let durability = 250;
+// stars
+let body = {
+  stars1: [],
+  numStars1: 100,
+  stars2: [],
+  numStars2: 100,
+};
+
 let debris = {
   //rocks2
   rocks2: [],
@@ -64,6 +69,7 @@ function preload() {
   pickupImg = loadImage("assets/images/pickup.png");
   astronautImg = loadImage("assets/images/astronaut.png");
   meteorImg = loadImage("assets/images/meteor.png");
+  laserImg = loadImage("assets/images/laser.png");
   // sounds // ALL GOTTEN FROM FREESOUND.ORG
   laserSound = loadSound("assets/sounds/laser.wav");
   debrisLaser = loadSound("assets/sounds/debris.wav");
@@ -91,7 +97,7 @@ function setup() {
     let y = random(50, 900);
     let w = random(100, 130);
     let h = 20;
-    let vy = random(1,3);
+    let vy = random(2,4);
     let size = random(10, 30);
     let rocks2 = new Rock2(x, y, w, h, vy,size);
     debris.rocks2.push(rocks2);
@@ -105,12 +111,20 @@ function setup() {
     let astronauts = new Astronaut(x, y, size, vy);
     crew.astronauts.push(astronauts);
   }
+  // creates the stars1
+  for (let i = 0; i < body.numStars1; i++){
+    body.stars1[i] = new Stars1();
+  }
+  // creates the stars2
+  for (let i = 0; i < body.numStars2; i++){
+    body.stars2[i] = new Stars2();
+  }
 }
 //state
 let state = 'mainMenu';
 
 function draw() {
-  background(30);
+  background(0);
 
   //states
   if (state === 'mainMenu') {
@@ -127,6 +141,7 @@ function draw() {
     numLasersRemaining();
     powerupSimulation();
     numDurabilityRemaining();
+    starsSimulation();
   } else if (state === 'level1') {
 
   } else if (state === 'level2') {
@@ -141,6 +156,20 @@ function draw() {
     durabilityLose();
   }
 }
+// displays the stars
+function starsSimulation(){
+
+    for (let i = 0; i < body.numStars1; i++){
+      body.stars1[i].move();
+      body.stars1[i].display();
+    }
+
+    for (let i = 0; i < body.numStars2; i++){
+      body.stars2[i].move();
+      body.stars2[i].display();
+    }
+}
+
 
 function powerupSimulation(){
   for (let i = 0; i < collect.pickups.length; i++){
@@ -202,9 +231,10 @@ function crewSimulation() {
 function userSimulation() {
   // properties of the user
   push();
+  noCursor();
   stroke(1000);
   fill(user.r, user.g, user.b);
-  image(shipImg, user.x, user.y, 35, 35);
+  image(shipImg, user.x, user.y, 50, 50);
   imageMode(CENTER);
   pop();
   // user movement
