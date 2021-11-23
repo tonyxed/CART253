@@ -15,6 +15,7 @@ let debrisImpact;
 let pickupSound;
 let victorySound;
 let loseSound;
+let level1Sound;
 //images
 let playImg;
 let shipImg;
@@ -79,6 +80,7 @@ function preload() {
   pickupSound = loadSound("assets/sounds/pickup.wav");
   victorySound = loadSound("assets/sounds/victory.wav");
   loseSound = loadSound("assets/sounds/lose.wav");
+  level1Sound = loadSound("assets/sounds/level1Back.wav");
 }
 
 
@@ -128,7 +130,6 @@ let state = 'mainMenu';
 
 function draw() {
   background(0);
-
   //states
   if (state === 'mainMenu') {
     mainMenu();
