@@ -2,8 +2,8 @@ class Stars2 {
   constructor(x, y) {
     this.x = random(0, width);
     this.y = random(0, height);
-    this.radius = 1;
-    this.speed = 2;
+    this.radius = random(1, 3);
+    this.speed = 1.5;
   }
   //diplays
   display() {
