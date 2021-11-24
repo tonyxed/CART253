@@ -378,7 +378,7 @@ function numLasersRemaining() {
   textAlign(TOP, TOP);
   textSize(30);
   fill(255);
-  text(numLasers, 450, 0);
+  text(numLasers, user.x - 70, user.y);
   pop();
 }
 // total durability of the ship remaining
