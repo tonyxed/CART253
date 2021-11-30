@@ -159,7 +159,7 @@ function setup() {
   }
 }
 //state
-let state = 'mainMenu';
+let state = 'level2';
 
 function draw() {
   background(0);
@@ -187,6 +187,7 @@ function draw() {
     tutorialText1();
     laserSimulation();
     numLasersRemaining();
+    pickupSimulation();
     medicSimulation();
     pickupSimulation();
     medicHP();
