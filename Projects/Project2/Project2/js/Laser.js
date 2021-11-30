@@ -19,7 +19,7 @@ class Laser {
   }
   // if lasers at 0 then --->
   lasersAtZero() {
-    if (numLasers === 0) {
+    if (numLasers < 0) {
       state = 'lose';
       loseSound.setVolume(.05);
       loseSound.play();

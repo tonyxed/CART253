@@ -7,7 +7,6 @@ class Rock2 {
     this.size = size;
     this.vy = vy;
     this.vx = vx;
-    this.r = .05;
     this.color = {
       r: 138,
       g: 202,
