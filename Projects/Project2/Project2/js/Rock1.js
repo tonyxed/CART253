@@ -9,9 +9,8 @@ class Rock1 {
     this.angle = angle;
     this.radius = radius;
     this.size = size;
+    this.float = 0.9;
     this.speed = 0.01;
-    this.centerX = 450;
-    this.centerY = 450;
     this.color = {
       r: 138,
       g: 179,
@@ -34,6 +33,12 @@ class Rock1 {
       imageMode(CENTER, CENTER);
       image(meteor1Img, this.x, this.y, 40, 40);
       pop();
+    }
+  }
+  floating(){
+    let r = random();
+    if (r < this.float){
+      this.vy = random(-.1,.1);
     }
   }
   offScreen() {

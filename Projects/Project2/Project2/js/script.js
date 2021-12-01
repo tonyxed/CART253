@@ -33,7 +33,7 @@ let lasers = [];
 let numLasers = 16;
 let score = 0;
 let durability = 250;
-let medicLives = 130;
+let medicLives = 180;
 // stars
 let body = {
   stars1: [],
@@ -275,6 +275,7 @@ function debrisSimulation1() {
     rocks1.offScreen();
     rocks1.collisionLaser();
     rocks1.collision();
+    rocks1.floating();
   }
 }
 
@@ -309,6 +310,7 @@ function medicSimulation() {
     medics.display();
     medics.collisionRock1();
     medics.checkCollision();
+    medics.floating();
     if (medics.saved === true) {
       medicsSaved += 1;
       victorySound.setVolume(.1);
@@ -653,7 +655,7 @@ function medicCatched() {
   fill(255);
   text(score, 570, 600);
   textAlign(CENTER, CENTER);
-  text("Your sole Medic was saved from this death!", 450, 450);
+  text("Your sole Medic was saved from his death!", 450, 450);
   text("Press 'ENTER' to continue!", 450, 800);
   pop();
   if (keyCode === 13) {

@@ -5,6 +5,7 @@ class Medic {
     this.size = size;
     this.vy = vy;
     this.vx = vx;
+    this.float = 1;
     this.color = {
       r: 145,
       g: 255,
@@ -25,9 +26,15 @@ class Medic {
       pop();
     }
   }
-
+  floating(){
+    let r = random();
+    if (r < this.float){
+      this.vx = random(-.5,.5);
+    }
+  }
   move1() {
     this.y = this.y + this.vy;
+    this.x = this.x + this.vx;
   }
   offScreen1() {
     let vy = random(1, 3);
