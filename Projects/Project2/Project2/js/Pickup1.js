@@ -1,4 +1,4 @@
-class Pickup {
+class Pickup1 {
   constructor(x, y, vy, vx, size) {
     this.x = x;
     this.y = y;
@@ -10,13 +10,13 @@ class Pickup {
     this.shot = false;
     this.present = true;
   }
-  //displays the pickups
+  //displays the pickups1
   display() {
     if (!this.shot) {
       push();
       fill(255);
       imageMode(CENTER, CENTER);
-      image(pickupImg, this.x, this.y, 25, 25);
+      image(speedImg, this.x, this.y, 35, 35);
       pop();
     }
   }
@@ -39,10 +39,10 @@ class Pickup {
         if (d < this.size / 2 + lasers[i].size / 2) {
           this.shot = true;
           this.present = false;
-          numLasers = numLasers + 5;
-          durability = durability + 50;
-          pickupSound.setVolume(.1);
-          pickupSound.play();
+          user.speed = user.speed + user.boost;
+          user.speed = constrain(user.speed, 4, 6);
+          speedSound.setVolume(.1);
+          speedSound.play();
         }
       }
     }

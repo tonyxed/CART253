@@ -9,6 +9,7 @@ WHAT I WANT DONE FOR NEXT CLASS
 
 //sounds
 let laserSound;
+let speedSound;
 let debrisLaser;
 let savedSound;
 let debrisImpact;
@@ -25,9 +26,12 @@ let medicImg;
 let meteorImg;
 let meteor1Img;
 let laserImg;
+let speedImg;
 let collect = {
   pickups: [],
   numPickUps: 4,
+  pickups1: [],
+  numPickUps1: 4,
 };
 let lasers = [];
 let numLasers = 16;
@@ -63,6 +67,7 @@ let user = {
   size: 20,
   speed: 4,
   speed1: 4,
+  boost: 1,
   r: 252,
   g: 186,
   b: 3,
@@ -80,6 +85,7 @@ function preload() {
   laserImg = loadImage("assets/images/laser.png");
   meteor1Img = loadImage("assets/images/meteor1.png");
   medicImg = loadImage("assets/images/medic.png");
+  speedImg = loadImage("assets/images/speed.png");
   // sounds // ALL GOTTEN FROM FREESOUND.ORG
   laserSound = loadSound("assets/sounds/laser.wav");
   debrisLaser = loadSound("assets/sounds/debris.wav");
@@ -89,6 +95,7 @@ function preload() {
   victorySound = loadSound("assets/sounds/victory.wav");
   loseSound = loadSound("assets/sounds/lose.wav");
   level1Sound = loadSound("assets/sounds/level1Back.wav");
+  speedSound = loadSound("assets/sounds/speed.wav");
 }
 
 
@@ -103,6 +110,16 @@ function setup() {
     let size = 20;
     pickups = new Pickup(x, y, vy, vx, size);
     collect.pickups.push(pickups);
+  }
+    //creates the pickup1
+  for (let i = 0; i < collect.numPickUps1; i++) {
+    let x = random(0, 900);
+    let y = random(50, 800);
+    let vy = 0;
+    let vx = 2;
+    let size = 20;
+    pickups1 = new Pickup1(x, y, vy, vx, size);
+    collect.pickups1.push(pickups1);
   }
   //creates the rocks1
   for (let i = 0; i < debris.numRocks1; i++) {
@@ -159,7 +176,7 @@ function setup() {
   }
 }
 //state
-let state = 'level2';
+let state = 'level1';
 
 function draw() {
   background(0);
@@ -177,6 +194,7 @@ function draw() {
     laserSimulation();
     numLasersRemaining();
     pickupSimulation();
+    pickup1Simulation();
     numDurabilityRemaining();
     starsSimulation();
   } else if (state === 'level2') {
@@ -241,6 +259,15 @@ function pickupSimulation() {
     pickups.collision();
     pickups.move();
     pickups.floating()
+  }
+}
+function pickup1Simulation() {
+  for (let i = 0; i < collect.pickups1.length; i++) {
+    let pickups1 = collect.pickups1[i];
+    pickups1.display();
+    pickups1.collision();
+    pickups1.move();
+    pickups1.floating()
   }
 }
 
@@ -638,7 +665,7 @@ function medicHP() {
   textAlign(TOP, TOP);
   textSize(20);
   fill(255);
-  text("Medic's oxygen:", 380, 10);
+  text("Medic's lives:", 370, 10);
   text(medicLives, 500, 10);
   pop();
 }
