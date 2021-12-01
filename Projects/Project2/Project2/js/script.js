@@ -638,7 +638,7 @@ function medicHP() {
   textAlign(TOP, TOP);
   textSize(20);
   fill(255);
-  text("Medic lives:", 380, 10);
+  text("Medic's oxygen:", 380, 10);
   text(medicLives, 500, 10);
   pop();
 }
