@@ -1,8 +1,6 @@
 /**
 Anthony Calderone
 WHAT I WANT DONE FOR NEXT CLASS
-- RANDOM MOVEMENT ON X-AXIS FOR DEBRIS!
-- DIFFERENT LEVELS WITH DEBRIS + MOVEMENT
 - BACKGROUND PLANETS
 - REFERENCE ALL IMAGES AND SOUNDS
 */
@@ -17,6 +15,8 @@ let pickupSound;
 let victorySound;
 let loseSound;
 let level1Sound;
+let musicSound;
+let crashSound;
 //images
 let playImg;
 let shipImg;
@@ -27,6 +27,9 @@ let meteorImg;
 let meteor1Img;
 let laserImg;
 let speedImg;
+let jupiterImg;
+let marsImg;
+let neptuneImg;
 let collect = {
   pickups: [],
   numPickUps: 4,
@@ -36,8 +39,8 @@ let collect = {
 let lasers = [];
 let numLasers = 16;
 let score = 0;
-let durability = 250;
-let medicLives = 180;
+let durability = 220;
+let medicLives = 220;
 // stars
 let body = {
   stars1: [],
@@ -52,7 +55,7 @@ let debris = {
   numRocks2: 70,
   //rocks1
   rocks1: [],
-  numRocks1: 40,
+  numRocks1: 30,
 };
 let crew = {
   astronauts: [],
@@ -72,6 +75,22 @@ let user = {
   g: 186,
   b: 3,
 };
+let jupiter = {
+  x: 250,
+  y: 150,
+  speed: .1,
+};
+let mars = {
+  x: 750,
+  y: -100,
+  speed: .2,
+};
+let neptune = {
+  x: 550,
+  y: 300,
+  speed: .3,
+};
+
 
 "use strict";
 
@@ -86,7 +105,10 @@ function preload() {
   meteor1Img = loadImage("assets/images/meteor1.png");
   medicImg = loadImage("assets/images/medic.png");
   speedImg = loadImage("assets/images/speed.png");
-  // sounds // ALL GOTTEN FROM FREESOUND.ORG
+  jupiterImg = loadImage("assets/images/jupiter.png");
+  marsImg = loadImage("assets/images/mars.png");
+  neptuneImg = loadImage("assets/images/neptune.png");
+  // sounds
   laserSound = loadSound("assets/sounds/laser.wav");
   debrisLaser = loadSound("assets/sounds/debris.wav");
   savedSound = loadSound("assets/sounds/saved.wav");
@@ -96,11 +118,15 @@ function preload() {
   loseSound = loadSound("assets/sounds/lose.wav");
   level1Sound = loadSound("assets/sounds/level1Back.wav");
   speedSound = loadSound("assets/sounds/speed.wav");
+  musicSound = loadSound("assets/sounds/music.wav");
+  crashSound = loadSound("assets/sounds/crash.wav");
 }
-
 
 function setup() {
   createCanvas(900, 900);
+  musicSound.setVolume(.02);
+  musicSound.play();
+  musicSound.loop();
   //creates the pickup
   for (let i = 0; i < collect.numPickUps; i++) {
     let x = random(0, 900);
@@ -111,7 +137,7 @@ function setup() {
     pickups = new Pickup(x, y, vy, vx, size);
     collect.pickups.push(pickups);
   }
-    //creates the pickup1
+  //creates the pickup1
   for (let i = 0; i < collect.numPickUps1; i++) {
     let x = random(0, 900);
     let y = random(50, 800);
@@ -176,7 +202,7 @@ function setup() {
   }
 }
 //state
-let state = 'level1';
+let state = 'mainMenu';
 
 function draw() {
   background(0);
@@ -187,6 +213,9 @@ function draw() {
     controls();
   } else if (state === 'level1') {
     userSimulation();
+    jupiterSimulation();
+    marsSimulation();
+    neptuneSimulation();
     debrisSimulation();
     crewSimulation();
     tutorialText();
@@ -200,7 +229,6 @@ function draw() {
   } else if (state === 'level2') {
     userSimulation2();
     debrisSimulation1();
-    starsSimulation1();
     points();
     tutorialText1();
     laserSimulation();
@@ -209,6 +237,7 @@ function draw() {
     medicSimulation();
     pickupSimulation();
     medicHP();
+    starsSimulation1();
   } else if (state === 'level3') {
 
   } else if (state === 'crewSaved') {
@@ -261,6 +290,7 @@ function pickupSimulation() {
     pickups.floating()
   }
 }
+
 function pickup1Simulation() {
   for (let i = 0; i < collect.pickups1.length; i++) {
     let pickups1 = collect.pickups1[i];
@@ -353,6 +383,24 @@ function medicSimulation() {
   } else if (medicsKilled === crew.medics.length) {
     state = "medicsAllKilled";
   }
+}
+//planets
+function jupiterSimulation() {
+  imageMode(CENTER);
+  image(jupiterImg, jupiter.x, jupiter.y, 120, 90);
+  jupiter.y = jupiter.y + jupiter.speed;
+}
+
+function marsSimulation() {
+  imageMode(CENTER);
+  image(marsImg, mars.x, mars.y, 40, 40);
+  mars.y = mars.y + mars.speed;
+}
+
+function neptuneSimulation() {
+  imageMode(CENTER);
+  image(neptuneImg, neptune.x, neptune.y, 20, 20);
+  neptune.y = neptune.y + neptune.speed;
 }
 
 function userSimulation() {
@@ -512,7 +560,7 @@ function win() {
   background(0);
   textStyle(BOLDITALIC);
   fill(255);
-  textAlign(CENTER,CENTER);
+  textAlign(CENTER, CENTER);
   text("Your total score was:", 350, 600);
   textStyle(BOLDITALIC);
   fill(255);
@@ -521,7 +569,7 @@ function win() {
   text("You've beaten level 1!", 450, 450);
   textStyle(BOLDITALIC);
   fill(255);
-  textAlign(CENTER,CENTER);
+  textAlign(CENTER, CENTER);
   text("Press 'ENTER' to continue!", 450, 800);
   pop();
   if (keyCode === 13) {
@@ -545,7 +593,7 @@ function numDurabilityRemaining() {
   textAlign(LEFT, LEFT);
   textSize(30);
   fill(255);
-  text(durability, user.x + 50, user.y + 20);
+  text(durability, user.x + 50, user.y);
   pop();
 }
 // mainmenu
@@ -566,7 +614,7 @@ function lasersFinished1() {
   background(0);
   textStyle(BOLDITALIC);
   fill(255);
-  textAlign(CENTER,CENTER);
+  textAlign(CENTER, CENTER);
   text("Your total score was:", 350, 600);
   textStyle(BOLDITALIC);
   fill(255);
@@ -586,7 +634,7 @@ function durabilityLose() {
   background(0);
   textStyle(BOLDITALIC);
   fill(255);
-  textAlign(CENTER,CENTER);
+  textAlign(CENTER, CENTER);
   text("Your total score was:", 350, 600);
   textStyle(BOLDITALIC);
   fill(255);
@@ -596,7 +644,7 @@ function durabilityLose() {
   text("Press 'ENTER' to restart!", 450, 800);
   pop();
   if (keyCode === 13) {
-  location.reload();
+    location.reload();
   }
 }
 
@@ -606,12 +654,12 @@ function level2Dialogue() {
   textSize(17);
   textStyle(BOLDITALIC);
   fill(150 + cos(frameCount * 0.1) * 128);
-  textAlign(CENTER,CENTER);
+  textAlign(CENTER, CENTER);
   text("Prevent your medic from losing oxygen! ", 450, 660);
   text("For every debris hit, his oxygen level will go down; and will also go down over time! ", 450, 620);
   pop();
   push();
-  textAlign(CENTER,CENTER);
+  textAlign(CENTER, CENTER);
   textSize(17);
   textStyle(BOLDITALIC);
   fill(150 + cos(frameCount * 0.1) * 128);
@@ -621,7 +669,7 @@ function level2Dialogue() {
   textSize(30);
   textStyle(BOLDITALIC);
   fill(255);
-  textAlign(CENTER,CENTER);
+  textAlign(CENTER, CENTER);
   text("Your score was:", 300, 450);
   textSize(30);
   textStyle(BOLDITALIC);
@@ -645,7 +693,7 @@ function medicsAllKilled() {
   background(0);
   textStyle(BOLDITALIC);
   fill(255);
-  textAlign(CENTER,CENTER);
+  textAlign(CENTER, CENTER);
   text("Your total score was:", 350, 600);
   textStyle(BOLDITALIC);
   fill(255);
@@ -676,7 +724,7 @@ function medicCatched() {
   background(0);
   textStyle(BOLDITALIC);
   fill(255);
-  textAlign(CENTER,CENTER);
+  textAlign(CENTER, CENTER);
   text("Your total score was:", 350, 600);
   textStyle(BOLDITALIC);
   fill(255);

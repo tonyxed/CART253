@@ -25,7 +25,7 @@ class Stars2 {
   display1() {
     fill(255);
     noStroke();
-    ellipse(this.xx, this.yy, this.radius * 2, this.radius * 2);
+    ellipse(this.xx, this.yy, this.radius * 3, this.radius * 3);
   }
   //movement
   move1() {

@@ -22,9 +22,9 @@ class Stars1 {
     }
   }
   display1() {
-    fill(199, 193, 193);
+    fill(173, 170, 160);
     noStroke();
-    ellipse(this.xx, this.yy, this.radius * 2, this.radius * 2);
+    ellipse(this.xx, this.yy, this.radius * 4, this.radius * 4);
   }
   //movement
   move1() {

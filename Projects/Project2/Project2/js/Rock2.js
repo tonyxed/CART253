@@ -65,6 +65,8 @@ class Rock2 {
     }
     if (durability === 0) {
       state = "durabilityLose";
+      crashSound.setVolume(.02);
+      crashSound.play();
     }
   }
   // checks if the lasers in the array are overlapping with this class
