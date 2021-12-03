@@ -56,6 +56,9 @@ let debris = {
   //rocks1
   rocks1: [],
   numRocks1: 30,
+  //meteors
+  meteors: [],
+  numMet: 3,
 };
 let crew = {
   astronauts: [],
@@ -200,9 +203,19 @@ function setup() {
   for (let i = 0; i < body.numStars2; i++) {
     body.stars2[i] = new Stars2();
   }
+  // creates the meteors
+  for (let i = 0; i < debris.numMet; i++) {
+    let x = random(0, width);
+    let y = random(0, height);
+    let vx = random(0, width);
+    let vy = random(0, height);
+    let size = 10;
+    let meteors = new Meteor(x, y, vy, vx, size);
+    debris.meteors.push(meteors);
+  }
 }
 //state
-let state = 'mainMenu';
+let state = 'level2';
 
 function draw() {
   background(0);
@@ -226,6 +239,7 @@ function draw() {
     pickup1Simulation();
     numDurabilityRemaining();
     starsSimulation();
+    meteorSimulation();
   } else if (state === 'level2') {
     userSimulation2();
     debrisSimulation1();
@@ -237,6 +251,7 @@ function draw() {
     medicSimulation();
     pickupSimulation();
     medicHP();
+    pickup1Simulation();
     starsSimulation1();
   } else if (state === 'level3') {
 
@@ -354,6 +369,14 @@ function crewSimulation() {
     state = 'level2dialogue';
     victorySound.setVolume(.1);
     victorySound.play();
+  }
+}
+function meteorSimulation(){
+  for (let i = 0; i < debris.meteors.length; i++) {
+    let meteors = debris.meteors[i];
+    meteors.move();
+    meteors.display();
+    meteors.offScreen();
   }
 }
 

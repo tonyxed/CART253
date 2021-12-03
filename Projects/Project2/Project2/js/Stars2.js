@@ -9,7 +9,7 @@ class Stars2 {
   }
   //diplays
   display() {
-    fill(255);
+    fill((random(255)));
     noStroke();
     ellipse(this.x, this.y, this.radius * 2, this.radius * 2);
   }
