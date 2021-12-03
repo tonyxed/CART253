@@ -25,6 +25,7 @@ let astronautImg;
 let medicImg;
 let meteorImg;
 let meteor1Img;
+let meteor2Img;
 let laserImg;
 let speedImg;
 let jupiterImg;
@@ -39,8 +40,8 @@ let collect = {
 let lasers = [];
 let numLasers = 16;
 let score = 0;
-let durability = 220;
-let medicLives = 220;
+let durability = 150;
+let medicLives = 200;
 // stars
 let body = {
   stars1: [],
@@ -52,10 +53,10 @@ let body = {
 let debris = {
   //rocks2
   rocks2: [],
-  numRocks2: 70,
+  numRocks2: 100,
   //rocks1
   rocks1: [],
-  numRocks1: 30,
+  numRocks1: 70,
   //meteors
   meteors: [],
   numMet: 3,
@@ -68,8 +69,8 @@ let crew = {
 }
 
 let user = {
-  x: 450,
-  y: 850,
+  x: 900,
+  y: 930,
   size: 20,
   speed: 4,
   speed1: 4,
@@ -79,12 +80,12 @@ let user = {
   b: 3,
 };
 let jupiter = {
-  x: 250,
+  x: 850,
   y: 150,
   speed: .1,
 };
 let mars = {
-  x: 750,
+  x: 1450,
   y: -100,
   speed: .2,
 };
@@ -106,6 +107,7 @@ function preload() {
   meteorImg = loadImage("assets/images/meteor.png");
   laserImg = loadImage("assets/images/laser.png");
   meteor1Img = loadImage("assets/images/meteor1.png");
+  meteor2Img = loadImage("assets/images/meteor2.png");
   medicImg = loadImage("assets/images/medic.png");
   speedImg = loadImage("assets/images/speed.png");
   jupiterImg = loadImage("assets/images/jupiter.png");
@@ -126,14 +128,14 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(900, 900);
+  createCanvas(windowWidth,windowHeight);
   musicSound.setVolume(.02);
   musicSound.play();
   musicSound.loop();
   //creates the pickup
   for (let i = 0; i < collect.numPickUps; i++) {
-    let x = random(0, 900);
-    let y = random(50, 800);
+    let x = random(0, width);
+    let y = random(850, 0);
     let vy = 0;
     let vx = random();
     let size = 20;
@@ -142,8 +144,8 @@ function setup() {
   }
   //creates the pickup1
   for (let i = 0; i < collect.numPickUps1; i++) {
-    let x = random(0, 900);
-    let y = random(50, 800);
+    let x = random(0, width);
+    let y = random(850, 0);
     let vy = 0;
     let vx = 2;
     let size = 20;
@@ -152,8 +154,8 @@ function setup() {
   }
   //creates the rocks1
   for (let i = 0; i < debris.numRocks1; i++) {
-    let x = random(0, 900);
-    let y = random(50, 820);
+    let x = random(0, width);
+    let y = random(850, 0);
     let w = random(100, 130);
     let h = 20;
     let vy = random(1, 3);
@@ -166,8 +168,8 @@ function setup() {
   }
   //creates the rocks2
   for (let i = 0; i < debris.numRocks2; i++) {
-    let x = random(0, 900);
-    let y = random(50, 900);
+    let x = random(0, width);
+    let y = random(50, height);
     let w = random(100, 130);
     let h = 20;
     let vy = random(1, 3);
@@ -178,8 +180,8 @@ function setup() {
   }
   // creates the astronauts in the array
   for (let i = 0; i < crew.numAstronauts; i++) {
-    let x = random(0, 900);
-    let y = random(50, 800);
+    let x = random(0, width);
+    let y = random(50, height);
     let size = random(20, 30);
     let vy = random(1, 1);
     let vx = 0;
@@ -187,8 +189,8 @@ function setup() {
     crew.astronauts.push(astronauts);
   }
   for (let i = 0; i < crew.numMedics; i++) {
-    let x = random(0, 900);
-    let y = 900;
+    let x = random(0, width);
+    let y = random(0);
     let size = random(20, 30);
     let vy = random(.5, .5);
     let vx = 0;
@@ -215,7 +217,7 @@ function setup() {
   }
 }
 //state
-let state = 'level2';
+let state = 'level1';
 
 function draw() {
   background(0);
@@ -253,6 +255,7 @@ function draw() {
     medicHP();
     pickup1Simulation();
     starsSimulation1();
+    meteorSimulation();
   } else if (state === 'level3') {
 
   } else if (state === 'crewSaved') {
@@ -441,7 +444,7 @@ function userSimulation() {
     user.x += user.speed;
   }
   //constrains the user
-  user.x = constrain(user.x, 0, 870);
+  user.x = constrain(user.x, 0, windowWidth);
 }
 
 function userSimulation2() {
@@ -456,8 +459,8 @@ function userSimulation2() {
   if (keyIsDown(RIGHT_ARROW)) {
     user.x += user.speed1;
   }
-  user.x = constrain(user.x, 0, 870);
-  user.y = constrain(user.y, 0, 900);
+  user.x = constrain(user.x, 0, width);
+
 }
 // shoots the lasers
 function keyPressed() {
@@ -478,11 +481,11 @@ function mainMenu() {
   strokeWeight(2);
   fill(255);
   textSize(40);
-  textAlign(CENTER, TOP);
+  textAlign(CENTER, CENTER);
   background(0);
   textStyle(BOLDITALIC);
   fill(150 + cos(frameCount * 0.2) * 128);
-  text("SPACE STORM IS NOW ONLINE!", 450, 450);
+  text("SPACE STORM IS NOW ONLINE!", width/2, height/2);
   //play button
   fill(255, 0, 0);
   textSize(20);
@@ -502,37 +505,37 @@ function controls() {
   background(0);
   textStyle(BOLDITALIC);
   fill(150 + cos(frameCount * 0.1) * 128);
-  text("Don't know how to play Space Storm? \r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n Press 'ENTER' to begin playing!", 450, 60);
+  text("Don't know how to play Space Storm? \r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n Press 'ENTER' to begin playing!", width/2, 60);
   fill(150 + sin(frameCount * 0.1) * 128);
   textSize(25);
-  text("Save your crew members before they are swept away in space!", 450, 250);
+  text("Save your crew members before they are swept away in space!", width/2, 250);
   textSize(25)
   fill(150 + cos(frameCount * 0.1) * 128);
-  text("Avoid the debris!", 450, 350);
+  text("Avoid the debris!", width/2, 350);
   textSize(25);
   fill(150 + sin(frameCount * 0.1) * 128);
-  text("(SPACE)Shoot the debris with your lasers to avoid it!", 450, 450);
+  text("(SPACE)Shoot the debris with your lasers to avoid it!", width/2, 450);
   textSize(25)
   fill(150 + cos(frameCount * 0.1) * 128);
-  text("Move around using the arrow keys!", 450, 550);
+  text("Move around using the arrow keys!", width/2, 550);
   textSize(25)
   fill(255, 100, 100);
-  text("If you die, you are brought back to level 1, no matter what level you are on!", 450, 500);
+  text("If you die, you are brought back to level 1, no matter what level you are on!",width/2, 500);
   textSize(25)
   fill(255, 100, 100);
-  text("Every saved crew member is worth 500 points!", 450, 600);
+  text("Every saved crew member is worth 500 points!", width/2, 600);
   textSize(25)
   fill(255, 100, 100);
-  text("For every debris you hit, your points will be deducted!", 450, 680);
+  text("For every debris you hit, your points will be deducted!", width/2, 680);
   textSize(25)
   fill(255, 100, 100);
-  text("Every pickup is worth 200 points!", 450, 640);
+  text("Every pickup is worth 200 points!", width/2, 640);
   textSize(25)
   fill(255, 100, 100);
-  text("Lasers are carried through each level, use them wisely!", 450, 720);
+  text("Lasers are carried through each level, use them wisely!", width/2, 720);
   textSize(25)
   fill(255, 100, 100);
-  text("Your ships durability will decrease over time, so hurry up!", 450, 760);
+  text("Your ships durability will decrease over time, so hurry up!", width/2, 760);
   pop();
   if (keyCode === 13) {
     state = "level1";
@@ -544,10 +547,10 @@ function tutorialText() {
   textAlign(CENTER, TOP);
   textSize(20);
   fill(0, 255, 76);
-  text("1", 70, 10);
+  text("1", 850, 10);
   textSize(20);
   fill(0, 255, 76);
-  text("Level:", 30, 10);
+  text("Level:", 800, 10);
   pop();
 }
 // tutorial state
@@ -556,10 +559,10 @@ function tutorialText1() {
   textAlign(CENTER, TOP);
   textSize(20);
   fill(0, 255, 76);
-  text("2", 70, 10);
+  text("2", 850, 10);
   textSize(20);
   fill(0, 255, 76);
-  text("Level:", 30, 10);
+  text("Level:", 800, 10);
   pop();
 }
 // scorepoints state
@@ -568,10 +571,10 @@ function points() {
   textAlign(CENTER, RIGHT);
   textSize(20);
   fill(212, 0, 255);
-  text(score, 870, 20);
+  text(score, 1000, 25);
   textSize(20);
   fill(212, 0, 255);
-  text("Total Points:", 790, 20);
+  text("Points:", 930, 25);
   pop();
 }
 
@@ -584,16 +587,16 @@ function win() {
   textStyle(BOLDITALIC);
   fill(255);
   textAlign(CENTER, CENTER);
-  text("Your total score was:", 350, 600);
+  text("Your total score was:", width/2, 600);
   textStyle(BOLDITALIC);
   fill(255);
-  text(score, 570, 600);
+  text(score, 1200, 600);
   textAlign(CENTER, CENTER);
-  text("You've beaten level 1!", 450, 450);
+  text("You've beaten level 1!", width/2, 450);
   textStyle(BOLDITALIC);
   fill(255);
   textAlign(CENTER, CENTER);
-  text("Press 'ENTER' to continue!", 450, 800);
+  text("Press 'ENTER' to continue!", width/2, 800);
   pop();
   if (keyCode === 13) {
     state = "level2";
@@ -616,7 +619,7 @@ function numDurabilityRemaining() {
   textAlign(LEFT, LEFT);
   textSize(30);
   fill(255);
-  text(durability, user.x + 50, user.y);
+  text(durability, user.x + 50, user.y +20);
   pop();
 }
 // mainmenu
@@ -638,13 +641,13 @@ function lasersFinished1() {
   textStyle(BOLDITALIC);
   fill(255);
   textAlign(CENTER, CENTER);
-  text("Your total score was:", 350, 600);
+  text("Your total score was:", width/2, 600);
   textStyle(BOLDITALIC);
   fill(255);
-  text(score, 570, 600);
+  text(score, 570, 1200);
   textAlign(CENTER, CENTER);
-  text("You've ran out of lasers!", 450, 450);
-  text("Press 'ENTER' to restart!", 450, 800);
+  text("You've ran out of lasers!", width/2, 450);
+  text("Press 'ENTER' to restart!", width/2, 800);
   pop();
   if (keyCode === 13) {
     location.reload();
@@ -658,13 +661,13 @@ function durabilityLose() {
   textStyle(BOLDITALIC);
   fill(255);
   textAlign(CENTER, CENTER);
-  text("Your total score was:", 350, 600);
+  text("Your total score was:", width/2, 600);
   textStyle(BOLDITALIC);
   fill(255);
-  text(score, 570, 600);
+  text(score, 570, 1200);
   textAlign(CENTER, CENTER);
-  text("Your ship ran out of durability!", 450, 450);
-  text("Press 'ENTER' to restart!", 450, 800);
+  text("Your ship ran out of durability!", width/2, 450);
+  text("Press 'ENTER' to restart!", width/2, 800);
   pop();
   if (keyCode === 13) {
     location.reload();
@@ -678,32 +681,32 @@ function level2Dialogue() {
   textStyle(BOLDITALIC);
   fill(150 + cos(frameCount * 0.1) * 128);
   textAlign(CENTER, CENTER);
-  text("Prevent your medic from losing oxygen! ", 450, 660);
-  text("For every debris hit, his oxygen level will go down; and will also go down over time! ", 450, 620);
+  text("Prevent your medic from losing oxygen! ", width/2, 660);
+  text("For every debris hit, his oxygen level will go down; and will also go down over time! ", width/2, 620);
   pop();
   push();
   textAlign(CENTER, CENTER);
   textSize(17);
   textStyle(BOLDITALIC);
   fill(150 + cos(frameCount * 0.1) * 128);
-  text("In the upcoming level, you will need to clear a path for your sole medic!", 450, 580);
+  text("In the upcoming level, you will need to clear a path for your sole medic!", width/2, 580);
   pop();
   push();
   textSize(30);
   textStyle(BOLDITALIC);
   fill(255);
   textAlign(CENTER, CENTER);
-  text("Your score was:", 300, 450);
+  text("Your score was:", width/2, 450);
   textSize(30);
   textStyle(BOLDITALIC);
   fill(255);
-  text(score, 570, 450);
+  text(score, 1200, 450);
   textAlign(CENTER, CENTER);
-  text("You've beaten level 1!", 450, 150);
+  text("You've beaten level 1!", width/2, 150);
   textSize(30);
   textStyle(BOLDITALIC);
-  fill(255);
-  text("Press 'ENTER' to continue!", 450, 800);
+  fill(random(255));
+  text("Press 'ENTER' to continue!", width/2, 800);
   pop();
   if (keyCode === 13) {
     state = "level2";
@@ -717,13 +720,14 @@ function medicsAllKilled() {
   textStyle(BOLDITALIC);
   fill(255);
   textAlign(CENTER, CENTER);
-  text("Your total score was:", 350, 600);
+  text("Your total score was:", width/2, 600);
   textStyle(BOLDITALIC);
   fill(255);
-  text(score, 570, 600);
+  text(score, 1200, 600);
   textAlign(CENTER, CENTER);
-  text("Your sole medic was killed!", 450, 450);
-  text("Press 'ENTER' to restart!", 450, 800);
+  text("Your sole medic was killed!", width/2, 450);
+  fill(random(255));
+  text("Press 'ENTER' to restart!", width/2, 800);
   pop();
   if (keyCode === 13) {
     location.reload();
@@ -735,9 +739,9 @@ function medicHP() {
   push();
   textAlign(TOP, TOP);
   textSize(20);
-  fill(255);
-  text("Medic's lives:", 370, 10);
-  text(medicLives, 500, 10);
+  fill(235, 64, 52);
+  text("Medic's lives:", 800, 60);
+  text(medicLives, width/2, 60);
   pop();
 }
 
@@ -748,13 +752,14 @@ function medicCatched() {
   textStyle(BOLDITALIC);
   fill(255);
   textAlign(CENTER, CENTER);
-  text("Your total score was:", 350, 600);
+  text("Your total score was:", width/2, 600);
   textStyle(BOLDITALIC);
   fill(255);
-  text(score, 570, 600);
+  text(score, 1200, 600);
   textAlign(CENTER, CENTER);
-  text("Your sole Medic was saved from his death!", 450, 450);
-  text("Press 'ENTER' to continue!", 450, 800);
+  text("Your sole Medic was saved from his death!", width/2, 450);
+  fill(random(255));
+  text("Press 'ENTER' to continue!", width/2, 800);
   pop();
   if (keyCode === 13) {
     state = "level3";

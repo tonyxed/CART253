@@ -9,7 +9,7 @@ class Meteor {
   display(){
     fill(random(255));
     noStroke();
-    ellipse(this.x,this.y, this.size);
+    image(meteor2Img, this.x,this.y, 40,40);
   }
   move(){
     this.y += 4;
@@ -17,13 +17,13 @@ class Meteor {
   }
   offScreen(){
   if(this.y > height){
-  this.y = random(0,height);
-  this.x = random(0,width);
+  this.y = 0;
+  this.x = random(0, width);
   this.size = 30;
   fill(random());
 } else if (this.x > width){
   this.y = 0;
-  this.x = random(0,width);
+  this.x = random(0,height);
   this.size = 30;
   fill(random());
 }

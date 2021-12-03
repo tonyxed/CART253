@@ -44,7 +44,7 @@ class Rock1 {
   offScreen() {
     if (this.x > width) {
       this.x = 0;
-      this.y = random(50, 820);
+      this.y = random(850, 0);
       this.vx = this.vx + .1;
       this.size = random(5, 32);
     }

@@ -46,7 +46,7 @@ class Rock2 {
     let blue = random(137, 205);
     let green = random(143, 220);
     if (this.y > height) {
-      this.x = random(0, 900);
+      this.x = random(0, width);
       this.y = 0;
       this.w = w;
       this.color.r = red;
