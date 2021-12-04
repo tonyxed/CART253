@@ -217,7 +217,7 @@ function setup() {
   }
 }
 //state
-let state = 'level1';
+let state = 'lose';
 
 function draw() {
   background(0);
@@ -642,7 +642,7 @@ function lasersFinished1() {
   text("Your total score was:", width/2, 600);
   textStyle(BOLDITALIC);
   fill(255);
-  text(score, 570, 1200);
+  text(score, 1200, 600);
   textAlign(CENTER, CENTER);
   text("You've ran out of lasers!", width/2, 450);
   text("Press 'ENTER' to restart!", width/2, 800);
@@ -662,7 +662,7 @@ function durabilityLose() {
   text("Your total score was:", width/2, 600);
   textStyle(BOLDITALIC);
   fill(255);
-  text(score, 570, 1200);
+  text(score, 1200, 600);
   textAlign(CENTER, CENTER);
   text("Your ship ran out of durability!", width/2, 450);
   text("Press 'ENTER' to restart!", width/2, 800);
