@@ -69,8 +69,8 @@ let crew = {
 }
 
 let user = {
-  x: 900,
-  y: 930,
+  x: 950,
+  y: 920,
   size: 20,
   speed: 4,
   speed1: 4,
@@ -241,7 +241,6 @@ function draw() {
     pickup1Simulation();
     numDurabilityRemaining();
     starsSimulation();
-    meteorSimulation();
   } else if (state === 'level2') {
     userSimulation2();
     debrisSimulation1();
@@ -255,7 +254,6 @@ function draw() {
     medicHP();
     pickup1Simulation();
     starsSimulation1();
-    meteorSimulation();
   } else if (state === 'level3') {
 
   } else if (state === 'crewSaved') {
