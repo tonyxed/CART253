@@ -60,7 +60,7 @@ class Rock2 {
     if (d < this.size / 2 + user.size / 2) {
       score = score - 1;
       durability = durability - 1;
-    }
+    } 
     if (durability === 0) {
       state = "durabilityLose";
       crashSound.setVolume(.02);

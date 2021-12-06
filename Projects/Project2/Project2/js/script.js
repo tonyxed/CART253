@@ -71,6 +71,8 @@ let crew = {
 let user = {
   x: 950,
   y: 920,
+  w: 50,
+  h: 50,
   size: 20,
   speed: 2,
   speed1: 4,
@@ -430,7 +432,7 @@ function userSimulation() {
   push();
   fill(user.r, user.g, user.b);
   imageMode(CENTER);
-  image(shipImg, user.x, user.y, 50, 50);
+  image(shipImg, user.x, user.y, user.w, user.h);
   pop();
   // user movement
   if (keyIsDown(LEFT_ARROW)) {
