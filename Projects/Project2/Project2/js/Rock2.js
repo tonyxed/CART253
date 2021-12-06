@@ -12,7 +12,6 @@ class Rock2 {
       g: 202,
       b: 214,
     };
-    this.alive = true;
     this.destroyed = false;
   }
   //displays the rocks
@@ -59,7 +58,6 @@ class Rock2 {
   collision() {
     let d = dist(user.x, user.y, this.x, this.y);
     if (d < this.size / 2 + user.size / 2) {
-      this.color.r = 255;
       score = score - 1;
       durability = durability - 1;
     }
@@ -75,12 +73,9 @@ class Rock2 {
       for (let i = 0; i < lasers.length; i++) {
         let d = dist(this.x, this.y, lasers[i].x, lasers[i].y);
         if (d < this.size / 2 + lasers[i].size / 2) {
-          if (d < this.size / 2 + lasers[i].size / 2) {
             this.destroyed = true;
-            this.alive = false;
             debrisLaser.setVolume(0.1);
             debrisLaser.play();
-          }
         }
       }
     }

@@ -17,7 +17,6 @@ class Rock1 {
       b: 186,
     }
     this.destroyed = false;
-    this.alive = true;
   }
   //moves the rock
   movement() {
@@ -69,12 +68,9 @@ class Rock1 {
       for (let i = 0; i < lasers.length; i++) {
         let d = dist(this.x, this.y, lasers[i].x, lasers[i].y);
         if (d < this.size / 2 + lasers[i].size / 2) {
-          if (d < this.size / 2 + lasers[i].size / 2) {
             this.destroyed = true;
-            this.alive = false;
             debrisLaser.setVolume(0.1);
             debrisLaser.play();
-          }
         }
       }
     }

@@ -37,7 +37,7 @@ let collect = {
   numPickUps1: 4,
 };
 let lasers = [];
-let numLasers = 16;
+let numLasers = 20;
 let score = 0;
 let finalScore = 0;
 let durability = 150;
@@ -72,7 +72,7 @@ let user = {
   x: 950,
   y: 920,
   size: 20,
-  speed: 4,
+  speed: 2,
   speed1: 4,
   boost: 1,
   r: 252,
@@ -754,7 +754,5 @@ function medicCatched() {
   text(score + finalScore, 1200, 600);
   textAlign(CENTER, CENTER);
   text("Your sole Medic was saved from his death!", width / 2, 450);
-  fill(random(255));
-  text("Press 'ENTER' to continue!", width / 2, 800);
   pop();
 }

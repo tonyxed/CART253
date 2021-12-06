@@ -1,6 +1,6 @@
 class Stars2 {
   constructor() {
-    this.x = random(0, width);
+    this.x = random(-500, width);
     this.y = random(0, height);
     this.xx = random(0, width);
     this.yy = random(0, height);
@@ -13,7 +13,7 @@ class Stars2 {
     noStroke();
     ellipse(this.x, this.y, this.radius * 2, this.radius * 2);
   }
-  //movement
+  //movement level1
   move() {
     this.y = this.y + this.speed;
     if (this.y > height) {
@@ -27,11 +27,11 @@ class Stars2 {
     noStroke();
     ellipse(this.xx, this.yy, this.radius * 3, this.radius * 3);
   }
-  //movement
+  //movement level2
   move1() {
     this.yy = this.yy - this.speed;
     if (this.yy < 0) {
-      this.yy = 900;
+      this.yy = 980;
       this.xx = random(0, width);
     }
   }

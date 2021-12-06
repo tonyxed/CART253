@@ -8,7 +8,6 @@ class Pickup {
     this.size = size;
     this.float = 0.2;
     this.shot = false;
-    this.present = true;
   }
   //displays the pickups
   display() {
@@ -39,7 +38,6 @@ class Pickup {
         let d = dist(this.x, this.y, lasers[i].x, lasers[i].y);
         if (d < this.size / 2 + lasers[i].size / 2) {
           this.shot = true;
-          this.present = false;
           numLasers = numLasers + 5;
           durability = durability + 50;
           pickupSound.setVolume(.1);
