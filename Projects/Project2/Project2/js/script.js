@@ -2,6 +2,7 @@
 Anthony Calderone
 ALL IMAGES GOTTEN FROM : https://www.pngwing.com/
 ALL SOUNDS GOTTEN FROM : https://freesound.org/
+REFERENCES GOTTEN FROM : https://p5js.org/ && my past exercises!
 */
 
 //sounds
@@ -225,7 +226,7 @@ let state = 'mainMenu';
 
 function draw() {
   background(0);
-  console.log(mouseX,mouseY);
+  console.log(mouseX, mouseY);
   //states
   if (state === 'mainMenu') {
     mainMenu();
@@ -437,8 +438,7 @@ function userSimulation() {
   // user movement
   if (keyIsDown(LEFT_ARROW)) {
     user.x -= user.speed;
-  }
-  if (keyIsDown(RIGHT_ARROW)) {
+  } else if (keyIsDown(RIGHT_ARROW)) {
     user.x += user.speed;
   }
   //constrains the user
@@ -453,8 +453,7 @@ function userSimulation2() {
   pop();
   if (keyIsDown(LEFT_ARROW)) {
     user.x -= user.speed1;
-  }
-  if (keyIsDown(RIGHT_ARROW)) {
+  } else if (keyIsDown(RIGHT_ARROW)) {
     user.x += user.speed1;
   }
   user.x = constrain(user.x, 0, width);
