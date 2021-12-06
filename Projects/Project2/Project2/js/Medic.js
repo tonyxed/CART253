@@ -26,10 +26,11 @@ class Medic {
       pop();
     }
   }
-  floating(){
+  // floating movement
+  floating() {
     let r = random();
-    if (r < this.float){
-      this.vx = random(-.5,.5);
+    if (r < this.float) {
+      this.vx = random(-.5, .5);
     }
   }
   move1() {
@@ -57,13 +58,14 @@ class Medic {
       }
     }
   }
+  // checks collision with rock1 and this class
   collisionRock1() {
     if (!this.killed) {
       for (let i = 0; i < debris.rocks1.length; i++) {
         let d = dist(debris.rocks1[i].x, debris.rocks1[i].y, this.x, this.y);
         if (d < this.size / 2 + debris.rocks1[i].size / 2) {
           medicLives = medicLives - 1;
-          if(medicLives === 0){
+          if (medicLives === 0) {
             this.killed = true;
             this.alive = false;
           }

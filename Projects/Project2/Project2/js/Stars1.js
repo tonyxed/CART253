@@ -4,10 +4,10 @@ class Stars1 {
     this.y = random(0, height);
     this.xx = random(0, width);
     this.yy = random(0, height);
-    this.radius = random(1,2);
+    this.radius = random(1, 2);
     this.speed = 1.5;
   }
-  //displays
+  //displays on level1
   display() {
     fill(255);
     noStroke();
@@ -21,6 +21,7 @@ class Stars1 {
       this.x = random(0, width);
     }
   }
+  //displays on level2
   display1() {
     fill(173, 170, 160);
     noStroke();

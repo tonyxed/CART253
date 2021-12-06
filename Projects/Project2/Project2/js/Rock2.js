@@ -33,10 +33,10 @@ class Rock2 {
     this.y += this.vy;
     this.x += this.vx;
   }
-  randomness(){
+  randomness() {
     let r = random();
-    if (r < this.r){
-      this.vx = random(-.1,.1);
+    if (r < this.r) {
+      this.vx = random(-.1, .1);
     }
   }
   //checks if this class is offScreen

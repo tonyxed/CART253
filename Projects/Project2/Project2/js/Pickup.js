@@ -25,6 +25,7 @@ class Pickup {
     this.y += this.vy;
     this.x += this.vx;
   }
+  //floating movement
   floating() {
     let r = random();
     if (r < this.float) {

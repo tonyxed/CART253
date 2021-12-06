@@ -35,12 +35,14 @@ class Rock1 {
       pop();
     }
   }
-  floating(){
+  //floating movement
+  floating() {
     let r = random();
-    if (r < this.float){
-      this.vy = random(-.1,.1);
+    if (r < this.float) {
+      this.vy = random(-.1, .1);
     }
   }
+  // checks if offScreen
   offScreen() {
     if (this.x > width) {
       this.x = 0;
@@ -49,6 +51,7 @@ class Rock1 {
       this.size = random(5, 32);
     }
   }
+  //checks collision between this class and the user
   collision() {
     let d = dist(user.x, user.y, this.x, this.y);
     if (d < this.size / 2 + user.size / 2) {
@@ -60,6 +63,7 @@ class Rock1 {
       state = "durabilityLose";
     }
   }
+  //checks the collision between this class and the lasers
   collisionLaser() {
     if (!this.destroyed) {
       for (let i = 0; i < lasers.length; i++) {

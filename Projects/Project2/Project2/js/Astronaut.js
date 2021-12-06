@@ -14,17 +14,18 @@ class Astronaut {
     this.alive = true;
     this.saved = false;
   }
-  //displays
+  //display level1
   display() {
     if (!this.saved) {
       push();
       noStroke();
       fill(this.color.r, this.color.g, this.color.b);
       imageMode(CENTER);
-      image(astronautImg, this.x, this.y, 30, 30);
+      image(astronautImg, this.x, this.y, 40, 40);
       pop();
     }
   }
+  //display level2
   display1() {
     if (!this.alive) {
       push();
@@ -35,14 +36,16 @@ class Astronaut {
       pop();
     }
   }
-  //moves
+  //move level1
   move() {
     this.y = this.y + this.vy;
     this.x = this.x + this.vx;
   }
+  //move level1
   move1() {
     this.y = this.y + this.vy;
   }
+  //checks off screen
   offScreen1() {
     let vy = random(1, 3);
     if (this.y > height) {
@@ -51,10 +54,11 @@ class Astronaut {
       this.vx = vy;
     }
   }
-  floating(){
+  //floating movement
+  floating() {
     let r = random();
-    if (r < this.float){
-      this.vx = random(-.4,.4);
+    if (r < this.float) {
+      this.vx = random(-.4, .4);
     }
   }
   // checks off screen
@@ -76,18 +80,20 @@ class Astronaut {
         this.saved = true;
         savedSound.setVolume(.1);
         savedSound.play();
+
       }
     }
   }
-  collisionRock1(){
-    if(!this.saved){
+  // checks collision between rock1 and this class
+  collisionRock1() {
+    if (!this.saved) {
       for (let i = 0; i < debris.rocks1.length; i++) {
-      let d = dist(debris.rocks1[i].x, debris.rocks1[i].y, this.x, this.y);
-      if (d < this.size / 2 + debris.rocks1[i].size / 2) {
-        this.alive = false;
-        this.saved = false;
+        let d = dist(debris.rocks1[i].x, debris.rocks1[i].y, this.x, this.y);
+        if (d < this.size / 2 + debris.rocks1[i].size / 2) {
+          this.alive = false;
+          this.saved = false;
+        }
       }
-    }
     }
 
   }
