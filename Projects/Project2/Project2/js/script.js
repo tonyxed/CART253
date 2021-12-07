@@ -4,7 +4,7 @@ ALL IMAGES GOTTEN FROM : https://www.pngwing.com/
 ALL SOUNDS GOTTEN FROM : https://freesound.org/
 REFERENCES GOTTEN FROM : https://p5js.org/ && my past exercises!
 */
-
+//CREATE NEW PICKUPS OR WHATEVR FOR THE SECOND LEVEL + NEW LASERS
 //sounds
 let laserSound;
 let speedSound;
@@ -38,7 +38,7 @@ let collect = {
   numPickUps1: 4,
 };
 let lasers = [];
-let numLasers = 20;
+let numLasers = 30;
 let score = 0;
 let finalScore = 0;
 let durability = 150;
@@ -64,7 +64,7 @@ let debris = {
 };
 let crew = {
   astronauts: [],
-  numAstronauts: 6,
+  numAstronauts: 1,
   medics: [],
   numMedics: 1,
 }
@@ -210,19 +210,9 @@ function setup() {
   for (let i = 0; i < body.numStars2; i++) {
     body.stars2[i] = new Stars2();
   }
-  // creates the meteors
-  for (let i = 0; i < debris.numMet; i++) {
-    let x = random(0, width);
-    let y = random(0, height);
-    let vx = random(0, width);
-    let vy = random(0, height);
-    let size = 10;
-    let meteors = new Meteor(x, y, vy, vx, size);
-    debris.meteors.push(meteors);
-  }
 }
 //state
-let state = 'mainMenu';
+let state = 'level1';
 
 function draw() {
   background(0);
@@ -592,10 +582,6 @@ function win() {
   textAlign(CENTER, CENTER);
   text("Press 'ENTER' to continue!", width / 2, 800);
   pop();
-  if (keyCode === 13) {
-    state = "level2";
-    numLasers = 8;
-  }
 }
 // # of lasers left
 function numLasersRemaining() {
@@ -676,6 +662,11 @@ function level2Dialogue() {
   fill(150 + cos(frameCount * 0.1) * 128);
   textAlign(CENTER, CENTER);
   text("Prevent your medic from losing oxygen! ", width / 2, 660);
+  text("The amount of lasers being carried over:", width / 2, 700);
+  push();
+  fill(200, 100, 50);
+  text(numLasers, 1150 , 700);
+  pop();
   text("For every debris hit, his oxygen level will go down; and will also go down over time! ", width / 2, 620);
   pop();
   push();
@@ -699,7 +690,7 @@ function level2Dialogue() {
   text("You've beaten level 1!", width / 2, 150);
   textSize(30);
   textStyle(BOLDITALIC);
-  fill(random(255));
+  fill(255);
   text("Press 'ENTER' to continue!", width / 2, 800);
   pop();
   if (keyCode === 13) {
