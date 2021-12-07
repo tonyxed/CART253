@@ -724,12 +724,7 @@ function medicsAllKilled() {
   textAlign(CENTER, CENTER);
   text("Your sole medic was killed!", width / 2, 450);
   fill(random(255));
-  text("Press 'ENTER' to restart!", width / 2, 800);
   pop();
-  if (keyCode === 13) {
-    location.reload();
-
-  }
 }
 //medic hp
 function medicHP() {
