@@ -31,6 +31,7 @@ class Rock2 {
   movement() {
     this.y += this.vy;
     this.x += this.vx;
+
   }
   randomness() {
     let r = random();
@@ -60,7 +61,7 @@ class Rock2 {
     if (d < this.size / 2 + user.size / 2) {
       score = score - 1;
       durability = durability - 1;
-    } 
+    }
     if (durability === 0) {
       state = "durabilityLose";
       crashSound.setVolume(.02);
@@ -70,7 +71,7 @@ class Rock2 {
   // checks if the lasers in the array are overlapping with this class
   collisionLaser() {
     if (!this.destroyed) {
-      for (let i = 0; i < lasers.length; i++) {
+      for (let i = lasers.length - 1; i>= 0; i--) {
         let d = dist(this.x, this.y, lasers[i].x, lasers[i].y);
         if (d < this.size / 2 + lasers[i].size / 2) {
             this.destroyed = true;
