@@ -431,7 +431,7 @@ function controls() {
   text("Save your crew members before they are swept away in space!", width / 2, 250);
   textSize(25)
   fill(150 + cos(frameCount * 0.1) * 128);
-  text("Avoid the debris!", width / 2, 350);
+  text("(UP_ARROW)Once all crew members are saved, you will be permitted to extract to the MotherShip!", width / 2, 350);
   textSize(25);
   fill(150 + sin(frameCount * 0.1) * 128);
   text("(SPACE)Shoot the debris with your lasers to avoid them!", width / 2, 450);
