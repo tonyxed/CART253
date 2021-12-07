@@ -1,5 +1,7 @@
 /**
 Anthony Calderone
+Rescue your crew by preventing them from being swept away in space, and by using your lasers to clear the oncoming debris.
+If you fail to make it to the mother ship in time after all your crew members have been saved, you will forever be lost in space.
 ALL IMAGES GOTTEN FROM : https://www.pngwing.com/
 ALL SOUNDS GOTTEN FROM : https://freesound.org/
 REFERENCES GOTTEN FROM : https://p5js.org/ && my past exercises!
@@ -23,7 +25,6 @@ let shipImg;
 let shieldImg;
 let pickupImg;
 let astronautImg;
-let meteorImg;
 let meteor1Img;
 let meteor2Img;
 let laserImg;
@@ -42,6 +43,7 @@ let numLasers = 18;
 let score = 0;
 let finalScore = 0;
 let durability = 300;
+let timer = 20;
 // stars
 let body = {
   stars1: [],
@@ -57,9 +59,6 @@ let debris = {
   //rocks1
   rocks1: [],
   numRocks1: 70,
-  //meteors
-  meteors: [],
-  numMet: 3,
 };
 let crew = {
   astronauts: [],
@@ -217,42 +216,41 @@ function draw() {
     controls();
   } else if (state === 'level1') {
     userSimulation();
-    jupiterSimulation();
-    marsSimulation();
-    neptuneSimulation();
+    planetsSimulation();
     debrisSimulation();
     crewSimulation();
-    points();
+    userFunctionalities();
     laserSimulation();
-    numLasersRemaining();
-    pickupSimulation();
-    pickup1Simulation();
-    numDurabilityRemaining();
+    allPickupsSimulation();
     starsSimulation();
     mothershipSimulation();
+    points();
   } else if (state === 'lose') {
     lasersFinished1();
   } else if (state === 'durabilityLose') {
     durabilityLose();
-  } else if (state === "win"){
+  } else if (state === "win") {
     win();
+  } else if (state === 'timerLose') {
+    timerLose();
   }
 }
 // displays the stars on level1
 function starsSimulation() {
-
+  //stars 1
   for (let i = 0; i < body.numStars1; i++) {
     body.stars1[i].move();
     body.stars1[i].display();
   }
-
+  //stars 2
   for (let i = 0; i < body.numStars2; i++) {
     body.stars2[i].move();
     body.stars2[i].display();
   }
 }
-// pickupSimulation level1
-function pickupSimulation() {
+// allPickupsSimulation
+function allPickupsSimulation() {
+  // pickupSimulation level1
   for (let i = 0; i < collect.pickups.length; i++) {
     let pickups = collect.pickups[i];
     pickups.display();
@@ -260,9 +258,7 @@ function pickupSimulation() {
     pickups.move();
     pickups.floating()
   }
-}
-// pickupSimulation level1
-function pickup1Simulation() {
+  // pickupSimulation level1
   for (let i = 0; i < collect.pickups1.length; i++) {
     let pickups1 = collect.pickups1[i];
     pickups1.display();
@@ -292,18 +288,6 @@ function debrisSimulation() {
     rocks2.randomness();
   }
 }
-//displays rocks1 in the array
-function debrisSimulation1() {
-  for (let i = 0; i < debris.rocks1.length; i++) {
-    let rocks1 = debris.rocks1[i];
-    rocks1.movement();
-    rocks1.display();
-    rocks1.offScreen();
-    rocks1.collisionLaser();
-    rocks1.collision();
-    rocks1.floating();
-  }
-}
 
 //displays the astronauts in the array
 function crewSimulation() {
@@ -319,39 +303,56 @@ function crewSimulation() {
       astronautsSaved += 1;
     }
   }
+  // if all crew members are saved then text will appear and user.ableToMove will = true
   if (astronautsSaved === crew.astronauts.length) {
     user.ableToMove = true;
     push();
     textSize(20);
-    fill(255);
+    fill(150 + cos(frameCount * 0.2) * 128);
     textStyle(BOLDITALIC);
     textAlign(CENTER, CENTER);
     text("All Crew members have been saved, make it to the mother ship before it departs!", width / 2, 450);
+    textAlign(CENTER, CENTER);
+    fill(255, 221, 0 + cos(frameCount * 0.1) * 128);
+    textSize(30);
+    stroke(1);
+    text(timer, width / 2, 500);
     pop();
+    //timerCountdown
+    if (frameCount % 60 === 0 && timer > 0) {
+      timer--;
+    }
+    if (timer === 0) {
+      state = 'timerLose';
+    }
   }
-  if(user.ableToMove === true){
-    if(keyIsDown(UP_ARROW)){
+  // if all crew members are saved then user will be able to move
+  if (user.ableToMove === true) {
+    if (keyIsDown(UP_ARROW)) {
       user.y = user.y - 1;
     }
   }
 }
-//jupiter
-function jupiterSimulation() {
+// planetsSimulation
+function planetsSimulation() {
+  //jupiter
+
   imageMode(CENTER);
   image(jupiterImg, jupiter.x, jupiter.y, 120, 90);
   jupiter.y = jupiter.y + jupiter.speed;
-}
-//mars
-function marsSimulation() {
+
+  //mars
+
   imageMode(CENTER);
   image(marsImg, mars.x, mars.y, 40, 40);
   mars.y = mars.y + mars.speed;
-}
-//neptune
-function neptuneSimulation() {
+
+  //neptune
+
   imageMode(CENTER);
   image(neptuneImg, neptune.x, neptune.y, 20, 20);
   neptune.y = neptune.y + neptune.speed;
+
 }
 // properties of the user level1
 function userSimulation() {
@@ -380,22 +381,49 @@ function keyPressed() {
     laserSound.play();
   }
 }
-function mothershipSimulation(){
+// motherShip simulation
+function mothershipSimulation() {
   push();
   imageMode(CENTER);
-  image(mothershipImg, motherShip.x, motherShip.y, 70,70);
+  image(mothershipImg, motherShip.x, motherShip.y, 70, 70);
   pop();
   this.x = this.x + this.vx;
   this.y = this.y + this.vy;
 
-  let d = dist(user.x,user.y, motherShip.x, motherShip.y);
-    if(d< user.size/2 + motherShip.size/2){
-      state = 'win';
-      victorySound.setVolume(.1);
-      victorySound.play();
-    }
+  let d = dist(user.x, user.y, motherShip.x, motherShip.y);
+  if (d < user.size / 2 + motherShip.size / 2) {
+    state = 'win';
+    victorySound.setVolume(.1);
+    victorySound.play();
+  }
 }
 
+function userFunctionalities() {
+  // # of lasers left
+  push();
+  textAlign(TOP, TOP);
+  textSize(30);
+  fill(3, 181, 252);
+  text(numLasers, user.x - 70, user.y);
+  pop();
+  // total durability of the ship remaining
+  textAlign(LEFT, LEFT);
+  textSize(30);
+  fill(252, 3, 3);
+  text(durability, user.x + 50, user.y + 20);
+  pop();
+}
+
+// button on mainMenu
+function mouseClicked() {
+  if (state === 'mainMenu') {
+    if (mouseX < 990 && mouseX > 890) {
+      if (mouseY < 275 && mouseY > 200) {
+        state = 'controls';
+      }
+    }
+  }
+}
 // mainMenu state
 function mainMenu() {
   push();
@@ -415,6 +443,9 @@ function mainMenu() {
   fill(255);
   text("ENTER?", 945, 255);
 }
+
+//STATE FUNCTIONS
+
 //controls state
 function controls() {
   push();
@@ -480,37 +511,7 @@ function win() {
   text("Crew members have been saved, make it to the mother ship before it departs!", width / 2, 450);
   pop();
 }
-// # of lasers left
-function numLasersRemaining() {
-  push();
-  textAlign(TOP, TOP);
-  textSize(30);
-  fill(255);
-  text(numLasers, user.x - 70, user.y);
-  pop();
-
-}
-// total durability of the ship remaining
-function numDurabilityRemaining() {
-  push();
-  textAlign(LEFT, LEFT);
-  textSize(30);
-  fill(255);
-  text(durability, user.x + 50, user.y + 20);
-  pop();
-}
-// button on mainMenu
-function mouseClicked() {
-  if (state === 'mainMenu') {
-    if (mouseX < 990 && mouseX > 890) {
-      if (mouseY < 275 && mouseY > 200) {
-        state = 'controls';
-      }
-    }
-  }
-}
-
-// lasers finished
+// lasers finished state
 function lasersFinished1() {
   push();
   textSize(30);
@@ -530,7 +531,7 @@ function lasersFinished1() {
     location.reload();
   }
 }
-// durability lose
+// durability lose state
 function durabilityLose() {
   push();
   textSize(30);
@@ -550,7 +551,8 @@ function durabilityLose() {
     location.reload();
   }
 }
-function win(){
+//winning state
+function win() {
   push();
   textSize(30);
   background(0);
@@ -563,5 +565,21 @@ function win(){
   text(score, 1200, 600);
   textAlign(CENTER, CENTER);
   text("You've extracted succesfully with all your crew members!", width / 2, 450);
+  pop();
+}
+//losing time state
+function timerLose() {
+  push();
+  textSize(30);
+  background(0);
+  textStyle(BOLDITALIC);
+  fill(255);
+  textAlign(CENTER, CENTER);
+  text("Your total score was:", width / 2, 600);
+  textStyle(BOLDITALIC);
+  fill(255);
+  text(score, 1200, 600);
+  textAlign(CENTER, CENTER);
+  text("The mother ship has left without you!", width / 2, 450);
   pop();
 }
