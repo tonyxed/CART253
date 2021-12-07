@@ -254,11 +254,8 @@ function draw() {
     tutorialText1();
     laserSimulation();
     numLasersRemaining();
-    pickupSimulation();
     medicSimulation();
-    pickupSimulation();
     medicHP();
-    pickup1Simulation();
     starsSimulation1();
   } else if (state === 'crewSaved') {
     win();
@@ -310,7 +307,7 @@ function pickupSimulation() {
     pickups.floating()
   }
 }
-// pickupSimulation level2
+// pickupSimulation level1
 function pickup1Simulation() {
   for (let i = 0; i < collect.pickups1.length; i++) {
     let pickups1 = collect.pickups1[i];

@@ -19,6 +19,16 @@ class Pickup1 {
       pop();
     }
   }
+  // displays the pickups on level2
+  display1() {
+    if (!this.shot) {
+      push();
+      fill(255);
+      imageMode(CENTER, CENTER);
+      image(speedImg, this.x, this.y, 35, 35);
+      pop();
+    }
+  }
   //moving
   move() {
     this.y += this.vy;
